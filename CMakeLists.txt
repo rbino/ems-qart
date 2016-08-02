@@ -18,3 +18,5 @@ set(ems-qart-resources resources.qrc)
 add_executable(ems-qart ${ems-qart-sources} ${ems-qart-resources})
 
 qt5_use_modules(ems-qart Core Quick Gui)
+
+install(TARGETS ems-qart DESTINATION bin)
