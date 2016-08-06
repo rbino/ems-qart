@@ -9,3 +9,8 @@ CartController::CartController(QObject *parent) :
 CartController::~CartController()
 {
 }
+
+bool CartController::isReady()
+{
+    return m_emsCart->ready();
+}

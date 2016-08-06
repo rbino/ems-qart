@@ -9,10 +9,17 @@ class CartController : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
+
     public:
         CartController(QObject *parent = nullptr);
 
         virtual ~CartController();
+
+        bool isReady();
+
+    signals:
+        void readyChanged(bool ready);
 
     private:
         EmsCart *m_emsCart;
