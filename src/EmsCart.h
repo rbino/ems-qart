@@ -5,6 +5,11 @@
 
 #include <libusb.h>
 
+namespace EmsConstants {
+    const int UsbVID = 0x4670;
+    const int UsbPID = 0x9394;
+}
+
 class EmsCart : public QObject
 {
     Q_OBJECT
