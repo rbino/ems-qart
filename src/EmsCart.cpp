@@ -29,14 +29,23 @@ EmsCart::~EmsCart()
 
 void EmsCart::findDevice()
 {
+    int result = 0;
     if (ready()) {
+        libusb_release_interface(m_deviceHandle, 0);
+        result = libusb_claim_interface(m_deviceHandle, 0);
+        if (result < 0) {
+            qWarning() << "usb_claim_interface error " << result;
+            m_interfaceClaimed = false;
+            libusb_close(m_deviceHandle);
+            m_deviceHandle = nullptr;
+            emit readyChanged(false);
+        }
         return;
     }
 
     ssize_t numDevices = 0;
     libusb_device **deviceList = nullptr;
     struct libusb_device_descriptor deviceDescriptor;
-    int result = 0;
 
     numDevices = libusb_get_device_list(nullptr, &deviceList);
     if (numDevices >= 0) {
