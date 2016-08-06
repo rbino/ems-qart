@@ -39,8 +39,9 @@ void EmsCart::findDevice()
             libusb_close(m_deviceHandle);
             m_deviceHandle = nullptr;
             emit readyChanged(false);
+        } else {
+            return;
         }
-        return;
     }
 
     ssize_t numDevices = 0;
