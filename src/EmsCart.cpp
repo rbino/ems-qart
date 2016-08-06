@@ -64,6 +64,7 @@ void EmsCart::findDevice()
                             qWarning() << "usb_claim_interface error " << result;
                         } else {
                             m_interfaceClaimed = true;
+                            emit readyChanged(true);
                         }
                     }
                     break;
