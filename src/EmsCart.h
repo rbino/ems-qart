@@ -19,7 +19,6 @@ class EmsCart : public QObject
 
         virtual ~EmsCart();
 
-        bool init();
         void findDevice();
 
         bool ready();

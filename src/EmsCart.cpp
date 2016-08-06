@@ -7,6 +7,11 @@ EmsCart::EmsCart(QObject *parent) :
 {
     m_deviceHandle = nullptr;
     m_interfaceClaimed = false;
+
+    int result = libusb_init(NULL);
+    if (result < 0) {
+        qCritical() << "Failed to initialize libusb";
+    }
 }
 
 EmsCart::~EmsCart()
@@ -20,16 +25,6 @@ EmsCart::~EmsCart()
     }
 
     libusb_exit(nullptr);
-}
-
-bool EmsCart::init()
-{
-    int result = libusb_init(NULL);
-    if (result < 0) {
-        qCritical() << "Failed to initialize libusb";
-        return false;
-    }
-    return true;
 }
 
 void EmsCart::findDevice()
