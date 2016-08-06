@@ -15,6 +15,9 @@ class EmsCart : public QObject
         virtual ~EmsCart();
 
         bool init();
+
+    private:
+        struct libusb_device_handle *m_deviceHandle;
 };
 
 #endif
