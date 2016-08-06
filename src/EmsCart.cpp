@@ -11,6 +11,15 @@ EmsCart::EmsCart(QObject *parent) :
 
 EmsCart::~EmsCart()
 {
+    if (m_interfaceClaimed) {
+        libusb_release_interface(m_deviceHandle, 0);
+    }
+
+    if (m_deviceHandle) {
+        libusb_close(m_deviceHandle);
+    }
+
+    libusb_exit(nullptr);
 }
 
 bool EmsCart::init()
