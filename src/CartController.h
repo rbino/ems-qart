@@ -23,6 +23,9 @@ class CartController : public QObject
     signals:
         void readyChanged(bool ready);
 
+    private slots:
+        void readyUpdate(bool newReady);
+
     private:
         EmsCart *m_emsCart;
 };
