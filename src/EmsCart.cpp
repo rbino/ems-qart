@@ -34,6 +34,10 @@ bool EmsCart::init()
 
 void EmsCart::findDevice()
 {
+    if (ready()) {
+        return;
+    }
+
     ssize_t numDevices = 0;
     libusb_device **deviceList = nullptr;
     struct libusb_device_descriptor deviceDescriptor;
