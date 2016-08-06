@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "EmsCart.h"
+
 class CartController : public QObject
 {
     Q_OBJECT
@@ -11,6 +13,9 @@ class CartController : public QObject
         CartController(QObject *parent = nullptr);
 
         virtual ~CartController();
+
+    private:
+        EmsCart *m_emsCart;
 };
 
 #endif
