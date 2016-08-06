@@ -155,6 +155,23 @@ ApplicationWindow {
 
                 verticalAlignment: Text.AlignBottom;
             }
+
+            Button {
+                id: refreshCartButton;
+
+                iconSource: "qrc:///images/refresh.png";
+
+                tooltip: "Refresh";
+
+                width: height;
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                }
+
+                onClicked: {
+                    cartController.refresh();
+                }
+            }
         }
 
         Row {
