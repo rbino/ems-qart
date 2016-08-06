@@ -24,6 +24,9 @@ class EmsCart : public QObject
 
         bool ready();
 
+    signals:
+        void readyChanged(bool ready);
+
     private:
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
