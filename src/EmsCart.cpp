@@ -6,6 +6,7 @@ EmsCart::EmsCart(QObject *parent) :
     QObject(parent)
 {
     m_deviceHandle = nullptr;
+    m_interfaceClaimed = false;
 }
 
 EmsCart::~EmsCart()
