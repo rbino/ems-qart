@@ -58,6 +58,13 @@ void EmsCart::findDevice()
                         if (result == LIBUSB_ERROR_ACCESS) {
                             qWarning() << "Try running as root/sudo or update udev rules (check the FAQ for more info)";
                         }
+                    } else {
+                        result = libusb_claim_interface(m_deviceHandle, 0);
+                        if (result < 0) {
+                            qWarning() << "usb_claim_interface error " << result;
+                        } else {
+                            m_interfaceClaimed = true;
+                        }
                     }
                     break;
                 }
