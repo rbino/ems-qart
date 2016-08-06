@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <libusb.h>
+
 class EmsCart : public QObject
 {
     Q_OBJECT
@@ -11,6 +13,8 @@ class EmsCart : public QObject
         EmsCart(QObject *parent = nullptr);
 
         virtual ~EmsCart();
+
+        bool init();
 };
 
 #endif
