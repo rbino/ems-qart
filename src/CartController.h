@@ -16,6 +16,8 @@ class CartController : public QObject
 
         virtual ~CartController();
 
+        void refresh();
+
         bool isReady();
 
     signals:
