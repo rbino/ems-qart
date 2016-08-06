@@ -131,6 +131,30 @@ ApplicationWindow {
             anchors {
                 horizontalCenter: parent.horizontalCenter;
             }
+
+            Image {
+                id: cartLed;
+
+                source: cartController.ready ? "qrc:///images/green_led.png" : "qrc:///images/red_led.png";
+
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                }
+            }
+
+            Label {
+                id: cartStatusLabel;
+
+                text: cartController.ready ? "Cart connected" : "Cart not connected";
+
+                width: 135;
+                anchors {
+                    top: cartLed.top;
+                    bottom: cartLed.bottom;
+                }
+
+                verticalAlignment: Text.AlignBottom;
+            }
         }
 
         Row {
