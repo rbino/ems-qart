@@ -31,3 +31,8 @@ bool EmsCart::init()
     }
     return true;
 }
+
+bool EmsCart::ready()
+{
+    return (m_deviceHandle != nullptr && m_interfaceClaimed);
+}
