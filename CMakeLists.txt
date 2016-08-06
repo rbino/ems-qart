@@ -12,7 +12,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(ems-qart-sources src/main.cpp)
+set(ems-qart-sources src/main.cpp src/EmsCart.cpp)
 set(ems-qart-resources resources.qrc)
 
 add_executable(ems-qart ${ems-qart-sources} ${ems-qart-resources})
