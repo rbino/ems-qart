@@ -16,7 +16,7 @@ class CartController : public QObject
 
         virtual ~CartController();
 
-        void refresh();
+        Q_INVOKABLE void refresh();
 
         bool isReady();
 
