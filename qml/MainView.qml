@@ -55,7 +55,7 @@ ApplicationWindow {
         topPadding: 20;
         bottomPadding: 20;
 
-        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + filePathRow.height + theButton.height)) / 2;
+        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + cartStatusRow.height + filePathRow.height + theButton.height)) / 3;
 
         anchors {
             fill: parent;
@@ -120,6 +120,16 @@ ApplicationWindow {
                         exclusiveGroup: sourceGroup;
                     }
                 }
+            }
+        }
+
+        Row {
+            id: cartStatusRow;
+
+            spacing: 5;
+
+            anchors {
+                horizontalCenter: parent.horizontalCenter;
             }
         }
 
