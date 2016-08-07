@@ -14,6 +14,7 @@ void RomInfo::updateInfo(const QByteArray &header)
 {
     // Title max length is 16
     m_title = QLatin1String(header.mid(TitleOffset, 16));
+    emit titleChanged(m_title);
 
     uint8_t calculatedChecksum = 0;
     for (int i = TitleOffset; i < ChecksumOffset; i++)
@@ -25,6 +26,7 @@ void RomInfo::updateInfo(const QByteArray &header)
     } else {
         m_checksumValid = true;
     }
+    emit checksumValidChanged(m_checksumValid);
 }
 
 QString RomInfo::title()
