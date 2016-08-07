@@ -19,6 +19,12 @@ class EmsCart : public QObject
     Q_OBJECT
 
     public:
+        enum EmsMemory {
+            ROM = 1,
+            SRAM = 2
+        };
+        Q_ENUM(EmsMemory)
+
         EmsCart(QObject *parent = nullptr);
 
         virtual ~EmsCart();
