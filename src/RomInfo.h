@@ -7,6 +7,8 @@ class RomInfo : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+
     public:
         enum RomHeaderOffsets {
             LogoOffset = 0x104,
@@ -25,6 +27,14 @@ class RomInfo : public QObject
         RomInfo(QObject *parent = nullptr);
 
         virtual ~RomInfo();
+
+        QString title();
+
+    signals:
+        void titleChanged(QString title);
+
+    private:
+        QString m_title;
 };
 
 #endif
