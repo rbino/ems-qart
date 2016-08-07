@@ -12,6 +12,8 @@ namespace EmsConstants {
     const int WriteBlocksize = 32;
     const int SendEndpoint = 2 | LIBUSB_ENDPOINT_OUT;
     const int ReceiveEndpoint = 1 | LIBUSB_ENDPOINT_IN;
+    const int BankSize = 0x400000;
+    const int SRAMSize = 0x020000;
 }
 
 class EmsCart : public QObject
