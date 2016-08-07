@@ -107,6 +107,38 @@ QByteArray EmsCart::createCommandBuffer(uint8_t command, uint32_t offset, uint32
     return commandBuffer;
 }
 
+QByteArray EmsCart::read(EmsMemory from, uint32_t offset, uint32_t count)
+{
+    int result, transferred;
+    uint8_t cmd;
+
+    switch (from) {
+        case (ROM):
+            cmd = ReadROMCommand;
+            break;
+        case (SRAM):
+            cmd = ReadSRAMCommand;
+            break;
+    }
+
+    QByteArray cmdBuffer = createCommandBuffer(cmd, offset, count);
+    // Send the read command
+    result = libusb_bulk_transfer(m_deviceHandle, EmsConstants::SendEndpoint, reinterpret_cast<uchar *>(cmdBuffer.data()), cmdBuffer.size(), &transferred, 0);
+    if (result < 0) {
+        return QByteArray();
+    }
+
+    QByteArray outBuffer;
+    outBuffer.resize(count);
+    // Read the data
+    result = libusb_bulk_transfer(m_deviceHandle, EmsConstants::ReceiveEndpoint, reinterpret_cast<uchar *>(outBuffer.data()), count, &transferred,   0);
+    if (result < 0) {
+        return QByteArray();
+    }
+
+    return outBuffer;
+}
+
 bool EmsCart::ready()
 {
     return (m_deviceHandle != nullptr && m_interfaceClaimed);
