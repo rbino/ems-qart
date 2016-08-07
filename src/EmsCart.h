@@ -8,6 +8,8 @@
 namespace EmsConstants {
     const int UsbVID = 0x4670;
     const int UsbPID = 0x9394;
+    const int ReadBlocksize = 4096;
+    const int WriteBlocksize = 32;
 }
 
 class EmsCart : public QObject
