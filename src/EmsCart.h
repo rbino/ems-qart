@@ -10,6 +10,8 @@ namespace EmsConstants {
     const int UsbPID = 0x9394;
     const int ReadBlocksize = 4096;
     const int WriteBlocksize = 32;
+    const int SendEndpoint = 2 | LIBUSB_ENDPOINT_OUT;
+    const int ReceiveEndpoint = 1 | LIBUSB_ENDPOINT_IN;
 }
 
 class EmsCart : public QObject
