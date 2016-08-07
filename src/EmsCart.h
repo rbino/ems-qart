@@ -25,6 +25,14 @@ class EmsCart : public QObject
         };
         Q_ENUM(EmsMemory)
 
+        enum EmsCommands {
+            WriteSRAMCommand = 0x4d,
+            ReadSRAMCommand = 0x6d,
+            WriteROMCommand = 0x57,
+            ReadROMCommand = 0xff
+        };
+        Q_ENUM(EmsCommands)
+
         EmsCart(QObject *parent = nullptr);
 
         virtual ~EmsCart();
