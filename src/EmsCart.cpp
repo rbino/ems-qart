@@ -1,6 +1,8 @@
 #include "EmsCart.h"
 
 #include <QDebug>
+#include <QDataStream>
+#include <QtEndian>
 
 EmsCart::EmsCart(QObject *parent) :
     QObject(parent)
@@ -90,6 +92,19 @@ void EmsCart::findDevice()
     } else {
       qWarning() << "Failed to get device list: " << libusb_error_name((int)numDevices);
     }
+}
+
+QByteArray EmsCart::createCommandBuffer(uint8_t command, uint32_t offset, uint32_t count)
+{
+    QByteArray commandBuffer;
+    commandBuffer.resize(sizeof(command) + sizeof(offset) + sizeof(count));
+    QDataStream commandStream(&commandBuffer, QIODevice::ReadWrite);
+    commandStream.writeRawData((const char *)&command, sizeof(command));
+    uint32_t bigEndianOffset = qToBigEndian(offset);
+    commandStream.writeRawData((const char *)&bigEndianOffset, sizeof(bigEndianOffset));
+    uint32_t bigEndianCount = qToBigEndian(count);
+    commandStream.writeRawData((const char *)&bigEndianCount, sizeof(bigEndianCount));
+    return commandBuffer;
 }
 
 bool EmsCart::ready()

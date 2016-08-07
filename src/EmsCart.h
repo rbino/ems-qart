@@ -47,6 +47,8 @@ class EmsCart : public QObject
     private:
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
+
+        QByteArray createCommandBuffer(uint8_t command, uint32_t offset, uint32_t count);
 };
 
 #endif
