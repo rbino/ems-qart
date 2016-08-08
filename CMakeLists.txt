@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.1)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Quick REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(LIBUSB1 REQUIRED libusb-1.0)
@@ -23,7 +24,7 @@ include_directories(${LIBUSB1_INCLUDE_DIRS})
 
 add_executable(ems-qart ${ems-qart-sources} ${ems-qart-resources})
 
-qt5_use_modules(ems-qart Core Quick)
+qt5_use_modules(ems-qart Core Quick Widgets)
 target_link_libraries(ems-qart ${LIBUSB1_LIBRARIES})
 
 install(TARGETS ems-qart DESTINATION bin)
