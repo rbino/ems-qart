@@ -1,7 +1,7 @@
-import QtQuick 2.6
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.2
 import QtQuick.Dialogs 1.2
 import EmsQart 1.0
 
@@ -52,12 +52,11 @@ ApplicationWindow {
     Column {
         id: mainColumn;
 
-        topPadding: 20;
-        bottomPadding: 20;
-
-        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + cartIconsRow.height + theButton.height)) / 2;
+        spacing: (parent.height - (anchors.topMargin + anchors.bottomMargin) - (radioButtonsRow.height + cartIconsRow.height + theButton.height)) / 2;
 
         anchors {
+            topMargin: 20;
+            bottomMargin: 20;
             fill: parent;
         }
 
