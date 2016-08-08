@@ -235,6 +235,32 @@ ApplicationWindow {
                     opacity: cartController.ready ? 1 : 0.08;
                 }
 
+                Text {
+                    id: refreshText;
+
+                    visible: !cartController.ready;
+
+                    text: "Click to refresh EMS cart status";
+
+                    anchors {
+                        fill: emsCartIcon;
+                        topMargin: emsCartIcon.height * 0.28;
+                        bottomMargin: emsCartIcon.height * 0.135;
+                        leftMargin: emsCartIcon.height * 0.120;
+                        rightMargin: emsCartIcon.height * 0.120;
+                    }
+
+                    font {
+                        italic: true;
+                        pointSize: 12;
+                    }
+
+                    wrapMode: Text.WordWrap;
+
+                    horizontalAlignment: Text.AlignHCenter;
+                    verticalAlignment: Text.AlignVCenter;
+                }
+
                 Item {
                     id: cartStatus;
 
