@@ -178,7 +178,7 @@ ApplicationWindow {
 
                     opacity: 0.08;
 
-                    source: romButton.checked ? "../images/gb_cart.svg" : "../images/save_icon.svg";
+                    source: romButton.checked ? "qrc:///images/gb_cart.svg" : "qrc:///images/save_icon.svg";
                     sourceSize.height: mainView.height / 2.3;
                 }
 
@@ -210,7 +210,7 @@ ApplicationWindow {
             Image {
                 id: arrowIcon;
 
-                source: "../images/arrow.svg";
+                source: "qrc:///images/arrow.svg";
                 sourceSize.height: 70;
 
                 rotation: writeButton.checked ? 0 : 180;
@@ -229,7 +229,7 @@ ApplicationWindow {
                 Image {
                     id: emsCartIcon;
 
-                    source: "../images/gb_cart_usb.svg";
+                    source: "qrc:///images/gb_cart_usb.svg";
                     sourceSize.height: mainView.height / 2.3;
 
                     opacity: cartController.ready ? 1 : 0.08;
