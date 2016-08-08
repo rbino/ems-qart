@@ -205,6 +205,70 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter;
                     verticalAlignment: Text.AlignVCenter;
                 }
+
+                Image {
+                    id: cancelFileIcon;
+
+                    source: "qrc:///images/cancel_icon.svg";
+
+                    visible: opacity > 0;
+                    opacity: chosenFilePath.text != "" ? 1 : 0;
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 100;
+                        }
+                    }
+
+                    anchors {
+                        left: localFileIcon.left;
+                        verticalCenter: chosenFilePath.verticalCenter;
+                    }
+
+                    sourceSize.width: 16;
+                    sourceSize.height: 16;
+
+                    MouseArea {
+                        id: cancelFileMouseArea;
+
+                        anchors {
+                            fill: parent;
+                        }
+
+                        onClicked: {
+                            chosenFilePath.text = "";
+                        }
+                    }
+                }
+
+                Label {
+                    id: chosenFilePath;
+
+                    text: "";
+
+                    visible: opacity > 0;
+                    opacity: text != "" ? 1 : 0;
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 100;
+                        }
+                    }
+
+                    anchors {
+                        left: cancelFileIcon.right;
+                        leftMargin: 5;
+                        right: localFileIcon.right;
+                        top: localFileIcon. bottom;
+                        topMargin: 10;
+                    }
+
+                    font {
+                        pointSize: 10;
+                    }
+
+                    elide: Text.ElideMiddle;
+                }
             }
 
             Image {
