@@ -65,13 +65,16 @@ ApplicationWindow {
             id: radioButtonsRow;
 
             anchors {
-                horizontalCenter: parent.horizontalCenter;
+                left: parent.left;
+                right: parent.right;
             }
 
             GroupBox {
                 id: readWriteGroupbox;
 
                 title: "I/O direction";
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
 
                 RowLayout {
                     id: readWriteRow;
@@ -99,6 +102,8 @@ ApplicationWindow {
 
             GroupBox {
                 title: "Memory"
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
 
                 RowLayout {
                     spacing: 20;
