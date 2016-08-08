@@ -319,6 +319,12 @@ ApplicationWindow {
                     sourceSize.height: mainView.height / 2.3;
 
                     opacity: cartController.ready ? 1 : 0.08;
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 100;
+                        }
+                    }
                 }
 
                 Text {
