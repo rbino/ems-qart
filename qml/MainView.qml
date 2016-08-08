@@ -121,7 +121,7 @@ ApplicationWindow {
                     RadioButton {
                         id: ramButton;
 
-                        text: "RAM (.sav files)";
+                        text: "SRAM (.sav files)";
                         exclusiveGroup: sourceGroup;
                     }
                 }
