@@ -22,7 +22,7 @@ set(ems-qart-resources resources.qrc)
 
 include_directories(${LIBUSB1_INCLUDE_DIRS})
 
-add_executable(ems-qart ${ems-qart-sources} ${ems-qart-resources})
+add_executable(ems-qart WIN32 ${ems-qart-sources} ${ems-qart-resources})
 
 qt5_use_modules(ems-qart Core Quick Widgets)
 target_link_libraries(ems-qart ${LIBUSB1_LIBRARIES})
