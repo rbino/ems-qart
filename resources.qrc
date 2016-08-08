@@ -1,8 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>qml/MainView.qml</file>
-    <file>images/refresh.png</file>
-    <file>images/green_led.png</file>
-    <file>images/red_led.png</file>
+    <file>images/refresh.svg</file>
+    <file>images/green_led.svg</file>
+    <file>images/red_led.svg</file>
 </qresource>
 </RCC>

@@ -135,7 +135,10 @@ ApplicationWindow {
             Image {
                 id: cartLed;
 
-                source: cartController.ready ? "qrc:///images/green_led.png" : "qrc:///images/red_led.png";
+                source: cartController.ready ? "qrc:///images/green_led.svg" : "qrc:///images/red_led.svg";
+
+                sourceSize.width: 16;
+                sourceSize.height: 16;
 
                 anchors {
                     verticalCenter: parent.verticalCenter;
@@ -159,13 +162,24 @@ ApplicationWindow {
             Button {
                 id: refreshCartButton;
 
-                iconSource: "qrc:///images/refresh.png";
-
                 tooltip: "Refresh";
 
                 width: height;
                 anchors {
                     verticalCenter: parent.verticalCenter;
+                }
+
+                Image {
+                    id: refreshIcon;
+
+                    source: "qrc:///images/refresh.svg";
+
+                    sourceSize.width: 16;
+                    sourceSize.height: 16;
+
+                    anchors {
+                        centerIn: parent;
+                    }
                 }
 
                 onClicked: {
