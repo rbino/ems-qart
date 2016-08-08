@@ -12,9 +12,8 @@ ApplicationWindow {
 
     visible: true;
 
-    width: 600;
-    height: 200;
-
+    width: 800;
+    height: 600;
     CartController {
         id: cartController;
     }
