@@ -3,6 +3,7 @@
     <file>qml/MainView.qml</file>
 
     <file>images/arrow.svg</file>
+    <file>images/cancel_icon.svg</file>
     <file>images/gb_cart.svg</file>
     <file>images/gb_cart_usb.svg</file>
     <file>images/green_led.svg</file>
