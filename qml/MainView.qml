@@ -218,15 +218,22 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
             }
 
-            Image {
-                id: emsCartIcon;
+            Item {
+                id: emsCartItem;
 
-                source: "../images/gb_cart_usb.svg";
-                sourceSize.height: mainView.height / 2.3;
-
-                opacity: cartController.ready ? 1 : 0.08;
+                implicitWidth: emsCartIcon.width;
+                implicitHeight: emsCartIcon.height;
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+
+                Image {
+                    id: emsCartIcon;
+
+                    source: "../images/gb_cart_usb.svg";
+                    sourceSize.height: mainView.height / 2.3;
+
+                    opacity: cartController.ready ? 1 : 0.08;
+                }
 
                 Item {
                     id: cartStatus;
