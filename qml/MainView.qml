@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 import EmsQart 1.0
@@ -228,6 +229,19 @@ ApplicationWindow {
             id: theButton;
 
             text: "Start";
+
+            height: parent.height / 8;
+            width: height * 2;
+
+            style: ButtonStyle {
+				label: Text {
+					renderType: Text.NativeRendering;
+					verticalAlignment: Text.AlignVCenter;
+					horizontalAlignment: Text.AlignHCenter;
+					font.pointSize: 18;
+					text: control.text;
+				}
+			}
 
             anchors {
                 horizontalCenter: parent.horizontalCenter;
