@@ -26,6 +26,11 @@ bool CartController::isReady()
     return m_emsCart->ready();
 }
 
+QString CartController::localFilePath()
+{
+    return m_localFilePath;
+}
+
 RomInfo *CartController::bankOne()
 {
     return m_bankOne;
@@ -54,4 +59,20 @@ void CartController::readyUpdate(bool newReady)
         m_bankTwo->resetInfo();
     }
     emit readyChanged(newReady);
+}
+
+void CartController::setLocalFilePath(QUrl fileUrl, QString extension)
+{
+    QString localPath = fileUrl.toLocalFile();
+    if (!localPath.endsWith(extension)) {
+        localPath += extension;
+    }
+    m_localFilePath = localPath;
+    emit localFilePathChanged(m_localFilePath);
+}
+
+void CartController::clearLocalFilePath()
+{
+    m_localFilePath = QString();
+    emit localFilePathChanged(m_localFilePath);
 }
