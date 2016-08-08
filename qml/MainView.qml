@@ -56,7 +56,7 @@ ApplicationWindow {
         topPadding: 20;
         bottomPadding: 20;
 
-        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + cartStatusRow.height + filePathRow.height + theButton.height)) / 3;
+        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + cartStatusRow.height + theButton.height)) / 3;
 
         anchors {
             fill: parent;
@@ -190,37 +190,6 @@ ApplicationWindow {
 
                 onClicked: {
                     cartController.refresh();
-                }
-            }
-        }
-
-        Row {
-            id: filePathRow;
-
-            anchors {
-                horizontalCenter: parent.horizontalCenter;
-            }
-
-            TextField {
-                id: pathTextField;
-
-                text: fileDialogTitle(saveButton.checked, romButton.checked);
-                readOnly: true;
-
-                height: 25;
-                width: mainView.width / 2;
-            }
-
-            Button {
-                text: "...";
-
-                width: 30;
-                anchors {
-                    top: pathTextField.top;
-                    bottom: pathTextField.bottom;
-                }
-                onClicked: {
-                    fileDialog.open();
                 }
             }
         }
