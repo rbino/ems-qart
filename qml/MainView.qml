@@ -193,6 +193,8 @@ ApplicationWindow {
 
                     text: "Click to " + fileDialogTitle(readButton.checked, romButton.checked);
 
+                    visible: cartController.localFilePath == "";
+
                     anchors {
                         fill: localFileIcon;
                         topMargin: localFileIcon.height * 0.28;
