@@ -23,18 +23,18 @@ ApplicationWindow {
 
         property string selectedNameFilterExtension: selectedNameFilter.split("*")[1].replace(")","");
 
-        title: fileDialogTitle(saveButton.checked, romButton.checked);
+        title: fileDialogTitle(readButton.checked, romButton.checked);
 
         nameFilters: romButton.checked ? ["GB Roms (*.gb)", "GBC Roms (*.gbc)"] : ["GB/GBC Save files (*.sav)"];
-        selectExisting: loadButton.checked;
+        selectExisting: writeButton.checked;
 
         onAccepted: {
             pathTextField.text = decodeURIComponent(fileDialog.fileUrl.toString().replace(/^(file:\/{2})/,""));
         }
     }
 
-    function fileDialogTitle(save, rom) {
-        if (save) {
+    function fileDialogTitle(read, rom) {
+        if (read) {
             if (rom) {
                 return "Choose where the ROM will be saved";
             } else {
@@ -69,30 +69,30 @@ ApplicationWindow {
             }
 
             GroupBox {
-                id: saveLoadGroupbox;
+                id: readWriteGroupbox;
 
-                title: "In or out";
+                title: "I/O direction";
 
                 RowLayout {
-                    id: saveLoadRow;
+                    id: readWriteRow;
 
                     spacing: 20;
 
                     ExclusiveGroup {
-                        id: saveLoadExclusiveGroup;
+                        id: readWriteExclusiveGroup;
                     }
                     RadioButton {
-                        id: saveButton;
+                        id: readButton;
 
-                        text: "Save from cart";
+                        text: "Read from cart";
                         checked: true;
-                        exclusiveGroup: saveLoadExclusiveGroup;
+                        exclusiveGroup: readWriteExclusiveGroup;
                     }
                     RadioButton {
-                        id: loadButton;
+                        id: writeButton;
 
-                        text: "Load to cart";
-                        exclusiveGroup: saveLoadExclusiveGroup;
+                        text: "Write to cart";
+                        exclusiveGroup: readWriteExclusiveGroup;
                     }
                 }
             }
