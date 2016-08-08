@@ -29,7 +29,7 @@ ApplicationWindow {
         selectExisting: writeButton.checked;
 
         onAccepted: {
-            pathTextField.text = decodeURIComponent(fileDialog.fileUrl.toString().replace(/^(file:\/{2})/,""));
+            cartController.setLocalFilePath(fileDialog.fileUrl, selectedNameFilterExtension);
         }
     }
 
