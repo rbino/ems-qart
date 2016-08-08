@@ -49,6 +49,9 @@ void CartController::readyUpdate(bool newReady)
         qDebug() << "Bank 2";
         qDebug() << "Title: " << m_bankTwo->title();
         qDebug() << "ChecksumValid: " << m_bankTwo->isChecksumValid() << "\n";
+    } else {
+        m_bankOne->resetInfo();
+        m_bankTwo->resetInfo();
     }
     emit readyChanged(newReady);
 }
