@@ -1,8 +1,13 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>qml/MainView.qml</file>
-    <file>images/refresh.svg</file>
+
+    <file>images/arrow.svg</file>
+    <file>images/gb_cart.svg</file>
+    <file>images/gb_cart_usb.svg</file>
     <file>images/green_led.svg</file>
     <file>images/red_led.svg</file>
+    <file>images/refresh.svg</file>
+    <file>images/save_icon.svg</file>
 </qresource>
 </RCC>
