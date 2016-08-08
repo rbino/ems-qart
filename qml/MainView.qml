@@ -56,7 +56,7 @@ ApplicationWindow {
         topPadding: 20;
         bottomPadding: 20;
 
-        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + cartStatusRow.height + theButton.height)) / 3;
+        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + theButton.height)) / 3;
 
         anchors {
             fill: parent;
@@ -125,71 +125,6 @@ ApplicationWindow {
                         text: "SRAM (.sav files)";
                         exclusiveGroup: sourceGroup;
                     }
-                }
-            }
-        }
-
-        Row {
-            id: cartStatusRow;
-
-            spacing: 5;
-
-            anchors {
-                horizontalCenter: parent.horizontalCenter;
-            }
-
-            Image {
-                id: cartLed;
-
-                source: cartController.ready ? "qrc:///images/green_led.svg" : "qrc:///images/red_led.svg";
-
-                sourceSize.width: 16;
-                sourceSize.height: 16;
-
-                anchors {
-                    verticalCenter: parent.verticalCenter;
-                }
-            }
-
-            Label {
-                id: cartStatusLabel;
-
-                text: cartController.ready ? "Cart connected" : "Cart not connected";
-
-                width: 135;
-                anchors {
-                    top: cartLed.top;
-                    bottom: cartLed.bottom;
-                }
-
-                verticalAlignment: Text.AlignBottom;
-            }
-
-            Button {
-                id: refreshCartButton;
-
-                tooltip: "Refresh";
-
-                width: height;
-                anchors {
-                    verticalCenter: parent.verticalCenter;
-                }
-
-                Image {
-                    id: refreshIcon;
-
-                    source: "qrc:///images/refresh.svg";
-
-                    sourceSize.width: 16;
-                    sourceSize.height: 16;
-
-                    anchors {
-                        centerIn: parent;
-                    }
-                }
-
-                onClicked: {
-                    cartController.refresh();
                 }
             }
         }
