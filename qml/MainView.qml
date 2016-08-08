@@ -183,7 +183,7 @@ ApplicationWindow {
                 }
 
                 Text {
-                    id: choseFileText;
+                    id: chooseFileText;
 
                     text: "Click to " + fileDialogTitle(readButton.checked, romButton.checked);
 
