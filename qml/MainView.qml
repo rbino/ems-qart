@@ -236,7 +236,7 @@ ApplicationWindow {
                         }
 
                         onClicked: {
-                            chosenFilePath.text = "";
+                            cartController.clearLocalFilePath();
                         }
                     }
                 }
@@ -244,7 +244,7 @@ ApplicationWindow {
                 Label {
                     id: chosenFilePath;
 
-                    text: "";
+                    text: cartController.localFilePath;
 
                     visible: opacity > 0;
                     opacity: text != "" ? 1 : 0;
