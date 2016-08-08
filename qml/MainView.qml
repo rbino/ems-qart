@@ -300,6 +300,18 @@ ApplicationWindow {
                         verticalAlignment: Text.AlignBottom;
                     }
                 }
+
+                MouseArea {
+                    id: refreshCartMouseArea;
+
+                    anchors {
+                        fill: parent;
+                    }
+
+                    onClicked: {
+                        cartController.refresh();
+                    }
+                }
             }
         }
 
