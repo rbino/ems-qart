@@ -36,15 +36,15 @@ ApplicationWindow {
     function fileDialogTitle(read, rom) {
         if (read) {
             if (rom) {
-                return "Choose where the ROM will be saved";
+                return "choose where the ROM will be saved";
             } else {
-                return "Choose where the sav will be saved";
+                return "choose where the SAV will be saved";
             }
         } else {
             if (rom) {
-                return "Choose the ROM to be written to the cart";
+                return "choose the ROM to be written to the cart";
             } else {
-                return "Choose the sav to be written to the cart";
+                return "choose the SAV to be written to the cart";
             }
         }
     }
