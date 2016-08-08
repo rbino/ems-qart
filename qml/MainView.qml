@@ -176,7 +176,13 @@ ApplicationWindow {
                 Image {
                     id: localFileIcon;
 
-                    opacity: 0.08;
+                    opacity: cartController.localFilePath != "" ? 1 : 0.08;
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 100;
+                        }
+                    }
 
                     source: romButton.checked ? "qrc:///images/gb_cart.svg" : "qrc:///images/save_icon.svg";
                     sourceSize.height: mainView.height / 2.3;
