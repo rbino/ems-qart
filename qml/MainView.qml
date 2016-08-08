@@ -55,7 +55,7 @@ ApplicationWindow {
         topPadding: 20;
         bottomPadding: 20;
 
-        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + theButton.height)) / 3;
+        spacing: (parent.height - (topPadding + bottomPadding) - (radioButtonsRow.height + cartIconsRow.height + theButton.height)) / 2;
 
         anchors {
             fill: parent;
@@ -152,6 +152,119 @@ ApplicationWindow {
 
                         text: "Bank 2";
                         exclusiveGroup: bankGroup;
+                    }
+                }
+            }
+        }
+
+        RowLayout {
+            id: cartIconsRow;
+
+            anchors {
+                left: parent.left;
+                right: parent.right;
+            }
+
+            Item {
+                id: localFileItem;
+
+                implicitHeight: localFileIcon.height;
+                implicitWidth: localFileIcon.width;
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+
+                Image {
+                    id: localFileIcon;
+
+                    opacity: 0.08;
+
+                    source: romButton.checked ? "../images/gb_cart.svg" : "../images/save_icon.svg";
+                    sourceSize.height: mainView.height / 2.3;
+                }
+
+                Text {
+                    id: choseFileText;
+
+                    text: "Click to " + fileDialogTitle(readButton.checked, romButton.checked);
+
+                    anchors {
+                        fill: localFileIcon;
+                        topMargin: localFileIcon.height * 0.28;
+                        bottomMargin: localFileIcon.height * 0.135;
+                        leftMargin: localFileIcon.height * 0.120;
+                        rightMargin: localFileIcon.height * 0.120;
+                    }
+
+                    font {
+                        italic: true;
+                        pointSize: 12;
+                    }
+
+                    wrapMode: Text.WordWrap;
+
+                    horizontalAlignment: Text.AlignHCenter;
+                    verticalAlignment: Text.AlignVCenter;
+                }
+            }
+
+            Image {
+                id: arrowIcon;
+
+                source: "../images/arrow.svg";
+                sourceSize.height: 70;
+
+                rotation: writeButton.checked ? 0 : 180;
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+            }
+
+            Image {
+                id: emsCartIcon;
+
+                source: "../images/gb_cart_usb.svg";
+                sourceSize.height: mainView.height / 2.3;
+
+                opacity: cartController.ready ? 1 : 0.08;
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+
+                Item {
+                    id: cartStatus;
+
+                    anchors {
+                        left: emsCartIcon.left;
+                        right: emsCartIcon.right;
+                        bottom: emsCartIcon.top;
+                        bottomMargin: 5;
+                    }
+
+                    Image {
+                        id: cartLed;
+
+                        source: cartController.ready ? "qrc:///images/green_led.svg" : "qrc:///images/red_led.svg";
+
+                        sourceSize.width: 16;
+                        sourceSize.height: 16;
+
+                        anchors {
+                            bottom: parent.bottom;
+                        }
+                    }
+
+                    Label {
+                        id: cartStatusLabel;
+
+                        text: cartController.ready ? "Cart connected" : "Cart not connected";
+
+                        width: 135;
+                        anchors {
+                            top: cartLed.top;
+                            bottom: cartLed.bottom;
+                            left: cartLed.right;
+                            leftMargin: 5;
+                        }
+
+                        verticalAlignment: Text.AlignBottom;
                     }
                 }
             }
