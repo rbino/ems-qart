@@ -186,6 +186,20 @@ ApplicationWindow {
 
                     source: romButton.checked ? "qrc:///images/gb_cart.svg" : "qrc:///images/save_icon.svg";
                     sourceSize.height: mainView.height / 2.3;
+
+                    MouseArea {
+                        id: localFileSelectionMouseArea;
+
+                        enabled: cartController.localFilePath == "";
+
+                        anchors {
+                            fill: parent;
+                        }
+
+                        onClicked: {
+                            fileDialog.open();
+                        }
+                    }
                 }
 
                 Text {
