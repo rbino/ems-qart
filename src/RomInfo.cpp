@@ -29,6 +29,15 @@ void RomInfo::updateInfo(const QByteArray &header)
     emit checksumValidChanged(m_checksumValid);
 }
 
+void RomInfo::resetInfo()
+{
+    m_title = QString();
+    emit titleChanged(m_title);
+
+    m_checksumValid = false;
+    emit checksumValidChanged(m_checksumValid);
+}
+
 QString RomInfo::title()
 {
     return m_title;

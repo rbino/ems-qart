@@ -30,6 +30,7 @@ class RomInfo : public QObject
         virtual ~RomInfo();
 
         void updateInfo(const QByteArray &header);
+        void resetInfo();
 
         QString title();
         bool isChecksumValid();
