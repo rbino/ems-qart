@@ -2,12 +2,21 @@ project(ems-qart CXX)
 
 cmake_minimum_required(VERSION 3.1)
 
+if (MINGW)
+    set (CMAKE_PREFIX_PATH "C:\\Qt\\5.7\\mingw53_32\\")
+endif (MINGW)
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Quick REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-find_package(PkgConfig REQUIRED)
-pkg_search_module(LIBUSB1 REQUIRED libusb-1.0)
+if (MINGW)
+    set (LIBUSB1_INCLUDE_DIRS "C:\\Qt\\Tools\\mingw530_32\\include")
+    set (LIBUSB1_LIBRARIES "C:\\Qt\\Tools\\mingw530_32\\lib\\libusb-1.0.dll.a")
+else (MINGW)
+    find_package(PkgConfig REQUIRED)
+    pkg_search_module(LIBUSB1 REQUIRED libusb-1.0)
+endif (MINGW)
 
 add_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_USE_QSTRINGBUILDER)
 
