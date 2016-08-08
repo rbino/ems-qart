@@ -127,6 +127,35 @@ ApplicationWindow {
                     }
                 }
             }
+
+            GroupBox {
+                title: "Bank"
+
+                enabled: romButton.checked;
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+
+                RowLayout {
+                    spacing: 20;
+
+                    ExclusiveGroup {
+                        id: bankGroup;
+                    }
+                    RadioButton {
+                        id: bankOneButton;
+
+                        text: "Bank 1";
+                        checked: true;
+                        exclusiveGroup: bankGroup;
+                    }
+                    RadioButton {
+                        id: bankTwoButton;
+
+                        text: "Bank 2";
+                        exclusiveGroup: bankGroup;
+                    }
+                }
+            }
         }
 
         Button {
