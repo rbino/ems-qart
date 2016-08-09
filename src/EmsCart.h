@@ -8,8 +8,8 @@
 namespace EmsConstants {
     const int UsbVID = 0x4670;
     const int UsbPID = 0x9394;
-    const int ReadBlocksize = 4096;
-    const int WriteBlocksize = 32;
+    const int ReadBlockSize = 4096;
+    const int WriteBlockSize = 32;
     const int SendEndpoint = 2 | LIBUSB_ENDPOINT_OUT;
     const int ReceiveEndpoint = 1 | LIBUSB_ENDPOINT_IN;
     const int BankSize = 0x400000;
