@@ -546,6 +546,12 @@ ApplicationWindow {
                 horizontalAlignment: Text.AlignHCenter;
                 verticalAlignment: Text.AlignVCenter;
             }
+
+            onClicked: {
+                if (readWriteGroupbox.readCart) {
+                    cartController.readCart(memoryGroupBox.cartMemory, bankGroupBox.selectedBank);
+                }
+            }
         }
     }
 }
