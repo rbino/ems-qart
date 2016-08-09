@@ -106,6 +106,8 @@ ApplicationWindow {
             }
 
             GroupBox {
+                id: memoryGroupBox;
+
                 title: "Memory"
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
@@ -139,6 +141,8 @@ ApplicationWindow {
             }
 
             GroupBox {
+                id: bankGroupBox;
+
                 title: "Bank"
 
                 enabled: romButton.checked;
