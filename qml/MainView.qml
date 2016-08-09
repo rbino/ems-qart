@@ -498,23 +498,29 @@ ApplicationWindow {
         Button {
             id: theButton;
 
-            text: "Start";
 
             height: parent.height / 8;
             width: height * 2;
 
-            style: ButtonStyle {
-				label: Text {
-					renderType: Text.NativeRendering;
-					verticalAlignment: Text.AlignVCenter;
-					horizontalAlignment: Text.AlignHCenter;
-					font.pointSize: 18;
-					text: control.text;
-				}
-			}
-
             anchors {
                 horizontalCenter: parent.horizontalCenter;
+            }
+
+            Label {
+                id: startButtonLabel;
+
+                text: "Start";
+
+                anchors {
+                    fill: parent;
+                }
+
+                font {
+                    pointSize: 18;
+                }
+
+                horizontalAlignment: Text.AlignHCenter;
+                verticalAlignment: Text.AlignVCenter;
             }
         }
     }
