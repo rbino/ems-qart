@@ -317,12 +317,29 @@ ApplicationWindow {
             Image {
                 id: arrowIcon;
 
+                visible: !cartController.busy;
+
                 source: "qrc:///images/arrow.svg";
                 sourceSize.height: 70;
 
                 rotation: writeButton.checked ? 0 : 180;
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+
+            }
+
+            ProgressBar {
+                id: progressBar;
+
+                visible: cartController.busy;
+                enabled: cartController.busy;
+
+                Layout.preferredWidth: arrowIcon.width;
+
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
+
+                value: cartController.progress;
+
             }
 
             Item {
