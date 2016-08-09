@@ -63,6 +63,8 @@ ApplicationWindow {
         RowLayout {
             id: radioButtonsRow;
 
+            enabled: !cartController.busy;
+
             anchors {
                 left: parent.left;
                 right: parent.right;
@@ -176,6 +178,8 @@ ApplicationWindow {
 
         RowLayout {
             id: cartIconsRow;
+
+            enabled: !cartController.busy;
 
             anchors {
                 left: parent.left;
@@ -500,6 +504,7 @@ ApplicationWindow {
         Button {
             id: theButton;
 
+            enabled: !cartController.busy && cartController.ready && cartController.localFilePath != "";
 
             height: parent.height / 8;
             width: height * 2;
