@@ -110,6 +110,12 @@ ApplicationWindow {
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
 
+                property int cartMemory: romButton.checked ? CartController.ROM : CartController.SRAM;
+
+                onCartMemoryChanged: {
+                    cartController.clearLocalFilePath();
+                }
+
                 RowLayout {
                     spacing: 20;
 
