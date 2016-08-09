@@ -326,6 +326,79 @@ ApplicationWindow {
                     }
                 }
 
+                GroupBox {
+                    id: bankOneInfo;
+
+                    title: "Bank 1";
+
+                    visible: opacity > 0;
+                    opacity: cartController.ready ? 1 : 0;
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 100;
+                        }
+                    }
+
+                    anchors {
+                        left: emsCartIcon.left;
+                        right: emsCartIcon.right;
+                        top: emsCartIcon.bottom;
+                        topMargin: 15;
+                    }
+
+                    Column {
+                        Label {
+                            id: bankOneTitleLabel;
+
+                            text: "Title: " + cartController.bankOne.title;
+                        }
+
+                        Label {
+                            id: bankOneChecksumLabel;
+
+                            text: "Checksum: " + (cartController.bankOne.checksumValid ? "valid" : "not valid");
+                        }
+                    }
+                }
+
+
+                GroupBox {
+                    id: bankTwoInfo;
+
+                    title: "Bank 2";
+
+                    visible: opacity > 0;
+                    opacity: cartController.ready ? 1 : 0;
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 100;
+                        }
+                    }
+
+                    anchors {
+                        left: bankOneInfo.left;
+                        right: bankOneInfo.right;
+                        top: bankOneInfo.bottom;
+                        topMargin: 5;
+                    }
+
+                    Column {
+                        Label {
+                            id: bankTwoTitleLabel;
+
+                            text: "Title: " + cartController.bankTwo.title;
+                        }
+
+                        Label {
+                            id: bankTwoChecksumLabel;
+
+                            text: "Checksum: " + (cartController.bankTwo.checksumValid ? "valid" : "not valid");
+                        }
+                    }
+                }
+
                 Text {
                     id: refreshText;
 
