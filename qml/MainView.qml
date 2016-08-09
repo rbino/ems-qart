@@ -149,6 +149,8 @@ ApplicationWindow {
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
 
+                property int selectedBank: bankOneButton.checked ? 1 : 2;
+
                 RowLayout {
                     spacing: 20;
 
