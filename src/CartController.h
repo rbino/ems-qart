@@ -13,8 +13,8 @@ class CartController : public QObject
 
     Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
     Q_PROPERTY(QString localFilePath READ localFilePath NOTIFY localFilePathChanged)
-    Q_PROPERTY(QObject * bankOne READ bankOne)
-    Q_PROPERTY(QObject * bankTwo READ bankTwo)
+    Q_PROPERTY(QObject * bankOne READ bankOne NOTIFY bankOneChanged)
+    Q_PROPERTY(QObject * bankTwo READ bankTwo NOTIFY bankTwoChanged)
 
     public:
         CartController(QObject *parent = nullptr);
@@ -33,6 +33,9 @@ class CartController : public QObject
     signals:
         void readyChanged(bool ready);
         void localFilePathChanged(QString localFilePath);
+
+        void bankOneChanged(QObject *bankOne);
+        void bankTwoChanged(QObject *bankTwo);
 
     private slots:
         void readyUpdate(bool newReady);
