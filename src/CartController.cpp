@@ -6,6 +6,7 @@ CartController::CartController(QObject *parent) :
     QObject(parent)
 {
     m_busy = false;
+    m_progress = 0;
     m_emsCart = new EmsCart(this);
     m_bankOne = new RomInfo(this);
     m_bankTwo = new RomInfo(this);
@@ -30,6 +31,11 @@ bool CartController::isReady()
 bool CartController::isBusy()
 {
     return m_busy;
+}
+
+double CartController::progress()
+{
+    return m_progress;
 }
 
 QString CartController::localFilePath()
