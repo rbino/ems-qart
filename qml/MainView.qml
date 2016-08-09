@@ -75,6 +75,12 @@ ApplicationWindow {
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
 
+                property bool readCart: readButton.checked;
+
+                onReadCartChanged: {
+                    cartController.clearLocalFilePath();
+                }
+
                 RowLayout {
                     id: readWriteRow;
 
