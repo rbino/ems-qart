@@ -17,6 +17,12 @@ class CartController : public QObject
     Q_PROPERTY(QObject * bankTwo READ bankTwo NOTIFY bankTwoChanged)
 
     public:
+        enum CartMemory {
+            ROM,
+            SRAM
+        };
+        Q_ENUM(CartMemory)
+
         CartController(QObject *parent = nullptr);
 
         virtual ~CartController();
