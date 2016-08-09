@@ -12,6 +12,7 @@ class CartController : public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(QString localFilePath READ localFilePath NOTIFY localFilePathChanged)
     Q_PROPERTY(QObject * bankOne READ bankOne NOTIFY bankOneChanged)
     Q_PROPERTY(QObject * bankTwo READ bankTwo NOTIFY bankTwoChanged)
@@ -32,12 +33,14 @@ class CartController : public QObject
         Q_INVOKABLE void clearLocalFilePath();
 
         bool isReady();
+        bool isBusy();
         QString localFilePath();
         RomInfo *bankOne();
         RomInfo *bankTwo();
 
     signals:
         void readyChanged(bool ready);
+        void busyChanged(bool busy);
         void localFilePathChanged(QString localFilePath);
 
         void bankOneChanged(QObject *bankOne);
@@ -47,6 +50,7 @@ class CartController : public QObject
         void readyUpdate(bool newReady);
 
     private:
+        bool m_busy;
         QString m_localFilePath;
 
         EmsCart *m_emsCart;
