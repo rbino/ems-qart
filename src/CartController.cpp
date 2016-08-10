@@ -155,6 +155,8 @@ void CartController::readCartImpl(CartMemory memory, int bank)
         QByteArray chunk = m_emsCart->read(from, baseAddress + offset, EmsConstants::ReadBlockSize);
         if (chunk.isEmpty()) {
             emit error(QStringLiteral("Error reading cart at address %1, aborting").arg(baseAddress + offset));
+            // Is the cart still connected?
+            m_emsCart->findDevice();
             m_busy = false;
             emit busyChanged(m_busy);
             return;
