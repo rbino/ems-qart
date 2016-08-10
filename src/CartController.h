@@ -48,6 +48,8 @@ class CartController : public QObject
 
         void progressChanged(double progress);
 
+        void error(QString message);
+
         void bankOneChanged(QObject *bankOne);
         void bankTwoChanged(QObject *bankTwo);
 
