@@ -93,6 +93,11 @@ void CartController::readCart(CartMemory memory, int bank)
     QtConcurrent::run(this, &CartController::readCartImpl, memory, bank);
 }
 
+void CartController::writeCart(CartMemory memory, int bank)
+{
+    QtConcurrent::run(this, &CartController::writeCartImpl, memory, bank);
+}
+
 void CartController::readCartImpl(CartMemory memory, int bank)
 {
     m_progress = 0;

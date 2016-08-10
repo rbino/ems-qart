@@ -33,6 +33,7 @@ class CartController : public QObject
         Q_INVOKABLE void setLocalFilePath(QUrl fileUrl, QString extension);
         Q_INVOKABLE void clearLocalFilePath();
         Q_INVOKABLE void readCart(CartMemory memory, int bank);
+        Q_INVOKABLE void writeCart(CartMemory memory, int bank);
 
         bool isReady();
         bool isBusy();
