@@ -8,7 +8,6 @@
     <file>images/gb_cart_usb.svg</file>
     <file>images/green_led.svg</file>
     <file>images/red_led.svg</file>
-    <file>images/refresh.svg</file>
     <file>images/save_icon.svg</file>
 </qresource>
 </RCC>
