@@ -59,10 +59,7 @@ RomInfo *CartController::bankTwo()
 void CartController::readyUpdate(bool newReady)
 {
     if (newReady) {
-        QByteArray header = m_emsCart->read(EmsCart::ROM, 0, 512);
-        m_bankOne->updateInfo(header);
-        header = m_emsCart->read(EmsCart::ROM, EmsConstants::BankSize, 512);
-        m_bankTwo->updateInfo(header);
+        updateInfo();
     } else {
         m_bankOne->resetInfo();
         m_bankTwo->resetInfo();
@@ -267,4 +264,15 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
     m_busy = false;
     emit busyChanged(m_busy);
     emit transferCompleted();
+
+    // Update cart informations
+    updateInfo();
+}
+
+void CartController::updateInfo()
+{
+    QByteArray header = m_emsCart->read(EmsCart::ROM, EmsConstants::BankSize, 512);
+    m_bankTwo->updateInfo(header);
+    header = m_emsCart->read(EmsCart::ROM, 0, 512);
+    m_bankOne->updateInfo(header);
 }
