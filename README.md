@@ -11,7 +11,7 @@ Then navigate to the folder where you cloned the repo and
 ```
 mkdir build
 cd build
-cmake ..
+qmake ..
 make
 ```
 
