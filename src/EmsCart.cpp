@@ -12,7 +12,7 @@ EmsCart::EmsCart(QObject *parent) :
 
     int result = libusb_init(NULL);
     if (result < 0) {
-        qCritical() << "Failed to initialize libusb";
+        emit error(QStringLiteral("Failed to initialize libusb"));
     }
 }
 
@@ -67,7 +67,9 @@ void EmsCart::findDevice()
                          */
                         qWarning() << "Failed to open device, libusb error: " << libusb_error_name(result);
                         if (result == LIBUSB_ERROR_ACCESS) {
-                            qWarning() << "Try running as root/sudo or update udev rules (check the FAQ for more info)";
+                            emit error(QStringLiteral("Device access error. Did you install udev rules? Check README"));
+                        } else if (result == LIBUSB_ERROR_NOT_SUPPORTED) {
+                            emit error(QStringLiteral("Device not supported. Did you install the drivers? Check README"));
                         }
                     } else {
                         result = libusb_claim_interface(m_deviceHandle, 0);
