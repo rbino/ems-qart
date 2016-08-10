@@ -46,6 +46,7 @@ class EmsCart : public QObject
 
     signals:
         void readyChanged(bool ready);
+        void error(QString message);
 
     private:
         struct libusb_device_handle *m_deviceHandle;
