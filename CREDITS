@@ -1,0 +1,17 @@
+Copyright (C) 2016 Riccardo Binetti
+
+The source files in this repository are licensed under GPLv3 or later, for more
+informations see LICENSE
+
+The code for the USB communication is taken (adapting it to Qt) from ems-flasher
+by Mike Ryan (http://lacklustre.net/projects/ems-flasher/)
+
+The Game Boy Cart icon was made by Andres Flores and licensed under CC-BY
+(https://thenounproject.com/aflores158/) and modified by me for making the one
+with the USB symbol
+
+The red and green led icons were made by RadicalOne and licensed under CC-BY-SA
+(https://en.wikipedia.org/wiki/User:RadicalOne)
+
+The cancel filename icon and the arrow are part of Font Awesome by Dave Gandy,
+licensed under CC-BY-SA (http://fontawesome.io/)
