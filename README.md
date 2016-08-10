@@ -1,5 +1,9 @@
 # ems-qart
-A Qt application to flash EMS 64M cartridges
+A cross-platform Qt application to flash EMS 64M USB cartridges
+
+![alt text](https://i.imgur.com/UU4yUpi.png)
+
+Currently working on Linux and Windows
 
 ## Linux installation
 Go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the .deb package
