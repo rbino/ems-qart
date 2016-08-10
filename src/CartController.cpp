@@ -13,6 +13,7 @@ CartController::CartController(QObject *parent) :
     m_bankOne = new RomInfo(this);
     m_bankTwo = new RomInfo(this);
     connect(m_emsCart, &EmsCart::readyChanged, this, &CartController::readyUpdate);
+    connect(m_emsCart, &EmsCart::error, this, &CartController::emsErrorUpdate);
     m_emsCart->findDevice();
 }
 
@@ -73,6 +74,11 @@ void CartController::readyUpdate(bool newReady)
         m_bankTwo->resetInfo();
     }
     emit readyChanged(newReady);
+}
+
+void CartController::emsErrorUpdate(QString message)
+{
+    emit error(message);
 }
 
 void CartController::setLocalFilePath(QUrl fileUrl, QString extension)

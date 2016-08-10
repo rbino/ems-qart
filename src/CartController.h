@@ -55,6 +55,7 @@ class CartController : public QObject
 
     private slots:
         void readyUpdate(bool newReady);
+        void emsErrorUpdate(QString message);
 
     private:
         bool m_busy;
