@@ -10,3 +10,6 @@ DEFINES += QT_NO_CAST_FROM_ASCII
 HEADERS = src/CartController.h src/EmsCart.h src/RomInfo.h
 SOURCES = src/main.cpp src/CartController.cpp src/EmsCart.cpp src/RomInfo.cpp
 RESOURCES = resources.qrc
+
+unix:target.path = /usr/bin/
+INSTALLS += target
