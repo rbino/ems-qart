@@ -21,6 +21,15 @@ ApplicationWindow {
 
     CartController {
         id: cartController;
+
+        onTransferCompleted: {
+            clearLocalFilePath();
+
+            messageDialog.title = "Finished";
+            messageDialog.text = "Transfer completed!";
+            messageDialog.icon = StandardIcon.Information;
+            messageDialog.open();
+        }
     }
 
     FileDialog {
