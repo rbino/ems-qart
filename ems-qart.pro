@@ -14,5 +14,5 @@ RESOURCES = resources.qrc
 unix:udevrules.path = /etc/udev/rules.d/
 unix:udevrules.files = 50_ems_gb_flash.rules
 
-unix:target.path = /usr/bin/
+unix:target.path = /usr/local/bin/
 INSTALLS += target udevrules
