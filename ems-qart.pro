@@ -11,5 +11,8 @@ HEADERS = src/CartController.h src/EmsCart.h src/RomInfo.h
 SOURCES = src/main.cpp src/CartController.cpp src/EmsCart.cpp src/RomInfo.cpp
 RESOURCES = resources.qrc
 
+unix:udevrules.path = /etc/udev/rules.d/
+unix:udevrules.files = 50_ems_gb_flash.rules
+
 unix:target.path = /usr/bin/
-INSTALLS += target
+INSTALLS += target udevrules
