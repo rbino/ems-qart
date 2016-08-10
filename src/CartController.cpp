@@ -63,12 +63,6 @@ void CartController::readyUpdate(bool newReady)
         m_bankOne->updateInfo(header);
         header = m_emsCart->read(EmsCart::ROM, EmsConstants::BankSize, 512);
         m_bankTwo->updateInfo(header);
-        qDebug() << "Bank 1";
-        qDebug() << "Title: " << m_bankOne->title();
-        qDebug() << "ChecksumValid: " << m_bankOne->isChecksumValid() << "\n";
-        qDebug() << "Bank 2";
-        qDebug() << "Title: " << m_bankTwo->title();
-        qDebug() << "ChecksumValid: " << m_bankTwo->isChecksumValid() << "\n";
     } else {
         m_bankOne->resetInfo();
         m_bankTwo->resetInfo();
