@@ -332,7 +332,6 @@ ApplicationWindow {
                 id: progressBar;
 
                 visible: cartController.busy;
-                enabled: cartController.busy;
 
                 Layout.preferredWidth: arrowIcon.width;
 
