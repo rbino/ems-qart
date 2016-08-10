@@ -145,7 +145,7 @@ void CartController::readCart(CartMemory memory, int bank)
     }
 
     int offset = 0;
-    while ((baseAddress + offset) <= totalReadSize) {
+    while (offset <= totalReadSize) {
         QByteArray chunk = m_emsCart->read(from, baseAddress + offset, EmsConstants::ReadBlockSize);
         if (chunk.isEmpty()) {
             qWarning() << "Error reading cart at address " << baseAddress + offset << ", aborting";
