@@ -135,7 +135,22 @@ void CartController::readCartImpl(CartMemory memory, int bank)
     switch (memory) {
         case (ROM):
             from = EmsCart::ROM;
-            totalReadSize = EmsConstants::BankSize;
+            switch (bank) {
+                case 1:
+                    if (m_bankOne->romSize() > 0) {
+                        totalReadSize = m_bankOne->romSize();
+                    } else {
+                        totalReadSize = EmsConstants::BankSize;
+                    }
+                    break;
+                case 2:
+                    if (m_bankTwo->romSize() > 0) {
+                        totalReadSize = m_bankTwo->romSize();
+                    } else {
+                        totalReadSize = EmsConstants::BankSize;
+                    }
+                    break;
+            }
             baseAddress = (bank - 1) * EmsConstants::BankSize;
             break;
 
