@@ -570,6 +570,8 @@ ApplicationWindow {
             onClicked: {
                 if (readWriteGroupbox.readCart) {
                     cartController.readCart(memoryGroupBox.cartMemory, bankGroupBox.selectedBank);
+                } else {
+                    cartController.writeCart(memoryGroupBox.cartMemory, bankGroupBox.selectedBank);
                 }
             }
         }
