@@ -30,6 +30,13 @@ ApplicationWindow {
             messageDialog.icon = StandardIcon.Information;
             messageDialog.open();
         }
+
+        onError: {
+            messageDialog.title = "Error";
+            messageDialog.text = message;
+            messageDialog.icon = StandardIcon.Critical;
+            messageDialog.open();
+        }
     }
 
     FileDialog {
