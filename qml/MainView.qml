@@ -14,6 +14,11 @@ ApplicationWindow {
 
     width: 800;
     height: 600;
+
+    MessageDialog {
+        id: messageDialog;
+    }
+
     CartController {
         id: cartController;
     }
