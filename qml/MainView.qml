@@ -276,7 +276,7 @@ ApplicationWindow {
                     source: "qrc:///images/cancel_icon.svg";
 
                     visible: opacity > 0;
-                    opacity: chosenFilePath.text != "" ? 1 : 0;
+                    opacity: chosenFilePath.text != "" ? (cartController.busy ? 0.3 : 1) : 0;
 
                     Behavior on opacity {
                         NumberAnimation {
@@ -498,6 +498,8 @@ ApplicationWindow {
                         id: cartLed;
 
                         source: cartController.ready ? "qrc:///images/green_led.svg" : "qrc:///images/red_led.svg";
+
+                        opacity: cartController.busy ? 0.3 : 1;
 
                         sourceSize.width: 16;
                         sourceSize.height: 16;
