@@ -121,6 +121,9 @@ QByteArray EmsCart::read(EmsMemory from, uint32_t offset, uint32_t count)
         case (SRAM):
             cmd = ReadSRAMCommand;
             break;
+        default:
+            qWarning() << "from must be ROM or SRAM, aborting";
+            return QByteArray();
     }
 
     QByteArray cmdBuffer = createCommandBuffer(cmd, offset, count);
