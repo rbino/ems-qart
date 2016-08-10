@@ -131,7 +131,7 @@ void CartController::readCartImpl(CartMemory memory, int bank)
         case (ROM):
             from = EmsCart::ROM;
             totalReadSize = EmsConstants::BankSize;
-            baseAddress = bank * EmsConstants::BankSize;
+            baseAddress = (bank - 1) * EmsConstants::BankSize;
             break;
 
         case (SRAM):
