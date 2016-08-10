@@ -162,10 +162,10 @@ void CartController::readCart(CartMemory memory, int bank)
             return;
         }
 
-        offset += EmsConstants::ReadBlockSize;
-
         m_progress = (double) offset / totalReadSize;
         emit progressChanged(m_progress);
+
+        offset += EmsConstants::ReadBlockSize;
     }
 
     outFile.close();
