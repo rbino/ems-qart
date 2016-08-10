@@ -41,6 +41,7 @@ class EmsCart : public QObject
 
         void findDevice();
         QByteArray read(EmsMemory from, uint32_t offset, uint32_t count);
+        bool write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t count);
 
         bool ready();
 

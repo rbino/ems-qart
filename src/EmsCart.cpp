@@ -144,6 +144,35 @@ QByteArray EmsCart::read(EmsMemory from, uint32_t offset, uint32_t count)
     return outBuffer;
 }
 
+bool EmsCart::write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t count)
+{
+    int result, transferred;
+    uint8_t cmd;
+
+    switch (to) {
+        case (ROM):
+            cmd = WriteROMCommand;
+            break;
+        case (SRAM):
+            cmd = WriteSRAMCommand;
+            break;
+        default:
+            qWarning() << "to must be ROM or SRAM, aborting";
+            return false;
+    }
+
+    QByteArray outBuffer = createCommandBuffer(cmd, offset, count);
+    outBuffer.append(data);
+
+    // Send the write command with data
+    result = libusb_bulk_transfer(m_deviceHandle, EmsConstants::SendEndpoint, reinterpret_cast<uchar *>(outBuffer.data()), outBuffer.size(), &transferred, 0);
+    if (result < 0) {
+        return false;
+    }
+
+    return true;
+}
+
 bool EmsCart::ready()
 {
     return (m_deviceHandle != nullptr && m_interfaceClaimed);
