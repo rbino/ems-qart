@@ -153,7 +153,7 @@ void CartController::readCartImpl(CartMemory memory, int bank)
     }
 
     int offset = 0;
-    while (offset <= totalReadSize) {
+    while (offset < totalReadSize) {
         QByteArray chunk = m_emsCart->read(from, baseAddress + offset, EmsConstants::ReadBlockSize);
         if (chunk.isEmpty()) {
             emit error(QStringLiteral("Error reading cart at address %1, aborting").arg(baseAddress + offset));
@@ -240,7 +240,7 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
     }
 
     int offset = 0;
-    while (offset <= totalWriteSize && sourceFile.bytesAvailable()) {
+    while (offset < totalWriteSize && sourceFile.bytesAvailable()) {
         QByteArray chunk = sourceFile.read(EmsConstants::WriteBlockSize);
         if (chunk.isEmpty()) {
             emit error(QStringLiteral("Error while reading the source file, aborting"));
