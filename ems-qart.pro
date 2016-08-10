@@ -1,4 +1,4 @@
-QT += quick widgets svg
+QT += quick widgets svg concurrent
 
 CONFIG += c++11 windows release link_pkgconfig
 PKGCONFIG += libusb-1.0

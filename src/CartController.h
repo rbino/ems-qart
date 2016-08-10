@@ -62,6 +62,8 @@ class CartController : public QObject
         EmsCart *m_emsCart;
         RomInfo *m_bankOne;
         RomInfo *m_bankTwo;
+
+        void readCartImpl(CartMemory memory, int bank);
 };
 
 #endif

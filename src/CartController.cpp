@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QtConcurrent>
 
 CartController::CartController(QObject *parent) :
     QObject(parent)
@@ -91,6 +92,11 @@ void CartController::clearLocalFilePath()
 }
 
 void CartController::readCart(CartMemory memory, int bank)
+{
+    QtConcurrent::run(this, &CartController::readCartImpl, memory, bank);
+}
+
+void CartController::readCartImpl(CartMemory memory, int bank)
 {
     m_progress = 0;
     emit progressChanged(m_progress);
