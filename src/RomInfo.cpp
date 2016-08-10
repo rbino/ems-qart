@@ -4,6 +4,7 @@ RomInfo::RomInfo(QObject *parent) :
     QObject(parent)
 {
     m_checksumValid = false;
+    m_romSize = 0;
 }
 
 RomInfo::~RomInfo()
@@ -46,4 +47,9 @@ QString RomInfo::title()
 bool RomInfo::isChecksumValid()
 {
     return m_checksumValid;
+}
+
+int RomInfo::romSize()
+{
+    return m_romSize;
 }

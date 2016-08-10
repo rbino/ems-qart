@@ -9,6 +9,7 @@ class RomInfo : public QObject
 
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(bool checksumValid READ isChecksumValid NOTIFY checksumValidChanged)
+    Q_PROPERTY(int romSize READ romSize NOTIFY romSizeChanged)
 
     public:
         enum RomHeaderOffsets {
@@ -34,14 +35,17 @@ class RomInfo : public QObject
 
         QString title();
         bool isChecksumValid();
+        int romSize();
 
     signals:
         void titleChanged(QString title);
         void checksumValidChanged(bool checksumValid);
+        void romSizeChanged(int romSize);
 
     private:
         QString m_title;
         bool m_checksumValid;
+        int m_romSize;
 };
 
 #endif
