@@ -111,7 +111,7 @@ void CartController::readCartImpl(CartMemory memory, int bank)
     emit busyChanged(m_busy);
 
     if (m_localFilePath.isEmpty()) {
-        qWarning() << "You haven't selected the save location!";
+        emit error(QStringLiteral("You haven't selected the save location!"));
         m_busy = false;
         emit busyChanged(m_busy);
         return;
@@ -119,7 +119,7 @@ void CartController::readCartImpl(CartMemory memory, int bank)
 
     QFile outFile(m_localFilePath);
     if (!outFile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Can't open file " << m_localFilePath;
+        emit error(QStringLiteral("Can't open file %1").arg(m_localFilePath));
         m_busy = false;
         emit busyChanged(m_busy);
         return;
@@ -160,7 +160,7 @@ void CartController::readCartImpl(CartMemory memory, int bank)
     while (offset <= totalReadSize) {
         QByteArray chunk = m_emsCart->read(from, baseAddress + offset, EmsConstants::ReadBlockSize);
         if (chunk.isEmpty()) {
-            qWarning() << "Error reading cart at address " << baseAddress + offset << ", aborting";
+            emit error(QStringLiteral("Error reading cart at address %1, aborting").arg(baseAddress + offset));
             m_busy = false;
             emit busyChanged(m_busy);
             return;
@@ -168,7 +168,7 @@ void CartController::readCartImpl(CartMemory memory, int bank)
 
         int result = outFile.write(chunk);
         if (result < 0) {
-            qWarning() << "Error writing part of the cart in the file, aborting";
+            emit error(QStringLiteral("Error while writing in the file, aborting"));
             m_busy = false;
             emit busyChanged(m_busy);
             return;
