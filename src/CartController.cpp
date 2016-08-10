@@ -184,4 +184,5 @@ void CartController::readCartImpl(CartMemory memory, int bank)
 
     m_busy = false;
     emit busyChanged(m_busy);
+    emit transferCompleted();
 }
