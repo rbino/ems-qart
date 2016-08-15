@@ -34,16 +34,16 @@ before_script:
 
 script:
   - make -C "$TRAVIS_BUILD_DIR-build" -j2 all
-  - ls -lah "$TRAVIS_BUILD_DIR-build"
-  - ls -lah
-
-after_success:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker run --name="lollerplex" ubuntu:16.04 /bin/sh
     -c "apt-get -qy update; apt-get -qy install build-essential git pkg-config devscripts
     dh-make qt5-qmake qt5-default qtbase5-dev qtdeclarative5-dev libqt5svg5-dev libusb-1.0-0-dev;
     cd /root/; git clone https://github.com/rbino/ems-qart.git; cd ems-qart; export
     QMAKESPEC=linux-g++; export QT_SELECT=qt5; git archive --format=tar.gz HEAD > ../ems-qart_0.7.orig.tar.gz;
     debuild -us -uc"'
+  - ls -lah "$TRAVIS_BUILD_DIR-build"
+  - ls -lah
+
+after_success:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp lollerplex:/root/ems-qart_0.7-1_amd64.deb "$TRAVIS_BUILD_DIR-build"'
   - '[ "$TRAVIS_OS_NAME" != osx ] || macdeployqt $TRAVIS_BUILD_DIR-build/ems-qart.app -qmldir=/usr/local/Cellar/qt55/5.5.1/qml -verbose=2 -dmg'
 
