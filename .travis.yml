@@ -40,8 +40,6 @@ script:
     cd /root/; git clone https://github.com/rbino/ems-qart.git; cd ems-qart; export
     QMAKESPEC=linux-g++; export QT_SELECT=qt5; git archive --format=tar.gz HEAD > ../ems-qart_0.7.orig.tar.gz;
     debuild -us -uc"'
-  - ls -lah "$TRAVIS_BUILD_DIR-build"
-  - ls -lah
 
 after_success:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp lollerplex:/root/ems-qart_0.7-1_amd64.deb "$TRAVIS_BUILD_DIR-build"'
