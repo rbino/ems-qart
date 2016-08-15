@@ -3,7 +3,7 @@ A cross-platform Qt application to flash EMS 64M USB cartridges
 
 ![alt text](https://i.imgur.com/UU4yUpi.png)
 
-Currently working on Linux and Windows
+Currently working on Linux, OSX and Windows
 
 ## Linux installation
 Go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the .deb package
@@ -21,7 +21,7 @@ Go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) an
 Unzip it then follow the instructions written in README.txt
 
 ## Mac OSX installation
-Coming soon
+Go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the dmg for Mac
 
 ## Building on Linux
 Install the dependencies
