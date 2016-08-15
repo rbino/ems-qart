@@ -5,6 +5,11 @@ A cross-platform Qt application to flash EMS 64M USB cartridges
 
 Currently working on Linux, OSX and Windows
 
+## Features
+- Read ROMs from both banks
+- Write a single ROM to one bank
+- Read and write SRAM
+
 ## Linux installation
 If you're on Debian stretch or Ubuntu 16.04, go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the .deb package
 
