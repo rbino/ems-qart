@@ -3,6 +3,8 @@ QT += quick widgets svg concurrent
 CONFIG += c++11 windows link_pkgconfig
 PKGCONFIG += libusb-1.0
 
+QT_CONFIG -= no-pkg-config
+
 TARGET = ems-qart
 
 DEFINES += QT_NO_CAST_FROM_ASCII
