@@ -1,6 +1,8 @@
 # ems-qart
 A cross-platform Qt application to flash EMS 64M USB cartridges
 
+[![Build Status](https://travis-ci.org/rbino/ems-qart.svg?branch=master)](https://travis-ci.org/rbino/ems-qart)
+
 ![alt text](https://i.imgur.com/UU4yUpi.png)
 
 Currently working on Linux, OSX and Windows
