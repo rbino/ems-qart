@@ -1,6 +1,6 @@
 QT += quick widgets svg concurrent
 
-CONFIG += c++11 windows release link_pkgconfig
+CONFIG += c++11 windows link_pkgconfig
 PKGCONFIG += libusb-1.0
 
 TARGET = ems-qart
