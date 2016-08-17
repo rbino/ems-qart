@@ -17,7 +17,7 @@ If you're on Debian stretch or Ubuntu 16.04, go to the [latest release](https://
 
 Install it with
 ```
-dpkg -i packagename.deb
+sudo dpkg -i packagename.deb
 sudo apt -f install
 ```
 Then type `ems-qart` in a terminal to start the program
