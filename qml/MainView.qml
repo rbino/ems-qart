@@ -341,7 +341,7 @@ ApplicationWindow {
                 visible: !cartController.busy;
 
                 source: "qrc:///images/arrow.svg";
-                sourceSize.height: 70;
+                sourceSize.height: 90;
 
                 rotation: writeButton.checked ? 0 : 180;
 
