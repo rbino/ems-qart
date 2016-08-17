@@ -15,6 +15,9 @@ ApplicationWindow {
     width: 1050;
     height: 700;
 
+    minimumWidth: 1050;
+    minimumHeight: 700;
+
     MessageDialog {
         id: messageDialog;
     }
