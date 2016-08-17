@@ -12,8 +12,8 @@ ApplicationWindow {
 
     visible: true;
 
-    width: 800;
-    height: 600;
+    width: 1050;
+    height: 700;
 
     MessageDialog {
         id: messageDialog;
