@@ -13,7 +13,7 @@ Currently working on Linux, OSX and Windows
 - Read and write SRAM
 
 ## Linux installation
-If you're on Debian stretch or Ubuntu 16.04, go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the .deb package
+If you're on Debian (Jessie or later) or Ubuntu (15.10 or later), go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the .deb package
 
 Install it with
 ```
