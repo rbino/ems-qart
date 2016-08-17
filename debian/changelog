@@ -1,6 +1,10 @@
 ems-qart (0.8-1) UNRELEASED; urgency=low
 
+  [ rbino ]
+  * Initial release.
+
+  [ rbino ]
   * Bump version, added CI in repo
   * Fix license text in copyright file
 
- -- rbino <rbino@gmx.com>  Thu, 11 Aug 2016 00:25:44 +0200
+ -- rbino <rbino@gmx.com>  Wed, 17 Aug 2016 21:06:49 +0200
