@@ -77,7 +77,7 @@ ApplicationWindow {
 
         anchors {
             topMargin: 20;
-            bottomMargin: 20;
+            bottomMargin: 50;
             fill: parent;
         }
 
