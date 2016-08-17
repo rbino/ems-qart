@@ -1,4 +1,4 @@
-ems-qart (0.8-1) UNRELEASED; urgency=low
+ems-qart (0.9-1) UNRELEASED; urgency=low
 
   [ rbino ]
   * Initial release.
@@ -7,4 +7,8 @@ ems-qart (0.8-1) UNRELEASED; urgency=low
   * Bump version, added CI in repo
   * Fix license text in copyright file
 
- -- rbino <rbino@gmx.com>  Wed, 17 Aug 2016 21:06:49 +0200
+  [ rbino ]
+  * Lower library version requirements
+  * Adjust window size
+
+ -- rbino <rbino@gmx.com>  Wed, 17 Aug 2016 21:08:55 +0200
