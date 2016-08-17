@@ -11,6 +11,8 @@ class RomInfo : public QObject
     Q_PROPERTY(bool checksumValid READ isChecksumValid NOTIFY checksumValidChanged)
     Q_PROPERTY(int romSize READ romSize NOTIFY romSizeChanged)
 
+    Q_ENUMS(RomHeaderOffsets)
+
     public:
         enum RomHeaderOffsets {
             LogoOffset = 0x104,
@@ -24,7 +26,6 @@ class RomInfo : public QObject
             RomVersionOffset = 0x14c,
             ChecksumOffset = 0x14d
         };
-        Q_ENUM(RomHeaderOffsets)
 
         RomInfo(QObject *parent = nullptr);
 

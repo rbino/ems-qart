@@ -20,12 +20,13 @@ class EmsCart : public QObject
 {
     Q_OBJECT
 
+    Q_ENUMS(EmsMemory EmsCommands)
+
     public:
         enum EmsMemory {
             ROM = 1,
             SRAM = 2
         };
-        Q_ENUM(EmsMemory)
 
         enum EmsCommands {
             WriteSRAMCommand = 0x4d,
@@ -33,7 +34,6 @@ class EmsCart : public QObject
             WriteROMCommand = 0x57,
             ReadROMCommand = 0xff
         };
-        Q_ENUM(EmsCommands)
 
         EmsCart(QObject *parent = nullptr);
 
