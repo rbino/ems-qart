@@ -20,20 +20,19 @@ services:
   - docker
 
 before_install:
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || sudo add-apt-repository -y ppa:beineri/opt-qt551-trusty'
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || sudo apt-get -qy update'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew update'
 
 install:
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || docker pull ubuntu:16.04'
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != cross-win ]] || docker pull sago007/mxe_basic'
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || sudo apt-get -qy install build-essential pkg-config qt55base qt55declarative qt55svg libusb-1.0-0-dev'
+  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || sudo apt-get -qy install
+    build-essential pkg-config devscripts dh-make qt5-qmake qt5-default qtbase5-dev qtdeclarative5-dev
+    libqt5svg5-dev libusb-1.0-0-dev'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew install qt55 libusb'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew link --force qt55'
 
 before_script:
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || export QMAKESPEC=linux-g++'
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || . /opt/qt55/bin/qt55-env.sh'
   - '[ "$TRAVIS_OS_NAME" != osx ] || export QMAKESPEC=macx-clang'
   - mkdir -p "$TRAVIS_BUILD_DIR-build"
   - pushd "$TRAVIS_BUILD_DIR-build"
@@ -43,14 +42,8 @@ before_script:
 
 script:
   - '[ "$BUILD_PLATFORM" != native ] || make -C "$TRAVIS_BUILD_DIR-build" -j2 all'
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] ||
-    docker run --name="ubuntu-docker" ubuntu:16.04 /bin/sh -c
-    "apt-get -qy update;
-    apt-get -qy install build-essential git pkg-config devscripts dh-make qt5-qmake
-    qt5-default qtbase5-dev qtdeclarative5-dev libqt5svg5-dev libusb-1.0-0-dev;
-    cd /root/; git clone https://github.com/rbino/ems-qart.git; cd ems-qart;
-    export QMAKESPEC=linux-g++; export QT_SELECT=qt5;
-    git archive --format=tar.gz HEAD > ../ems-qart_0.8.orig.tar.gz; debuild -us -uc"'
+  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || git archive --format=tar.gz HEAD > ../ems-qart_0.9.orig.tar.gz'
+  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || debuild -us -uc'
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != cross-win ]] ||
     docker run --name="mxe-docker" sago007/mxe_basic /bin/sh -c
     "apt-get -qy update;
@@ -67,7 +60,7 @@ script:
 
 
 after_success:
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || docker cp ubuntu-docker:/root/ems-qart_0.8-1_amd64.deb "$TRAVIS_BUILD_DIR-build"'
+  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || mv "$TRAVIS_BUILD_DIR"/../ems-qart_0.9-1_amd64.deb "$TRAVIS_BUILD_DIR-build"'
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != cross-win ]] || docker cp mxe-docker:/root/ems-qart/build/release/ems-qart_win.zip "$TRAVIS_BUILD_DIR-build"'
   - '[ "$TRAVIS_OS_NAME" != osx ] || macdeployqt $TRAVIS_BUILD_DIR-build/ems-qart.app -qmldir=/usr/local/Cellar/qt55/5.5.1/qml -verbose=2 -dmg'
 
@@ -86,7 +79,7 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: CLNkQ87+s0VewE+PeteCbiiUvWRKjVlF+enXbbm/lB16JvpFtgAzDZtRhakKR+0Zsrw4whRxfnG51jhFfoYEn+RbwN9Rj+hZ4Z5qQGxALwp+2Hm83dFNYjjBSdhh02SbqGvkooImS+PZ7oDJBsnYHRSzKGPjzyph7vco3M4V/CxADXhVRzQ/F4F1vEgh0IOuCeLlCZhN5mpMoQmtPHsCkaWQYQ+z0+h+0rCB3QJmoXC+4SSBcmkWoBDPRvg61mhFSLblGD7UsOd4lH7xJHAr2J88EXPb6btfVHiPRvn4SLYT7gcZ7ICkyhhpSXtXiRxcp2DoeQo3weDq1VDhvaOX4A+7HDJCt/X8NG5EuKmhM5EiIFdo2uXXRQbihqcveHKT9L6ez0m/lk/UBw+25dtRoISnzHXaQfb0cxc1zPc8Sphhf5uGBBfaAmGFCloxr0kRKFf5cZUZ/rtNfB7liUQcI1w5g++pomrpa4UjPLzlG+oVUm0HV47FtVDXTxHO1hR/ReVbWRRhkb8RAHuTpMlqYNCJPU3n0sYdVRX/AXfBV1IYRLIZVzt02QHn17J3fOaZCg045KcmKb3ERXWWE5qM5+2g9gQ/SInqv9thy7rJNQLhKE/zg2B1Klzu3ByKBZ+d9tGmg+k1XYOC9VRJKqXnDvgy4XA/3f6wbBk8Q97rGk8=
-  file: "$TRAVIS_BUILD_DIR-build/ems-qart_0.8-1_amd64.deb"
+  file: "$TRAVIS_BUILD_DIR-build/ems-qart_0.9-1_amd64.deb"
   on:
     repo: rbino/ems-qart
     tags: true
