@@ -9,5 +9,7 @@
     <file>images/green_led.svg</file>
     <file>images/red_led.svg</file>
     <file>images/save_icon.svg</file>
+
+    <file>images/ems-qart.ico</file>
 </qresource>
 </RCC>
