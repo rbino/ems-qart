@@ -13,6 +13,8 @@ HEADERS = src/CartController.h src/EmsCart.h src/RomInfo.h
 SOURCES = src/main.cpp src/CartController.cpp src/EmsCart.cpp src/RomInfo.cpp
 RESOURCES = resources.qrc
 
+RC_ICONS = images/ems-qart.ico
+
 isEmpty(PREFIX) {
     UDEV_PREFIX = /etc
     PREFIX = /usr/local
