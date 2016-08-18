@@ -1,4 +1,4 @@
-ems-qart (0.9-1) UNRELEASED; urgency=low
+ems-qart (0.9.1-1) UNRELEASED; urgency=low
 
   [ rbino ]
   * Initial release.
@@ -11,4 +11,7 @@ ems-qart (0.9-1) UNRELEASED; urgency=low
   * Lower library version requirements
   * Adjust window size
 
- -- rbino <rbino@gmx.com>  Wed, 17 Aug 2016 21:08:55 +0200
+  [ rbino ]
+  * Add icons
+
+ -- rbino <rbino@gmx.com>  Thu, 18 Aug 2016 22:44:40 +0200
