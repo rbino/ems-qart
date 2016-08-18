@@ -24,4 +24,4 @@ unix:udevrules.path = $$UDEV_PREFIX/udev/rules.d/
 unix:udevrules.files = 50_ems_gb_flash.rules
 
 unix:target.path = $$PREFIX/bin/
-INSTALLS += target udevrules
+unix:INSTALLS += target udevrules
