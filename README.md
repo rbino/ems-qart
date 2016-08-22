@@ -32,6 +32,8 @@ Unzip it then follow the instructions written in README.txt
 ## Mac OSX installation
 Go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) and download the dmg for Mac, open the dmg and drag ems-qart in your Applications folder
 
+The first time you open the app, right-click on it and select `Open` from the menu. An alert will appear, then click `Open`.
+
 ## Building on Linux
 Install the dependencies
 
