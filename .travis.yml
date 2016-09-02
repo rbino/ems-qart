@@ -42,11 +42,11 @@ before_script:
 
 script:
   - '[ "$BUILD_PLATFORM" != native ] || make -C "$TRAVIS_BUILD_DIR-build" -j2 all'
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || git archive --format=tar.gz HEAD > ../ems-qart_0.9.1.orig.tar.gz'
+  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || git archive --format=tar.gz HEAD > ../ems-qart_0.9.2.orig.tar.gz'
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || debuild -us -uc'
 
 after_success:
-  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || mv "$TRAVIS_BUILD_DIR"/../ems-qart_0.9.1-1_amd64.deb "$TRAVIS_BUILD_DIR-build"'
+  - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || mv "$TRAVIS_BUILD_DIR"/../ems-qart_0.9.2-1_amd64.deb "$TRAVIS_BUILD_DIR-build"'
   - '[ "$TRAVIS_OS_NAME" != osx ] || macdeployqt $TRAVIS_BUILD_DIR-build/ems-qart.app -qmldir=/usr/local/Cellar/qt55/5.5.1/qml -verbose=2 -dmg'
 
 deploy:
@@ -64,7 +64,7 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: CLNkQ87+s0VewE+PeteCbiiUvWRKjVlF+enXbbm/lB16JvpFtgAzDZtRhakKR+0Zsrw4whRxfnG51jhFfoYEn+RbwN9Rj+hZ4Z5qQGxALwp+2Hm83dFNYjjBSdhh02SbqGvkooImS+PZ7oDJBsnYHRSzKGPjzyph7vco3M4V/CxADXhVRzQ/F4F1vEgh0IOuCeLlCZhN5mpMoQmtPHsCkaWQYQ+z0+h+0rCB3QJmoXC+4SSBcmkWoBDPRvg61mhFSLblGD7UsOd4lH7xJHAr2J88EXPb6btfVHiPRvn4SLYT7gcZ7ICkyhhpSXtXiRxcp2DoeQo3weDq1VDhvaOX4A+7HDJCt/X8NG5EuKmhM5EiIFdo2uXXRQbihqcveHKT9L6ez0m/lk/UBw+25dtRoISnzHXaQfb0cxc1zPc8Sphhf5uGBBfaAmGFCloxr0kRKFf5cZUZ/rtNfB7liUQcI1w5g++pomrpa4UjPLzlG+oVUm0HV47FtVDXTxHO1hR/ReVbWRRhkb8RAHuTpMlqYNCJPU3n0sYdVRX/AXfBV1IYRLIZVzt02QHn17J3fOaZCg045KcmKb3ERXWWE5qM5+2g9gQ/SInqv9thy7rJNQLhKE/zg2B1Klzu3ByKBZ+d9tGmg+k1XYOC9VRJKqXnDvgy4XA/3f6wbBk8Q97rGk8=
-  file: "$TRAVIS_BUILD_DIR-build/ems-qart_0.9.1-1_amd64.deb"
+  file: "$TRAVIS_BUILD_DIR-build/ems-qart_0.9.2-1_amd64.deb"
   on:
     repo: rbino/ems-qart
     tags: true
