@@ -3,6 +3,9 @@ Copyright (C) 2016 Riccardo Binetti
 The source files in this repository are licensed under GPLv3 or later, for more
 informations see LICENSE
 
+Contributors:
+0r4 (https://github.com/zeroerrequattro)
+
 The code for the USB communication is taken (adapting it to Qt) from ems-flasher
 by Mike Ryan (http://lacklustre.net/projects/ems-flasher/)
 
