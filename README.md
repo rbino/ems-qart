@@ -39,9 +39,14 @@ The first time you open the app, right-click on it and select `Open` from the me
 ## Building on Linux
 Install the dependencies
 
-On Debian/Ubuntu
+On Debian Jessie or later, Ubuntu 15.10 or later
 ```
 sudo apt install build-essential pkg-config qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qt5-qmake qt5-default libusb-1.0-0-dev qml-module-qtquick2 qml-module-qtquick-controls qml-module-qtquick-dialogs
+```
+
+If you're using Ubuntu 14.04, QML plugin packages have different names
+```
+sudo apt install build-essential pkg-config qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qt5-qmake qt5-default libusb-1.0-0-dev qtdeclarative5-qtquick2-plugin qtdeclarative5-controls-plugin qtdeclarative5-quicklayouts-plugin qtdeclarative5-dialogs-plugin
 ```
 
 Then navigate to the folder where you cloned the repo and
