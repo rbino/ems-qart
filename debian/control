@@ -7,7 +7,7 @@ Build-Depends: debhelper (>=9), pkg-config (>= 0.26), qtbase5-dev (>= 5.2.0), qt
 
 Package: ems-qart
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libqt5quick5 (>= 5.2.0), libqt5svg5 (>= 5.2.0), libqt5concurrent5 (>= 5.2.0), qml-module-qtquick2 (>= 5.2.0) | qtdeclarative5-qtquick2-plugin (>= 5.2.0), qml-module-qtquick-controls (>= 5.2.0) | qtdeclarative5-controls-plugin (>= 5.2.0), qml-module-qtquick-layouts (>= 5.2.0) | qtdeclarative5-quicklayouts-plugin (>= 5.2.0), qml-module-qtquick-dialogs (>= 5.2.0) | qtdeclarative5-dialogs-plugin (>= 5.2.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt5quick5 (>= 5.2.0), libqt5svg5 (>= 5.2.0), libqt5concurrent5 (>= 5.2.0), qml-module-qtquick2 (>= 5.2.0) | qtdeclarative5-qtquick2-plugin (>= 5.2.0), qml-module-qtquick-controls (>= 5.2.0) | qtdeclarative5-controls-plugin (>= 5.2.0), qml-module-qtquick-layouts (>= 5.2.0) | qtdeclarative5-quicklayouts-plugin (>= 5.2.0), qml-module-qtquick-dialogs (>= 5.2.0) | qtdeclarative5-dialogs-plugin (>= 5.2.0), qml-module-qtquick-window2 (>= 5.2.0) | qtdeclarative5-window-plugin (>= 5.2.0)
 Description: EMS cart flasher
  This program is a GUI to flash EMS 64M Game
  Boy USB cartridges on Linux
