@@ -41,12 +41,12 @@ Install the dependencies
 
 On Debian Jessie or later, Ubuntu 15.10 or later
 ```
-sudo apt install build-essential pkg-config qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qt5-qmake qt5-default libusb-1.0-0-dev qml-module-qtquick2 qml-module-qtquick-controls qml-module-qtquick-dialogs
+sudo apt install build-essential pkg-config qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qt5-qmake qt5-default libusb-1.0-0-dev qml-module-qtquick2 qml-module-qtquick-controls qml-module-qtquick-dialogs qml-module-qtquick-window2
 ```
 
 If you're using Ubuntu 14.04, QML plugin packages have different names
 ```
-sudo apt install build-essential pkg-config qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qt5-qmake qt5-default libusb-1.0-0-dev qtdeclarative5-qtquick2-plugin qtdeclarative5-controls-plugin qtdeclarative5-quicklayouts-plugin qtdeclarative5-dialogs-plugin
+sudo apt install build-essential pkg-config qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qt5-qmake qt5-default libusb-1.0-0-dev qtdeclarative5-qtquick2-plugin qtdeclarative5-controls-plugin qtdeclarative5-quicklayouts-plugin qtdeclarative5-dialogs-plugin qtdeclarative5-window-plugin
 ```
 
 Then navigate to the folder where you cloned the repo and
