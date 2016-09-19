@@ -1,4 +1,4 @@
-ems-qart (0.9.3-1) UNRELEASED; urgency=low
+ems-qart (0.9.4-1) UNRELEASED; urgency=low
 
   [ rbino ]
   * Initial release.
@@ -20,4 +20,7 @@ ems-qart (0.9.3-1) UNRELEASED; urgency=low
   [ rbino ]
   * Add deb dependency alternatives
 
- -- rbino <rbino@gmx.com>  Sun, 18 Sep 2016 17:50:38 +0200
+  [ rbino ]
+  * Add explicit deb dependency from QtQuick Window
+
+ -- rbino <rbino@gmx.com>  Mon, 19 Sep 2016 18:41:30 +0200
