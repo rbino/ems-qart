@@ -2,6 +2,7 @@
 <qresource>
     <file>qml/MainView.qml</file>
     <file>qml/EmsCartItem.qml</file>
+    <file>qml/TabPage.qml</file>
 
     <file>images/arrow.svg</file>
     <file>images/cancel_icon.svg</file>
