@@ -20,15 +20,15 @@ RomInfo::~RomInfo()
 void RomInfo::updateInfo(const QByteArray &header)
 {
     // Title max length is 16
-    m_title = QLatin1String(header.mid(TitleOffset, 16));
+    m_title = QLatin1String(header.mid(RomConstants::TitleOffset, 16));
     emit titleChanged(m_title);
 
     uint8_t calculatedChecksum = 0;
-    for (int i = TitleOffset; i < ChecksumOffset; i++)
+    for (int i = RomConstants::TitleOffset; i < RomConstants::ChecksumOffset; i++)
     {
         calculatedChecksum -= (uint8_t)header.at(i) + 1;
     }
-    if (calculatedChecksum != (uint8_t)header.at(ChecksumOffset)) {
+    if (calculatedChecksum != (uint8_t)header.at(RomConstants::ChecksumOffset)) {
         m_checksumValid = false;
     } else {
         m_checksumValid = true;
@@ -36,7 +36,7 @@ void RomInfo::updateInfo(const QByteArray &header)
     emit checksumValidChanged(m_checksumValid);
 
     if (m_checksumValid) {
-        int sizeCode = header.at(ROMSizeOffset);
+        int sizeCode = header.at(RomConstants::ROMSizeOffset);
         switch (sizeCode) {
             case 0:
             case 1:

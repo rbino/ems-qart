@@ -3,6 +3,21 @@
 
 #include <QObject>
 
+namespace RomConstants {
+    const int HeaderSize = 512;
+    const int SmallestRomSize = 32768;
+    const int LogoOffset = 0x104;
+    const int TitleOffset = 0x134;
+    const int CGBFlagOffset = 0x143;
+    const int SGBFlagOffset = 0x146;
+    const int ROMSizeOffset = 0x148;
+    const int SRAMSizeOffset = 0x149;
+    const int RegionOffset = 0x14a;
+    const int OldLicenseOffset = 0x14b;
+    const int RomVersionOffset = 0x14c;
+    const int ChecksumOffset = 0x14d;
+}
+
 class RomInfo : public QObject
 {
     Q_OBJECT
@@ -11,22 +26,7 @@ class RomInfo : public QObject
     Q_PROPERTY(bool checksumValid READ isChecksumValid NOTIFY checksumValidChanged)
     Q_PROPERTY(int romSize READ romSize NOTIFY romSizeChanged)
 
-    Q_ENUMS(RomHeaderOffsets)
-
     public:
-        enum RomHeaderOffsets {
-            LogoOffset = 0x104,
-            TitleOffset = 0x134,
-            CGBFlagOffset = 0x143,
-            SGBFlagOffset = 0x146,
-            ROMSizeOffset = 0x148,
-            SRAMSizeOffset = 0x149,
-            RegionOffset = 0x14a,
-            OldLicenseOffset = 0x14b,
-            RomVersionOffset = 0x14c,
-            ChecksumOffset = 0x14d
-        };
-
         RomInfo(QObject *parent = nullptr);
         RomInfo(const QByteArray &header, QObject *parent = nullptr);
 
