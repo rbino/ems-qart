@@ -90,9 +90,9 @@ void CartController::clearLocalFilePath()
     emit localFilePathChanged(m_localFilePath);
 }
 
-void CartController::readCart(CartMemory memory, int bank)
+void CartController::readCart(CartMemory memory, int bank, int romIndex)
 {
-    QtConcurrent::run(this, &CartController::readCartImpl, memory, bank);
+    QtConcurrent::run(this, &CartController::readCartImpl, memory, bank, romIndex);
 }
 
 void CartController::writeCart(CartMemory memory, int bank)
@@ -100,7 +100,7 @@ void CartController::writeCart(CartMemory memory, int bank)
     QtConcurrent::run(this, &CartController::writeCartImpl, memory, bank);
 }
 
-void CartController::readCartImpl(CartMemory memory, int bank)
+void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
 {
     m_progress = 0;
     emit progressChanged(m_progress);
@@ -139,15 +139,27 @@ void CartController::readCartImpl(CartMemory memory, int bank)
             from = EmsCart::ROM;
             switch (bank) {
                 case 1:
-                    if (m_bankOne->romSize() > 0) {
-                        totalReadSize = m_bankOne->romSize();
+                    if (romIndex < 0 || romIndex >= m_bankOne.size()) {
+                        qWarning() << "ROM Index is out of bound, aborting";
+                        m_busy = false;
+                        emit busyChanged(m_busy);
+                        return;
+                    }
+                    if (m_bankOne.at(romIndex)->romSize() > 0) {
+                        totalReadSize = m_bankOne.at(romIndex)->romSize();
                     } else {
                         totalReadSize = EmsConstants::BankSize;
                     }
                     break;
                 case 2:
-                    if (m_bankTwo->romSize() > 0) {
-                        totalReadSize = m_bankTwo->romSize();
+                    if (romIndex < 0 || romIndex >= m_bankTwo.size()) {
+                        qWarning() << "ROM Index is out of bound, aborting";
+                        m_busy = false;
+                        emit busyChanged(m_busy);
+                        return;
+                    }
+                    if (m_bankTwo.at(romIndex)->romSize() > 0) {
+                        totalReadSize = m_bankTwo.at(romIndex)->romSize();
                     } else {
                         totalReadSize = EmsConstants::BankSize;
                     }

@@ -33,7 +33,7 @@ class CartController : public QObject
         Q_INVOKABLE void refresh();
         Q_INVOKABLE void setLocalFilePath(QUrl fileUrl, QString extension);
         Q_INVOKABLE void clearLocalFilePath();
-        Q_INVOKABLE void readCart(CartMemory memory, int bank);
+        Q_INVOKABLE void readCart(CartMemory memory, int bank, int romIndex);
         Q_INVOKABLE void writeCart(CartMemory memory, int bank);
 
         bool isReady();
@@ -69,7 +69,7 @@ class CartController : public QObject
         QList<RomInfo *> m_bankOne;
         QList<RomInfo *> m_bankTwo;
 
-        void readCartImpl(CartMemory memory, int bank);
+        void readCartImpl(CartMemory memory, int bank, int romIndex);
         void writeCartImpl(CartMemory memory, int bank);
         void updateInfo();
         bool isValidHeader(const QByteArray &header, int offset);
