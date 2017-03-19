@@ -72,6 +72,7 @@ class CartController : public QObject
         void readCartImpl(CartMemory memory, int bank);
         void writeCartImpl(CartMemory memory, int bank);
         void updateInfo();
+        bool isValidHeader(const QByteArray &header, int offset);
 };
 
 #endif

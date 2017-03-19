@@ -296,3 +296,31 @@ void CartController::updateInfo()
     header = m_emsCart->read(EmsCart::ROM, 0, 512);
     m_bankOne->updateInfo(header);
 }
+
+bool CartController::isValidHeader(const QByteArray &header, int offset)
+{
+    uint8_t computedChecksum = 0;
+    for (int i = RomConstants::TitleOffset; i < RomConstants::ChecksumOffset; i++)
+    {
+        computedChecksum -= (uint8_t)header.at(i) + 1;
+    }
+    if (computedChecksum != (uint8_t)header.at(RomConstants::ChecksumOffset)) {
+        // Wrong checksum
+        return false;
+    }
+
+    int sizeCode = header.at(RomConstants::ROMSizeOffset);
+    if (sizeCode < 0 || sizeCode > 7) {
+        // Not a power-of-2-sized ROM
+        return false;
+    }
+
+    int size = 32 << (sizeCode + 10);
+    if (offset % size != 0 ||                     // Unaligned ROM
+        offset + size > EmsConstants::BankSize) { // Out-of-bound ROM
+
+        return false;
+    }
+
+    return true;
+}
