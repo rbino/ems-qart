@@ -7,6 +7,12 @@ RomInfo::RomInfo(QObject *parent) :
     m_romSize = 0;
 }
 
+RomInfo::RomInfo(const QByteArray &header, QObject *parent) :
+    QObject(parent)
+{
+    updateInfo(header);
+}
+
 RomInfo::~RomInfo()
 {
 }

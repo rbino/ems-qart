@@ -28,6 +28,7 @@ class RomInfo : public QObject
         };
 
         RomInfo(QObject *parent = nullptr);
+        RomInfo(const QByteArray &header, QObject *parent = nullptr);
 
         virtual ~RomInfo();
 
