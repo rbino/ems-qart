@@ -23,7 +23,6 @@ class RomInfo : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
-    Q_PROPERTY(bool checksumValid READ isChecksumValid NOTIFY checksumValidChanged)
     Q_PROPERTY(int romSize READ romSize NOTIFY romSizeChanged)
 
     public:
@@ -36,17 +35,14 @@ class RomInfo : public QObject
         void resetInfo();
 
         QString title();
-        bool isChecksumValid();
         int romSize();
 
     signals:
         void titleChanged(QString title);
-        void checksumValidChanged(bool checksumValid);
         void romSizeChanged(int romSize);
 
     private:
         QString m_title;
-        bool m_checksumValid;
         int m_romSize;
 };
 
