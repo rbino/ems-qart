@@ -15,8 +15,8 @@ class CartController : public QObject
     Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(double progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QString localFilePath READ localFilePath NOTIFY localFilePathChanged)
-    Q_PROPERTY(QObject * bankOne READ bankOne NOTIFY bankOneChanged)
-    Q_PROPERTY(QObject * bankTwo READ bankTwo NOTIFY bankTwoChanged)
+    Q_PROPERTY(QList<RomInfo *> bankOne READ bankOne NOTIFY bankOneChanged)
+    Q_PROPERTY(QList<RomInfo *> bankTwo READ bankTwo NOTIFY bankTwoChanged)
 
     Q_ENUMS(CartMemory)
 
@@ -40,8 +40,8 @@ class CartController : public QObject
         bool isBusy();
         double progress();
         QString localFilePath();
-        RomInfo *bankOne();
-        RomInfo *bankTwo();
+        QList<RomInfo *> bankOne();
+        QList<RomInfo *> bankTwo();
 
     signals:
         void readyChanged(bool ready);
@@ -53,8 +53,8 @@ class CartController : public QObject
         void error(QString message);
         void transferCompleted();
 
-        void bankOneChanged(QObject *bankOne);
-        void bankTwoChanged(QObject *bankTwo);
+        void bankOneChanged(const QList<RomInfo *> &bankOne);
+        void bankTwoChanged(const QList<RomInfo *> &bankTwo);
 
     private slots:
         void readyUpdate(bool newReady);
@@ -66,8 +66,8 @@ class CartController : public QObject
         QString m_localFilePath;
 
         EmsCart *m_emsCart;
-        RomInfo *m_bankOne;
-        RomInfo *m_bankTwo;
+        QList<RomInfo *> m_bankOne;
+        QList<RomInfo *> m_bankTwo;
 
         void readCartImpl(CartMemory memory, int bank);
         void writeCartImpl(CartMemory memory, int bank);

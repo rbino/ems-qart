@@ -10,8 +10,6 @@ CartController::CartController(QObject *parent) :
     m_busy = false;
     m_progress = 0;
     m_emsCart = new EmsCart(this);
-    m_bankOne = new RomInfo(this);
-    m_bankTwo = new RomInfo(this);
     connect(m_emsCart, &EmsCart::readyChanged, this, &CartController::readyUpdate);
     connect(m_emsCart, &EmsCart::error, this, &CartController::emsErrorUpdate);
     m_emsCart->findDevice();
@@ -46,12 +44,12 @@ QString CartController::localFilePath()
     return m_localFilePath;
 }
 
-RomInfo *CartController::bankOne()
+QList<RomInfo *> CartController::bankOne()
 {
     return m_bankOne;
 }
 
-RomInfo *CartController::bankTwo()
+QList<RomInfo *> CartController::bankTwo()
 {
     return m_bankTwo;
 }
@@ -61,8 +59,12 @@ void CartController::readyUpdate(bool newReady)
     if (newReady) {
         updateInfo();
     } else {
-        m_bankOne->resetInfo();
-        m_bankTwo->resetInfo();
+        qDeleteAll(m_bankOne);
+        m_bankOne.clear();
+        emit bankOneChanged(m_bankOne);
+        qDeleteAll(m_bankTwo);
+        m_bankTwo.clear();
+        emit bankTwoChanged(m_bankTwo);
     }
     emit readyChanged(newReady);
 }
@@ -291,10 +293,28 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
 
 void CartController::updateInfo()
 {
-    QByteArray header = m_emsCart->read(EmsCart::ROM, EmsConstants::BankSize, 512);
-    m_bankTwo->updateInfo(header);
-    header = m_emsCart->read(EmsCart::ROM, 0, 512);
-    m_bankOne->updateInfo(header);
+    QByteArray header;
+    int offset = 0;
+    // Bank 1
+    while (offset < EmsConstants::BankSize) {
+        header = m_emsCart->read(EmsCart::ROM, offset, RomConstants::HeaderSize);
+        if (isValidHeader(header, offset)) {
+            m_bankOne.append(new RomInfo(header, this));
+        }
+        offset += RomConstants::SmallestRomSize;
+    }
+    emit bankOneChanged(m_bankOne);
+
+    offset = 0;
+    // Bank 2
+    while (offset < EmsConstants::BankSize) {
+        header = m_emsCart->read(EmsCart::ROM, EmsConstants::BankSize + offset, RomConstants::HeaderSize);
+        if (isValidHeader(header, offset)) {
+            m_bankTwo.append(new RomInfo(header, this));
+        }
+        offset += RomConstants::SmallestRomSize;
+    }
+    emit bankTwoChanged(m_bankTwo);
 }
 
 bool CartController::isValidHeader(const QByteArray &header, int offset)
