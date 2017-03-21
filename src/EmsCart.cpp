@@ -1,5 +1,7 @@
 #include "EmsCart.h"
 
+#include "RomInfo.h"
+
 #include <QDebug>
 #include <QDataStream>
 #include <QtEndian>
@@ -176,4 +178,14 @@ bool EmsCart::write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t cou
 bool EmsCart::ready()
 {
     return (m_deviceHandle != nullptr && m_interfaceClaimed);
+}
+
+QList<RomInfo *> EmsCart::bankOne()
+{
+    return m_bankOne;
+}
+
+QList<RomInfo *> EmsCart::bankTwo()
+{
+    return m_bankTwo;
 }

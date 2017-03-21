@@ -5,7 +5,6 @@
 #include <QUrl>
 
 #include "EmsCart.h"
-#include "RomInfo.h"
 
 class CartController : public QObject
 {
@@ -15,8 +14,6 @@ class CartController : public QObject
     Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(double progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QString localFilePath READ localFilePath NOTIFY localFilePathChanged)
-    Q_PROPERTY(QList<RomInfo *> bankOne READ bankOne NOTIFY bankOneChanged)
-    Q_PROPERTY(QList<RomInfo *> bankTwo READ bankTwo NOTIFY bankTwoChanged)
 
     Q_ENUMS(CartMemory)
 
@@ -40,8 +37,6 @@ class CartController : public QObject
         bool isBusy();
         double progress();
         QString localFilePath();
-        QList<RomInfo *> bankOne();
-        QList<RomInfo *> bankTwo();
 
     signals:
         void readyChanged(bool ready);
@@ -53,8 +48,6 @@ class CartController : public QObject
         void error(QString message);
         void transferCompleted();
 
-        void bankOneChanged(const QList<RomInfo *> &bankOne);
-        void bankTwoChanged(const QList<RomInfo *> &bankTwo);
 
     private slots:
         void readyUpdate(bool newReady);
@@ -66,8 +59,6 @@ class CartController : public QObject
         QString m_localFilePath;
 
         EmsCart *m_emsCart;
-        QList<RomInfo *> m_bankOne;
-        QList<RomInfo *> m_bankTwo;
 
         void readCartImpl(CartMemory memory, int bank, int romIndex);
         void writeCartImpl(CartMemory memory, int bank);

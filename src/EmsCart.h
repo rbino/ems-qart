@@ -16,6 +16,8 @@ namespace EmsConstants {
     const int SRAMSize = 0x020000;
 }
 
+class RomInfo;
+
 class EmsCart : public QObject
 {
     Q_OBJECT
@@ -45,13 +47,22 @@ class EmsCart : public QObject
 
         bool ready();
 
+        QList<RomInfo *> bankOne();
+        QList<RomInfo *> bankTwo();
+
     signals:
         void readyChanged(bool ready);
         void error(QString message);
 
+        void bankOneChanged(const QList<RomInfo *> &bankOne);
+        void bankTwoChanged(const QList<RomInfo *> &bankTwo);
+
     private:
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
+
+        QList<RomInfo *> m_bankOne;
+        QList<RomInfo *> m_bankTwo;
 
         QByteArray createCommandBuffer(uint8_t command, uint32_t offset, uint32_t count);
 };

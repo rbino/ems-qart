@@ -44,16 +44,6 @@ QString CartController::localFilePath()
     return m_localFilePath;
 }
 
-QList<RomInfo *> CartController::bankOne()
-{
-    return m_bankOne;
-}
-
-QList<RomInfo *> CartController::bankTwo()
-{
-    return m_bankTwo;
-}
-
 void CartController::readyUpdate(bool newReady)
 {
     if (newReady) {
