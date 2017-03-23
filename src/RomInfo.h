@@ -31,8 +31,8 @@ class RomInfo : public QObject
         void updateInfo(const QByteArray &header);
         void resetInfo();
 
-        QString title();
-        int romSize();
+        QString title() const;
+        int romSize() const;
 
     signals:
         void titleChanged(QString title);

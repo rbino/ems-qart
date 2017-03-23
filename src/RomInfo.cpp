@@ -61,12 +61,12 @@ void RomInfo::resetInfo()
     m_romSize = 0;
 }
 
-QString RomInfo::title()
+QString RomInfo::title() const
 {
     return m_title;
 }
 
-int RomInfo::romSize()
+int RomInfo::romSize() const
 {
     return m_romSize;
 }
