@@ -33,10 +33,10 @@ class CartController : public QObject
         Q_INVOKABLE void readCart(CartMemory memory, int bank, int romIndex);
         Q_INVOKABLE void writeCart(CartMemory memory, int bank);
 
-        bool isReady();
-        bool isBusy();
-        double progress();
-        QString localFilePath();
+        bool isReady() const;
+        bool isBusy() const;
+        double progress() const;
+        QString localFilePath() const;
 
     signals:
         void readyChanged(bool ready);

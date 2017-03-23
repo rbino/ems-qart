@@ -26,22 +26,22 @@ void CartController::refresh()
     m_emsCart->findDevice();
 }
 
-bool CartController::isReady()
+bool CartController::isReady() const
 {
     return m_emsCart->ready();
 }
 
-bool CartController::isBusy()
+bool CartController::isBusy() const
 {
     return m_busy;
 }
 
-double CartController::progress()
+double CartController::progress() const
 {
     return m_progress;
 }
 
-QString CartController::localFilePath()
+QString CartController::localFilePath() const
 {
     return m_localFilePath;
 }
