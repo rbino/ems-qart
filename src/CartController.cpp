@@ -1,5 +1,7 @@
 #include "CartController.h"
 
+#include "RomInfo.h"
+
 #include <QDebug>
 #include <QFile>
 #include <QtConcurrent>
@@ -10,7 +12,7 @@ CartController::CartController(QObject *parent) :
     m_busy = false;
     m_progress = 0;
     m_emsCart = new EmsCart(this);
-    connect(m_emsCart, &EmsCart::readyChanged, this, &CartController::readyUpdate);
+    connect(m_emsCart, &EmsCart::readyChanged, this, &CartController::readyChanged);
     connect(m_emsCart, &EmsCart::error, this, &CartController::emsErrorUpdate);
     m_emsCart->findDevice();
 }
@@ -42,21 +44,6 @@ double CartController::progress()
 QString CartController::localFilePath()
 {
     return m_localFilePath;
-}
-
-void CartController::readyUpdate(bool newReady)
-{
-    if (newReady) {
-        updateInfo();
-    } else {
-        qDeleteAll(m_bankOne);
-        m_bankOne.clear();
-        emit bankOneChanged(m_bankOne);
-        qDeleteAll(m_bankTwo);
-        m_bankTwo.clear();
-        emit bankTwoChanged(m_bankTwo);
-    }
-    emit readyChanged(newReady);
 }
 
 void CartController::emsErrorUpdate(QString message)
@@ -129,27 +116,27 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
             from = EmsCart::ROM;
             switch (bank) {
                 case 1:
-                    if (romIndex < 0 || romIndex >= m_bankOne.size()) {
+                    if (romIndex < 0 || romIndex >= m_emsCart->bankOne().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
                         m_busy = false;
                         emit busyChanged(m_busy);
                         return;
                     }
-                    if (m_bankOne.at(romIndex)->romSize() > 0) {
-                        totalReadSize = m_bankOne.at(romIndex)->romSize();
+                    if (m_emsCart->bankOne().at(romIndex)->romSize() > 0) {
+                        totalReadSize = m_emsCart->bankOne().at(romIndex)->romSize();
                     } else {
                         totalReadSize = EmsConstants::BankSize;
                     }
                     break;
                 case 2:
-                    if (romIndex < 0 || romIndex >= m_bankTwo.size()) {
+                    if (romIndex < 0 || romIndex >= m_emsCart->bankTwo().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
                         m_busy = false;
                         emit busyChanged(m_busy);
                         return;
                     }
-                    if (m_bankTwo.at(romIndex)->romSize() > 0) {
-                        totalReadSize = m_bankTwo.at(romIndex)->romSize();
+                    if (m_emsCart->bankTwo().at(romIndex)->romSize() > 0) {
+                        totalReadSize = m_emsCart->bankTwo().at(romIndex)->romSize();
                     } else {
                         totalReadSize = EmsConstants::BankSize;
                     }
@@ -290,59 +277,5 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
     emit transferCompleted();
 
     // Update cart informations
-    updateInfo();
-}
-
-void CartController::updateInfo()
-{
-    QByteArray header;
-    int offset = 0;
-    // Bank 1
-    while (offset < EmsConstants::BankSize) {
-        header = m_emsCart->read(EmsCart::ROM, offset, RomConstants::HeaderSize);
-        if (isValidHeader(header, offset)) {
-            m_bankOne.append(new RomInfo(header, this));
-        }
-        offset += RomConstants::SmallestRomSize;
-    }
-    emit bankOneChanged(m_bankOne);
-
-    offset = 0;
-    // Bank 2
-    while (offset < EmsConstants::BankSize) {
-        header = m_emsCart->read(EmsCart::ROM, EmsConstants::BankSize + offset, RomConstants::HeaderSize);
-        if (isValidHeader(header, offset)) {
-            m_bankTwo.append(new RomInfo(header, this));
-        }
-        offset += RomConstants::SmallestRomSize;
-    }
-    emit bankTwoChanged(m_bankTwo);
-}
-
-bool CartController::isValidHeader(const QByteArray &header, int offset)
-{
-    uint8_t computedChecksum = 0;
-    for (int i = RomConstants::TitleOffset; i < RomConstants::ChecksumOffset; i++)
-    {
-        computedChecksum -= (uint8_t)header.at(i) + 1;
-    }
-    if (computedChecksum != (uint8_t)header.at(RomConstants::ChecksumOffset)) {
-        // Wrong checksum
-        return false;
-    }
-
-    int sizeCode = header.at(RomConstants::ROMSizeOffset);
-    if (sizeCode < 0 || sizeCode > 7) {
-        // Not a power-of-2-sized ROM
-        return false;
-    }
-
-    int size = 32 << (sizeCode + 10);
-    if (offset % size != 0 ||                     // Unaligned ROM
-        offset + size > EmsConstants::BankSize) { // Out-of-bound ROM
-
-        return false;
-    }
-
-    return true;
+    m_emsCart->updateInfo();
 }

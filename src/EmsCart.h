@@ -44,6 +44,7 @@ class EmsCart : public QObject
         void findDevice();
         QByteArray read(EmsMemory from, uint32_t offset, uint32_t count);
         bool write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t count);
+        void updateInfo();
 
         bool ready();
 
@@ -57,6 +58,9 @@ class EmsCart : public QObject
         void bankOneChanged(const QList<RomInfo *> &bankOne);
         void bankTwoChanged(const QList<RomInfo *> &bankTwo);
 
+    private slots:
+        void readyUpdate(bool newReady);
+
     private:
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
@@ -65,6 +69,7 @@ class EmsCart : public QObject
         QList<RomInfo *> m_bankTwo;
 
         QByteArray createCommandBuffer(uint8_t command, uint32_t offset, uint32_t count);
+        bool isValidHeader(const QByteArray &header, int offset);
 };
 
 #endif

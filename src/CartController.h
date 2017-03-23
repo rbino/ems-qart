@@ -50,7 +50,6 @@ class CartController : public QObject
 
 
     private slots:
-        void readyUpdate(bool newReady);
         void emsErrorUpdate(QString message);
 
     private:
@@ -62,8 +61,6 @@ class CartController : public QObject
 
         void readCartImpl(CartMemory memory, int bank, int romIndex);
         void writeCartImpl(CartMemory memory, int bank);
-        void updateInfo();
-        bool isValidHeader(const QByteArray &header, int offset);
 };
 
 #endif

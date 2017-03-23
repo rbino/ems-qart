@@ -189,3 +189,72 @@ QList<RomInfo *> EmsCart::bankTwo()
 {
     return m_bankTwo;
 }
+
+void EmsCart::readyUpdate(bool newReady)
+{
+    if (newReady) {
+        updateInfo();
+    } else {
+        qDeleteAll(m_bankOne);
+        m_bankOne.clear();
+        emit bankOneChanged(m_bankOne);
+        qDeleteAll(m_bankTwo);
+        m_bankTwo.clear();
+        emit bankTwoChanged(m_bankTwo);
+    }
+    emit readyChanged(newReady);
+}
+
+void EmsCart::updateInfo()
+{
+    QByteArray header;
+    int offset = 0;
+    // Bank 1
+    while (offset < EmsConstants::BankSize) {
+        header = read(EmsCart::ROM, offset, RomConstants::HeaderSize);
+        if (isValidHeader(header, offset)) {
+            m_bankOne.append(new RomInfo(header, this));
+        }
+        offset += RomConstants::SmallestRomSize;
+    }
+    emit bankOneChanged(m_bankOne);
+
+    offset = 0;
+    // Bank 2
+    while (offset < EmsConstants::BankSize) {
+        header = read(EmsCart::ROM, EmsConstants::BankSize + offset, RomConstants::HeaderSize);
+        if (isValidHeader(header, offset)) {
+            m_bankTwo.append(new RomInfo(header, this));
+        }
+        offset += RomConstants::SmallestRomSize;
+    }
+    emit bankTwoChanged(m_bankTwo);
+}
+
+bool EmsCart::isValidHeader(const QByteArray &header, int offset)
+{
+    uint8_t computedChecksum = 0;
+    for (int i = RomConstants::TitleOffset; i < RomConstants::ChecksumOffset; i++)
+    {
+        computedChecksum -= (uint8_t)header.at(i) + 1;
+    }
+    if (computedChecksum != (uint8_t)header.at(RomConstants::ChecksumOffset)) {
+        // Wrong checksum
+        return false;
+    }
+
+    int sizeCode = header.at(RomConstants::ROMSizeOffset);
+    if (sizeCode < 0 || sizeCode > 7) {
+        // Not a power-of-2-sized ROM
+        return false;
+    }
+
+    int size = 32 << (sizeCode + 10);
+    if (offset % size != 0 ||                     // Unaligned ROM
+        offset + size > EmsConstants::BankSize) { // Out-of-bound ROM
+
+        return false;
+    }
+
+    return true;
+}
