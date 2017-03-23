@@ -37,9 +37,9 @@ class EmsCart : public QObject
             ReadROMCommand = 0xff
         };
 
-        EmsCart(QObject *parent = nullptr);
-
         virtual ~EmsCart();
+
+        static EmsCart *instance();
 
         void findDevice();
         QByteArray read(EmsMemory from, uint32_t offset, uint32_t count);
@@ -62,6 +62,10 @@ class EmsCart : public QObject
         void readyUpdate(bool newReady);
 
     private:
+        EmsCart(QObject *parent = nullptr);
+
+        static EmsCart *s_instance;
+
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
 

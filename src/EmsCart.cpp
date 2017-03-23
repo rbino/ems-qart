@@ -6,6 +6,8 @@
 #include <QDataStream>
 #include <QtEndian>
 
+EmsCart *EmsCart::s_instance;
+
 EmsCart::EmsCart(QObject *parent) :
     QObject(parent)
 {
@@ -29,6 +31,14 @@ EmsCart::~EmsCart()
     }
 
     libusb_exit(nullptr);
+}
+
+EmsCart *EmsCart::instance()
+{
+    if (!s_instance) {
+        s_instance = new EmsCart();
+    }
+    return s_instance;
 }
 
 void EmsCart::findDevice()
