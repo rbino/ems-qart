@@ -5,8 +5,6 @@ import QtQuick.Layouts 1.1
 Tab {
     id: tabPage;
 
-    property var cartController: null;
-
     RowLayout {
         id: tabRowLayout;
 
@@ -26,8 +24,6 @@ Tab {
 
         EmsCartItem {
             id: emsCartItem;
-
-            cartController: tabPage.cartController;
 
             implicitHeight: tabPage.height;
             implicitWidth: tabPage.width / 2;

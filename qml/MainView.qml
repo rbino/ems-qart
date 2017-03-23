@@ -52,26 +52,18 @@ ApplicationWindow {
         TabPage {
             id: statusTab;
             title: "Status";
-
-            cartController: cartController;
         }
         TabPage {
             id: loadTab;
             title: "Load";
-
-            cartController: cartController;
         }
         TabPage {
             id: saveTab;
             title: "Save";
-
-            cartController: cartController;
         }
         TabPage {
             id: utilsTab;
             title: "Utils";
-
-            cartController: cartController;
         }
     }
 }
