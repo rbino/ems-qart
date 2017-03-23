@@ -185,17 +185,17 @@ bool EmsCart::write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t cou
     return true;
 }
 
-bool EmsCart::ready()
+bool EmsCart::ready() const
 {
     return (m_deviceHandle != nullptr && m_interfaceClaimed);
 }
 
-QList<RomInfo *> EmsCart::bankOne()
+QList<RomInfo *> EmsCart::bankOne() const
 {
     return m_bankOne;
 }
 
-QList<RomInfo *> EmsCart::bankTwo()
+QList<RomInfo *> EmsCart::bankTwo() const
 {
     return m_bankTwo;
 }

@@ -46,10 +46,10 @@ class EmsCart : public QObject
         bool write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t count);
         void updateInfo();
 
-        bool ready();
+        bool ready() const;
 
-        QList<RomInfo *> bankOne();
-        QList<RomInfo *> bankTwo();
+        QList<RomInfo *> bankOne() const;
+        QList<RomInfo *> bankTwo() const;
 
     signals:
         void readyChanged(bool ready);
