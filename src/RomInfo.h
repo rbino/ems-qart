@@ -34,10 +34,6 @@ class RomInfo : public QObject
         QString title() const;
         int romSize() const;
 
-    signals:
-        void titleChanged(QString title);
-        void romSizeChanged(int romSize);
-
     private:
         QString m_title;
         int m_romSize;

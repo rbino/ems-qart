@@ -20,7 +20,6 @@ void RomInfo::updateInfo(const QByteArray &header)
 {
     // Title max length is 16
     m_title = QLatin1String(header.mid(RomConstants::TitleOffset, 16));
-    emit titleChanged(m_title);
 
     int sizeCode = header.at(RomConstants::ROMSizeOffset);
     switch (sizeCode) {
@@ -50,13 +49,11 @@ void RomInfo::updateInfo(const QByteArray &header)
         default:
             m_romSize = 0;
     }
-    emit romSizeChanged(m_romSize);
 }
 
 void RomInfo::resetInfo()
 {
     m_title = QString();
-    emit titleChanged(m_title);
 
     m_romSize = 0;
 }
