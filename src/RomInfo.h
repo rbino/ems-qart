@@ -22,9 +22,6 @@ class RomInfo : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString title READ title NOTIFY titleChanged)
-    Q_PROPERTY(int romSize READ romSize NOTIFY romSizeChanged)
-
     public:
         RomInfo(QObject *parent = nullptr);
         RomInfo(const QByteArray &header, QObject *parent = nullptr);
