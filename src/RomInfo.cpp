@@ -4,6 +4,7 @@ RomInfo::RomInfo(QObject *parent) :
     QObject(parent)
 {
     m_romSize = 0;
+    m_offset = -1;
 }
 
 RomInfo::RomInfo(const QByteArray &header, QObject *parent) :
@@ -56,6 +57,12 @@ void RomInfo::resetInfo()
     m_title = QString();
 
     m_romSize = 0;
+    m_offset = -1;
+}
+
+void RomInfo::setOffset(int offset)
+{
+    m_offset = offset;
 }
 
 QString RomInfo::title() const
@@ -66,4 +73,9 @@ QString RomInfo::title() const
 int RomInfo::romSize() const
 {
     return m_romSize;
+}
+
+int RomInfo::offset() const
+{
+    return m_offset;
 }

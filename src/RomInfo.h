@@ -30,13 +30,16 @@ class RomInfo : public QObject
 
         void updateInfo(const QByteArray &header);
         void resetInfo();
+        void setOffset(int offset);
 
         QString title() const;
         int romSize() const;
+        int offset() const;
 
     private:
         QString m_title;
         int m_romSize;
+        int m_offset;
 };
 
 #endif
