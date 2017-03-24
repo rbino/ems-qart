@@ -223,7 +223,9 @@ void EmsCart::updateInfo()
     while (offset < EmsConstants::BankSize) {
         header = read(EmsCart::ROM, offset, RomConstants::HeaderSize);
         if (isValidHeader(header, offset)) {
-            m_bankOne.append(new RomInfo(header, this));
+            RomInfo *rom = new RomInfo(header, this);
+            rom->setOffset(offset);
+            m_bankOne.append(rom);
         }
         offset += RomConstants::SmallestRomSize;
     }
@@ -234,7 +236,9 @@ void EmsCart::updateInfo()
     while (offset < EmsConstants::BankSize) {
         header = read(EmsCart::ROM, EmsConstants::BankSize + offset, RomConstants::HeaderSize);
         if (isValidHeader(header, offset)) {
-            m_bankTwo.append(new RomInfo(header, this));
+            RomInfo *rom = new RomInfo(header, this);
+            rom->setOffset(offset);
+            m_bankTwo.append(rom);
         }
         offset += RomConstants::SmallestRomSize;
     }
