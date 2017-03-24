@@ -23,10 +23,13 @@ class BankModel : public QAbstractListModel
 
         Bank bank() const;
 
+        QHash<int, QByteArray> roleNames() const override;
+
         void setBank(Bank bank);
 
     private:
         Bank m_bank;
+        QHash<int, QByteArray> m_roleNames;
 };
 
 #endif
