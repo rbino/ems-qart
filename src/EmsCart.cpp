@@ -52,7 +52,7 @@ void EmsCart::findDevice()
             m_interfaceClaimed = false;
             libusb_close(m_deviceHandle);
             m_deviceHandle = nullptr;
-            emit readyChanged(false);
+            readyUpdate(false);
         } else {
             return;
         }
@@ -89,7 +89,7 @@ void EmsCart::findDevice()
                             qWarning() << "usb_claim_interface error " << result;
                         } else {
                             m_interfaceClaimed = true;
-                            emit readyChanged(true);
+                            readyUpdate(true);
                         }
                     }
                     break;
