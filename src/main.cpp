@@ -3,10 +3,12 @@
 #include <QtQml>
 #include <QIcon>
 
+#include "BankModel.h"
 #include "CartController.h"
 
 int main(int argc, char *argv[])
 {
+    qmlRegisterType<BankModel>("EmsQart", 1, 0, "BankModel");
     qmlRegisterType<CartController>("EmsQart", 1, 0, "CartController");
 
     QApplication app(argc, argv);
