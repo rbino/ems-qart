@@ -33,7 +33,7 @@ bool CartController::isReady() const
 
 bool CartController::isBusy() const
 {
-    return m_busy;
+    return m_busy || m_emsCart->busy();
 }
 
 double CartController::progress() const
@@ -70,7 +70,7 @@ void CartController::clearLocalFilePath()
 void CartController::setBusy(bool busy)
 {
     m_busy = busy;
-    emit busyChanged(busy);
+    emit busyChanged(isBusy());
 }
 
 void CartController::readCart(CartMemory memory, int bank, int romIndex)
