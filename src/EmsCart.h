@@ -47,6 +47,7 @@ class EmsCart : public QObject
         void updateInfo();
 
         bool ready() const;
+        bool busy() const;
 
         QList<RomInfo *> bankOne() const;
         QList<RomInfo *> bankTwo() const;
@@ -54,6 +55,8 @@ class EmsCart : public QObject
     signals:
         void readyChanged(bool ready);
         void error(QString message);
+
+        void busyChanged(bool busy);
 
         void bankOneChanged(const QList<RomInfo *> &bankOne);
         void bankTwoChanged(const QList<RomInfo *> &bankTwo);
@@ -68,6 +71,7 @@ class EmsCart : public QObject
 
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
+        bool m_busy;
 
         QList<RomInfo *> m_bankOne;
         QList<RomInfo *> m_bankTwo;

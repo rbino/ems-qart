@@ -190,6 +190,11 @@ bool EmsCart::ready() const
     return (m_deviceHandle != nullptr && m_interfaceClaimed);
 }
 
+bool EmsCart::busy() const
+{
+    return m_busy;
+}
+
 QList<RomInfo *> EmsCart::bankOne() const
 {
     return m_bankOne;
