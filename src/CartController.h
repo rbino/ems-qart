@@ -61,6 +61,8 @@ class CartController : public QObject
 
         void readCartImpl(CartMemory memory, int bank, int romIndex);
         void writeCartImpl(CartMemory memory, int bank);
+
+        void setBusy(bool busy);
 };
 
 #endif

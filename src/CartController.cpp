@@ -67,6 +67,12 @@ void CartController::clearLocalFilePath()
     emit localFilePathChanged(m_localFilePath);
 }
 
+void CartController::setBusy(bool busy)
+{
+    m_busy = busy;
+    emit busyChanged(busy);
+}
+
 void CartController::readCart(CartMemory memory, int bank, int romIndex)
 {
     QtConcurrent::run(this, &CartController::readCartImpl, memory, bank, romIndex);
