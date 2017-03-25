@@ -49,7 +49,7 @@ ApplicationWindow {
             fill: parent;
         }
 
-        TabPage {
+        StatusTabPage {
             id: statusTab;
             title: "Status";
         }
