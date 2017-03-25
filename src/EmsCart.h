@@ -63,6 +63,7 @@ class EmsCart : public QObject
 
     private slots:
         void readyUpdate(bool newReady);
+        void setBusy(bool busy);
 
     private:
         EmsCart(QObject *parent = nullptr);

@@ -205,6 +205,12 @@ QList<RomInfo *> EmsCart::bankTwo() const
     return m_bankTwo;
 }
 
+void EmsCart::setBusy(bool busy)
+{
+    m_busy = busy;
+    emit busyChanged(busy);
+}
+
 void EmsCart::readyUpdate(bool newReady)
 {
     if (newReady) {
