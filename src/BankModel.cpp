@@ -23,6 +23,12 @@ QHash<int, QByteArray> BankModel::roleNames() const
     return m_roleNames;
 }
 
+int BankModel::rowCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+    return m_titles.count();
+}
+
 void BankModel::setBank(Bank bank)
 {
     m_bank = bank;

@@ -24,6 +24,7 @@ class BankModel : public QAbstractListModel
         Bank bank() const;
 
         QHash<int, QByteArray> roleNames() const override;
+        int rowCount(const QModelIndex &parent) const override;
 
         void setBank(Bank bank);
 
