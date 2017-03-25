@@ -30,6 +30,10 @@ class BankModel : public QAbstractListModel
     private:
         Bank m_bank;
         QHash<int, QByteArray> m_roleNames;
+
+        QList<QString> m_titles;
+        QList<int> m_sizes;
+        QList<int> m_offsets;
 };
 
 #endif
