@@ -75,12 +75,28 @@ void CartController::setBusy(bool busy)
 
 void CartController::readCart(CartMemory memory, int bank, int romIndex)
 {
-    QtConcurrent::run(this, &CartController::readCartImpl, memory, bank, romIndex);
+    setBusy(true);
+    QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
+    connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
+        setBusy(false);
+        watcher->deleteLater();
+    });
+
+    QFuture<void> readFuture = QtConcurrent::run(this, &CartController::readCartImpl, memory, bank, romIndex);
+    watcher->setFuture(readFuture);
 }
 
 void CartController::writeCart(CartMemory memory, int bank)
 {
-    QtConcurrent::run(this, &CartController::writeCartImpl, memory, bank);
+    setBusy(true);
+    QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
+    connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
+        setBusy(false);
+        watcher->deleteLater();
+    });
+
+    QFuture<void> writeFuture = QtConcurrent::run(this, &CartController::writeCartImpl, memory, bank);
+    watcher->setFuture(writeFuture);
 }
 
 void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
@@ -88,28 +104,19 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
     m_progress = 0;
     emit progressChanged(m_progress);
 
-    m_busy = true;
-    emit busyChanged(m_busy);
-
     if (m_localFilePath.isEmpty()) {
         emit error(QStringLiteral("You haven't selected the save location!"));
-        m_busy = false;
-        emit busyChanged(m_busy);
         return;
     }
 
     QFile outFile(m_localFilePath);
     if (!outFile.open(QIODevice::WriteOnly)) {
         emit error(QStringLiteral("Can't open file %1").arg(m_localFilePath));
-        m_busy = false;
-        emit busyChanged(m_busy);
         return;
     }
 
     if (bank < 1 || bank > 2) {
         qWarning() << "You can only select bank 1 or 2, aborting";
-        m_busy = false;
-        emit busyChanged(m_busy);
         return;
     }
 
@@ -124,8 +131,6 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
                 case 1:
                     if (romIndex < 0 || romIndex >= m_emsCart->bankOne().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
-                        m_busy = false;
-                        emit busyChanged(m_busy);
                         return;
                     }
                     if (m_emsCart->bankOne().at(romIndex)->romSize() > 0) {
@@ -137,8 +142,6 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
                 case 2:
                     if (romIndex < 0 || romIndex >= m_emsCart->bankTwo().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
-                        m_busy = false;
-                        emit busyChanged(m_busy);
                         return;
                     }
                     if (m_emsCart->bankTwo().at(romIndex)->romSize() > 0) {
@@ -159,8 +162,6 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
 
         default:
             qWarning() << "Invalid memory location in read, aborting";
-            m_busy = false;
-            emit busyChanged(m_busy);
             return;
     }
 
@@ -171,16 +172,12 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
             emit error(QStringLiteral("Error reading cart at address %1, aborting").arg(baseAddress + offset));
             // Is the cart still connected?
             m_emsCart->findDevice();
-            m_busy = false;
-            emit busyChanged(m_busy);
             return;
         }
 
         int result = outFile.write(chunk);
         if (result < 0) {
             emit error(QStringLiteral("Error while writing in the file, aborting"));
-            m_busy = false;
-            emit busyChanged(m_busy);
             return;
         }
 
@@ -192,8 +189,6 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
 
     outFile.close();
 
-    m_busy = false;
-    emit busyChanged(m_busy);
     emit transferCompleted();
 }
 
@@ -202,28 +197,19 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
     m_progress = 0;
     emit progressChanged(m_progress);
 
-    m_busy = true;
-    emit busyChanged(m_busy);
-
     if (m_localFilePath.isEmpty()) {
         emit error(QStringLiteral("You haven't selected the source location!"));
-        m_busy = false;
-        emit busyChanged(m_busy);
         return;
     }
 
     QFile sourceFile(m_localFilePath);
     if (!sourceFile.open(QIODevice::ReadOnly)) {
         emit error(QStringLiteral("Can't open file %1").arg(m_localFilePath));
-        m_busy = false;
-        emit busyChanged(m_busy);
         return;
     }
 
     if (bank < 1 || bank > 2) {
         qWarning() << "You can only select bank 1 or 2, aborting";
-        m_busy = false;
-        emit busyChanged(m_busy);
         return;
     }
 
@@ -246,8 +232,6 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
 
         default:
             qWarning() << "Invalid memory location in read, aborting";
-            m_busy = false;
-            emit busyChanged(m_busy);
             return;
     }
 
@@ -256,8 +240,6 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
         QByteArray chunk = sourceFile.read(EmsConstants::WriteBlockSize);
         if (chunk.isEmpty()) {
             emit error(QStringLiteral("Error while reading the source file, aborting"));
-            m_busy = false;
-            emit busyChanged(m_busy);
             return;
         }
 
@@ -265,8 +247,6 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
             emit error(QStringLiteral("Error writing to cart at address %1, aborting").arg(baseAddress + offset));
             // Is the cart still connected?
             m_emsCart->findDevice();
-            m_busy = false;
-            emit busyChanged(m_busy);
             return;
         }
 
@@ -278,8 +258,6 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
 
     sourceFile.close();
 
-    m_busy = false;
-    emit busyChanged(m_busy);
     emit transferCompleted();
 
     // Update cart informations
