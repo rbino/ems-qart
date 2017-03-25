@@ -1,6 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>qml/MainView.qml</file>
+    <file>qml/BankWidget.qml</file>
     <file>qml/EmsCartItem.qml</file>
     <file>qml/TabPage.qml</file>
 
