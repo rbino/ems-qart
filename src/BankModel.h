@@ -29,6 +29,9 @@ class BankModel : public QAbstractListModel
 
         void setBank(Bank bank);
 
+    private slots:
+        void refreshData();
+
     private:
         Bank m_bank;
         QHash<int, QByteArray> m_roleNames;

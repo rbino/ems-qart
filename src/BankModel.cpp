@@ -1,5 +1,8 @@
 #include "BankModel.h"
 
+#include "EmsCart.h"
+#include "RomInfo.h"
+
 BankModel::BankModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_bank(InvalidBank)
@@ -54,4 +57,41 @@ QVariant BankModel::data(const QModelIndex &index, int role) const
 void BankModel::setBank(Bank bank)
 {
     m_bank = bank;
+}
+
+void BankModel::refreshData()
+{
+    beginResetModel();
+
+    m_titles.clear();
+    m_sizes.clear();
+    m_offsets.clear();
+
+    endResetModel();
+
+    QList<RomInfo *> roms;
+    switch (m_bank) {
+        case BankOne:
+            roms = EmsCart::instance()->bankOne();
+            break;
+
+        case BankTwo:
+            roms = EmsCart::instance()->bankTwo();
+            break;
+
+        default:
+            return;
+    }
+
+    if (roms.isEmpty()) {
+        return;
+    }
+
+    beginInsertRows(index(0), 0, roms.count() - 1);
+    for (RomInfo *rom : roms) {
+        m_titles.append(rom->title());
+        m_sizes.append(rom->romSize());
+        m_offsets.append(rom->offset());
+    }
+    endInsertRows();
 }
