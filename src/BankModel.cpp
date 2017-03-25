@@ -57,6 +57,25 @@ QVariant BankModel::data(const QModelIndex &index, int role) const
 void BankModel::setBank(Bank bank)
 {
     m_bank = bank;
+
+    // Disconnect all signals
+    disconnect(EmsCart::instance(), 0, this, 0);
+
+    switch (bank) {
+        case BankOne:
+            connect(EmsCart::instance(), &EmsCart::bankOneChanged, this, &BankModel::refreshData);
+            break;
+
+        case BankTwo:
+            connect(EmsCart::instance(), &EmsCart::bankTwoChanged, this, &BankModel::refreshData);
+            break;
+
+        default:
+            // Avoid compiler whining
+            break;
+    }
+
+    refreshData();
 }
 
 void BankModel::refreshData()
