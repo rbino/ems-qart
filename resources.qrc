@@ -4,6 +4,7 @@
     <file>qml/BankWidget.qml</file>
     <file>qml/EmsCartItem.qml</file>
     <file>qml/TabPage.qml</file>
+    <file>qml/StatusTabPage.qml</file>
 
     <file>images/arrow.svg</file>
     <file>images/cancel_icon.svg</file>
