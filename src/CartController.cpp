@@ -14,6 +14,9 @@ CartController::CartController(QObject *parent) :
     m_emsCart = EmsCart::instance();
     connect(m_emsCart, &EmsCart::readyChanged, this, &CartController::readyChanged);
     connect(m_emsCart, &EmsCart::error, this, &CartController::emsErrorUpdate);
+    connect(m_emsCart, &EmsCart::busyChanged, this, [this] {
+        emit busyChanged(isBusy());
+    });
     m_emsCart->findDevice();
 }
 
