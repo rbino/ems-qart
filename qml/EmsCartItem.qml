@@ -44,6 +44,16 @@ Item {
                 cartController.refresh();
             }
         }
+
+        BusyIndicator {
+            id: busyIndicator;
+
+            running: cartController.busy;
+
+            anchors {
+                centerIn: parent;
+            }
+        }
     }
 
     Text {
