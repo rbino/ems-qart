@@ -79,6 +79,8 @@ class EmsCart : public QObject
 
         QByteArray createCommandBuffer(uint8_t command, uint32_t offset, uint32_t count);
         bool isValidHeader(const QByteArray &header, int offset);
+
+        void updateInfoImpl();
 };
 
 #endif

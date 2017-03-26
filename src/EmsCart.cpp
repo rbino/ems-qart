@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDataStream>
+#include <QTimer>
 #include <QtEndian>
 
 EmsCart *EmsCart::s_instance;
@@ -228,6 +229,15 @@ void EmsCart::readyUpdate(bool newReady)
 }
 
 void EmsCart::updateInfo()
+{
+    QTimer::singleShot(0, this, [this] {
+        setBusy(true);
+        updateInfoImpl();
+        setBusy(false);
+    });
+}
+
+void EmsCart::updateInfoImpl()
 {
     QByteArray header;
     int offset = 0;
