@@ -65,6 +65,8 @@ class EmsCart : public QObject
         void readyUpdate(bool newReady);
         void setBusy(bool busy);
 
+        void updateInfoImpl();
+
     private:
         EmsCart(QObject *parent = nullptr);
 
@@ -79,8 +81,6 @@ class EmsCart : public QObject
 
         QByteArray createCommandBuffer(uint8_t command, uint32_t offset, uint32_t count);
         bool isValidHeader(const QByteArray &header, int offset);
-
-        void updateInfoImpl();
 };
 
 #endif

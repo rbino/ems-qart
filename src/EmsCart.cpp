@@ -231,15 +231,12 @@ void EmsCart::readyUpdate(bool newReady)
 
 void EmsCart::updateInfo()
 {
-    QTimer::singleShot(0, this, [this] {
-        setBusy(true);
-        updateInfoImpl();
-        setBusy(false);
-    });
+    QMetaObject::invokeMethod(this, "updateInfoImpl", Qt::QueuedConnection);
 }
 
 void EmsCart::updateInfoImpl()
 {
+    setBusy(true);
     QByteArray header;
     int offset = 0;
     // Bank 1
@@ -268,6 +265,7 @@ void EmsCart::updateInfoImpl()
         QApplication::processEvents();
     }
     emit bankTwoChanged(m_bankTwo);
+    setBusy(false);
 }
 
 bool EmsCart::isValidHeader(const QByteArray &header, int offset)
