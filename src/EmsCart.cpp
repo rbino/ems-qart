@@ -2,6 +2,7 @@
 
 #include "RomInfo.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QDataStream>
 #include <QtEndian>
@@ -239,6 +240,7 @@ void EmsCart::updateInfo()
             m_bankOne.append(rom);
         }
         offset += RomConstants::SmallestRomSize;
+        QApplication::processEvents();
     }
     emit bankOneChanged(m_bankOne);
 
@@ -252,6 +254,7 @@ void EmsCart::updateInfo()
             m_bankTwo.append(rom);
         }
         offset += RomConstants::SmallestRomSize;
+        QApplication::processEvents();
     }
     emit bankTwoChanged(m_bankTwo);
 }
