@@ -87,8 +87,6 @@ Item {
 
             source: cartController.ready ? "qrc:///images/green_led.svg" : "qrc:///images/red_led.svg";
 
-            opacity: cartController.busy ? 0.3 : 1;
-
             sourceSize.width: 16;
             sourceSize.height: 16;
 
