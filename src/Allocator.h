@@ -12,6 +12,8 @@ class Allocator
         Allocator(const QList<RomInfo*> &initialRoms);
         ~Allocator();
 
+        bool allocate(RomInfo *rom);
+
     private:
         void mergeBuddies();
 

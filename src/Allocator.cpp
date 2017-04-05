@@ -4,6 +4,7 @@
 #include "RomInfo.h"
 
 #include <QDebug>
+#include <math.h>
 
 #define MAX_ORDER 7
 
@@ -34,6 +35,40 @@ Allocator::Allocator(const QList<RomInfo*> &initialRoms)
 
 Allocator::~Allocator()
 {
+}
+
+bool Allocator::allocate(RomInfo *rom)
+{
+    // Try to allocate the ROM. If succesful, write its offset and return true.
+    int sizeOrder = log2(rom->romSize() / RomConstants::SmallestRomSize);
+    if (!m_orderToFreeAddresses.value(sizeOrder).isEmpty()) {
+        // Easy peasy, we have a free block of the right size
+        rom->setOffset(m_orderToFreeAddresses[sizeOrder].takeFirst());
+        return true;
+    }
+
+    // Otherwise, we look for the next order with free blocks
+    int nextUsefulOrder = sizeOrder + 1;
+    while (m_orderToFreeAddresses.value(nextUsefulOrder).isEmpty()) {
+        if (nextUsefulOrder > MAX_ORDER) {
+            // No space
+            return false;
+        }
+        nextUsefulOrder++;
+    }
+
+    for (int order = nextUsefulOrder; order > sizeOrder; --order) {
+        // Recursively split the block in two blocks of the lower order until we reach our size
+        int lowerOrderBlockSize = RomConstants::SmallestRomSize << (order - 1);
+        int firstHalf = m_orderToFreeAddresses[order].takeFirst();
+        int secondHalf = firstHalf + lowerOrderBlockSize;
+        m_orderToFreeAddresses[order - 1].append(firstHalf);
+        m_orderToFreeAddresses[order - 1].append(secondHalf);
+    }
+
+    // Now we have our block
+    rom->setOffset(m_orderToFreeAddresses[sizeOrder].takeFirst());
+    return true;
 }
 
 void Allocator::mergeBuddies()
