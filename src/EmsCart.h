@@ -14,6 +14,10 @@ namespace EmsConstants {
     const int ReceiveEndpoint = 1 | LIBUSB_ENDPOINT_IN;
     const int BankSize = 0x400000;
     const int SRAMSize = 0x020000;
+    const uint8_t WriteSRAMCommand = 0x4d;
+    const uint8_t ReadSRAMCommand = 0x6d;
+    const uint8_t WriteROMCommand = 0x57;
+    const uint8_t ReadROMCommand = 0xff;
 }
 
 class RomInfo;
@@ -28,13 +32,6 @@ class EmsCart : public QObject
         enum EmsMemory {
             ROM = 1,
             SRAM = 2
-        };
-
-        enum EmsCommands {
-            WriteSRAMCommand = 0x4d,
-            ReadSRAMCommand = 0x6d,
-            WriteROMCommand = 0x57,
-            ReadROMCommand = 0xff
         };
 
         enum Bank {

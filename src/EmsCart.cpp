@@ -131,10 +131,10 @@ QByteArray EmsCart::read(EmsMemory from, uint32_t offset, uint32_t count)
 
     switch (from) {
         case (ROM):
-            cmd = ReadROMCommand;
+            cmd = EmsConstants::ReadROMCommand;
             break;
         case (SRAM):
-            cmd = ReadSRAMCommand;
+            cmd = EmsConstants::ReadSRAMCommand;
             break;
         default:
             qWarning() << "from must be ROM or SRAM, aborting";
@@ -166,10 +166,10 @@ bool EmsCart::write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t cou
 
     switch (to) {
         case (ROM):
-            cmd = WriteROMCommand;
+            cmd = EmsConstants::WriteROMCommand;
             break;
         case (SRAM):
-            cmd = WriteSRAMCommand;
+            cmd = EmsConstants::WriteSRAMCommand;
             break;
         default:
             qWarning() << "to must be ROM or SRAM, aborting";
