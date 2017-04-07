@@ -37,6 +37,8 @@ Tab {
                     id: bankOneWidget;
                     title: "Bank One";
 
+                    selectable: false;
+
                     bank: EmsCart.BankOne;
 
                     anchors {
@@ -48,6 +50,8 @@ Tab {
                 BankWidget {
                     id: bankTwoWidget;
                     title: "Bank Two";
+
+                    selectable: false;
 
                     bank: EmsCart.BankTwo;
 
