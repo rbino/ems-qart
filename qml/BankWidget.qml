@@ -8,6 +8,7 @@ Item {
 
     property alias bank: bankModel.bank;
     property alias title: bankLabel.text;
+    property bool selectable: true;
 
     implicitHeight: bankLabel.height + bankView.height;
 
@@ -31,6 +32,9 @@ Item {
 
     TableView {
         id: bankView;
+
+        selectionMode: bankWidget.selectable ? SelectionMode.SingleSelection
+                                             : SelectionMode.NoSelection;
 
         anchors {
             left: parent.left;
