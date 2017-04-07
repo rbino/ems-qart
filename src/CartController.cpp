@@ -96,8 +96,9 @@ void CartController::readCart(const QUrl &outFileUrl, CartMemory memory, int int
     watcher->setFuture(readFuture);
 }
 
-void CartController::writeCart(CartMemory memory, int bank)
+void CartController::writeCart(CartMemory memory, int intBank)
 {
+    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
     setBusy(true);
     QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
     connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
@@ -196,7 +197,7 @@ void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, Ems
     emit transferCompleted();
 }
 
-void CartController::writeCartImpl(CartMemory memory, int bank)
+void CartController::writeCartImpl(CartMemory memory, EmsCart::Bank bank)
 {
     m_progress = 0;
     emit progressChanged(m_progress);
@@ -212,11 +213,6 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
         return;
     }
 
-    if (bank < 1 || bank > 2) {
-        qWarning() << "You can only select bank 1 or 2, aborting";
-        return;
-    }
-
     EmsCart::EmsMemory to;
     int totalWriteSize;
     int baseAddress;
@@ -225,7 +221,17 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
         case (ROM):
             to = EmsCart::ROM;
             totalWriteSize = qMin(EmsConstants::BankSize, (int) sourceFile.size());
-            baseAddress = (bank - 1) * EmsConstants::BankSize;
+            switch (bank) {
+                case EmsCart::BankOne:
+                    baseAddress = 0;
+                    break;
+                case EmsCart::BankTwo:
+                    baseAddress = EmsConstants::BankSize;
+                    break;
+                default:
+                    qWarning() << "Invalid bank in write, aborting";
+                    return;
+            }
             break;
 
         case (SRAM):
@@ -235,7 +241,7 @@ void CartController::writeCartImpl(CartMemory memory, int bank)
             break;
 
         default:
-            qWarning() << "Invalid memory location in read, aborting";
+            qWarning() << "Invalid memory location in write, aborting";
             return;
     }
 
