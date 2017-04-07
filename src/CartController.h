@@ -30,7 +30,7 @@ class CartController : public QObject
         Q_INVOKABLE void refresh();
         Q_INVOKABLE void setLocalFilePath(QUrl fileUrl, QString extension);
         Q_INVOKABLE void clearLocalFilePath();
-        Q_INVOKABLE void readCart(CartMemory memory, int bank, int romIndex);
+        Q_INVOKABLE void readCart(const QUrl &outFileUrl, CartMemory memory, int intBank, int romIndex);
         Q_INVOKABLE void writeCart(CartMemory memory, int bank);
 
         Q_INVOKABLE static QString urlToLocalPath(const QUrl &fileUrl);
@@ -61,7 +61,7 @@ class CartController : public QObject
 
         EmsCart *m_emsCart;
 
-        void readCartImpl(CartMemory memory, int bank, int romIndex);
+        void readCartImpl(const QUrl &outFileUrl, CartMemory memory, EmsCart::Bank bank, int romIndex);
         void writeCartImpl(CartMemory memory, int bank);
 
         void setBusy(bool busy);

@@ -82,8 +82,9 @@ void CartController::setBusy(bool busy)
     emit busyChanged(isBusy());
 }
 
-void CartController::readCart(CartMemory memory, int bank, int romIndex)
+void CartController::readCart(const QUrl &outFileUrl, CartMemory memory, int intBank, int romIndex)
 {
+    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
     setBusy(true);
     QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
     connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
@@ -91,7 +92,7 @@ void CartController::readCart(CartMemory memory, int bank, int romIndex)
         watcher->deleteLater();
     });
 
-    QFuture<void> readFuture = QtConcurrent::run(this, &CartController::readCartImpl, memory, bank, romIndex);
+    QFuture<void> readFuture = QtConcurrent::run(this, &CartController::readCartImpl, outFileUrl, memory, bank, romIndex);
     watcher->setFuture(readFuture);
 }
 
@@ -108,24 +109,14 @@ void CartController::writeCart(CartMemory memory, int bank)
     watcher->setFuture(writeFuture);
 }
 
-void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
+void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, EmsCart::Bank bank, int romIndex)
 {
     m_progress = 0;
     emit progressChanged(m_progress);
 
-    if (m_localFilePath.isEmpty()) {
-        emit error(QStringLiteral("You haven't selected the save location!"));
-        return;
-    }
-
-    QFile outFile(m_localFilePath);
+    QFile outFile(outFileUrl.toLocalFile());
     if (!outFile.open(QIODevice::WriteOnly)) {
         emit error(QStringLiteral("Can't open file %1").arg(m_localFilePath));
-        return;
-    }
-
-    if (bank < 1 || bank > 2) {
-        qWarning() << "You can only select bank 1 or 2, aborting";
         return;
     }
 
@@ -137,7 +128,8 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
         case (ROM):
             from = EmsCart::ROM;
             switch (bank) {
-                case 1:
+                case EmsCart::BankOne:
+                    baseAddress = 0;
                     if (romIndex < 0 || romIndex >= m_emsCart->bankOne().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
                         return;
@@ -148,7 +140,8 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
                         totalReadSize = EmsConstants::BankSize;
                     }
                     break;
-                case 2:
+                case EmsCart::BankTwo:
+                    baseAddress = EmsConstants::BankSize;
                     if (romIndex < 0 || romIndex >= m_emsCart->bankTwo().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
                         return;
@@ -159,8 +152,10 @@ void CartController::readCartImpl(CartMemory memory, int bank, int romIndex)
                         totalReadSize = EmsConstants::BankSize;
                     }
                     break;
+                default:
+                    qWarning() << "Invalid bank in read, aborting";
+                    return;
             }
-            baseAddress = (bank - 1) * EmsConstants::BankSize;
             break;
 
         case (SRAM):
