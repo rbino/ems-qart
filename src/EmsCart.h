@@ -22,7 +22,7 @@ class EmsCart : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(EmsMemory EmsCommands)
+    Q_ENUMS(EmsMemory EmsCommands Bank)
 
     public:
         enum EmsMemory {
@@ -35,6 +35,12 @@ class EmsCart : public QObject
             ReadSRAMCommand = 0x6d,
             WriteROMCommand = 0x57,
             ReadROMCommand = 0xff
+        };
+
+        enum Bank {
+            InvalidBank = 0,
+            BankOne = 1,
+            BankTwo = 2
         };
 
         virtual ~EmsCart();

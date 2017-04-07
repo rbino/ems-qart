@@ -1,11 +1,10 @@
 #include "BankModel.h"
 
-#include "EmsCart.h"
 #include "RomInfo.h"
 
 BankModel::BankModel(QObject *parent)
     : QAbstractListModel(parent)
-    , m_bank(InvalidBank)
+    , m_bank(EmsCart::InvalidBank)
 {
     m_roleNames.insert(Qt::UserRole, "title");
     m_roleNames.insert(Qt::UserRole + 1, "size");
@@ -16,7 +15,7 @@ BankModel::~BankModel()
 {
 }
 
-BankModel::Bank BankModel::bank() const
+EmsCart::Bank BankModel::bank() const
 {
     return m_bank;
 }
@@ -54,7 +53,7 @@ QVariant BankModel::data(const QModelIndex &index, int role) const
     }
 }
 
-void BankModel::setBank(Bank bank)
+void BankModel::setBank(EmsCart::Bank bank)
 {
     m_bank = bank;
 
@@ -62,11 +61,11 @@ void BankModel::setBank(Bank bank)
     disconnect(EmsCart::instance(), 0, this, 0);
 
     switch (bank) {
-        case BankOne:
+        case EmsCart::BankOne:
             connect(EmsCart::instance(), &EmsCart::bankOneChanged, this, &BankModel::refreshData);
             break;
 
-        case BankTwo:
+        case EmsCart::BankTwo:
             connect(EmsCart::instance(), &EmsCart::bankTwoChanged, this, &BankModel::refreshData);
             break;
 
@@ -90,11 +89,11 @@ void BankModel::refreshData()
 
     QList<RomInfo *> roms;
     switch (m_bank) {
-        case BankOne:
+        case EmsCart::BankOne:
             roms = EmsCart::instance()->bankOne();
             break;
 
-        case BankTwo:
+        case EmsCart::BankTwo:
             roms = EmsCart::instance()->bankTwo();
             break;
 

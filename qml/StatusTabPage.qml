@@ -37,7 +37,7 @@ Tab {
                     id: bankOneWidget;
                     title: "Bank One";
 
-                    bank: BankModel.BankOne;
+                    bank: EmsCart.BankOne;
 
                     anchors {
                         left: parent.left;
@@ -49,7 +49,7 @@ Tab {
                     id: bankTwoWidget;
                     title: "Bank Two";
 
-                    bank: BankModel.BankTwo;
+                    bank: EmsCart.BankTwo;
 
                     anchors {
                         left: parent.left;
