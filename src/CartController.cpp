@@ -3,6 +3,7 @@
 #include "RomInfo.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QtConcurrent>
 
@@ -47,6 +48,11 @@ double CartController::progress() const
 QString CartController::localFilePath() const
 {
     return m_localFilePath;
+}
+
+QString CartController::urlToLocalPath(const QUrl &fileUrl)
+{
+    return QDir::toNativeSeparators(fileUrl.toLocalFile());
 }
 
 void CartController::emsErrorUpdate(QString message)
