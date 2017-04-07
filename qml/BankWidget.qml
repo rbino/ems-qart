@@ -10,6 +10,8 @@ Item {
     property alias title: bankLabel.text;
     property bool selectable: true;
 
+    signal selected(int index);
+
     implicitHeight: bankLabel.height + bankView.height;
 
     Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
@@ -35,6 +37,10 @@ Item {
 
         selectionMode: bankWidget.selectable ? SelectionMode.SingleSelection
                                              : SelectionMode.NoSelection;
+
+        onClicked: {
+            bankWidget.selected(row);
+        }
 
         anchors {
             left: parent.left;
