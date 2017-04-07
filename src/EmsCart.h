@@ -26,10 +26,10 @@ class EmsCart : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(EmsMemory EmsCommands Bank)
+    Q_ENUMS(Memory Bank)
 
     public:
-        enum EmsMemory {
+        enum Memory {
             ROM = 1,
             SRAM = 2
         };
@@ -45,8 +45,8 @@ class EmsCart : public QObject
         static EmsCart *instance();
 
         void findDevice();
-        QByteArray read(EmsMemory from, uint32_t offset, uint32_t count);
-        bool write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t count);
+        QByteArray read(Memory from, uint32_t offset, uint32_t count);
+        bool write(Memory to, QByteArray data, uint32_t offset, uint32_t count);
         void updateInfo();
 
         bool ready() const;

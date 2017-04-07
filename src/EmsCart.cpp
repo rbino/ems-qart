@@ -124,7 +124,7 @@ QByteArray EmsCart::createCommandBuffer(uint8_t command, uint32_t offset, uint32
     return commandBuffer;
 }
 
-QByteArray EmsCart::read(EmsMemory from, uint32_t offset, uint32_t count)
+QByteArray EmsCart::read(Memory from, uint32_t offset, uint32_t count)
 {
     int result, transferred;
     uint8_t cmd;
@@ -159,7 +159,7 @@ QByteArray EmsCart::read(EmsMemory from, uint32_t offset, uint32_t count)
     return outBuffer;
 }
 
-bool EmsCart::write(EmsMemory to, QByteArray data, uint32_t offset, uint32_t count)
+bool EmsCart::write(Memory to, QByteArray data, uint32_t offset, uint32_t count)
 {
     int result, transferred;
     uint8_t cmd;
