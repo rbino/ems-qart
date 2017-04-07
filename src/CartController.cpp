@@ -130,28 +130,20 @@ void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, Ems
             from = EmsCart::ROM;
             switch (bank) {
                 case EmsCart::BankOne:
-                    baseAddress = 0;
                     if (romIndex < 0 || romIndex >= m_emsCart->bankOne().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
                         return;
                     }
-                    if (m_emsCart->bankOne().at(romIndex)->romSize() > 0) {
-                        totalReadSize = m_emsCart->bankOne().at(romIndex)->romSize();
-                    } else {
-                        totalReadSize = EmsConstants::BankSize;
-                    }
+                    totalReadSize = m_emsCart->bankOne().at(romIndex)->romSize();
+                    baseAddress = m_emsCart->bankOne().at(romIndex)->offset();
                     break;
                 case EmsCart::BankTwo:
-                    baseAddress = EmsConstants::BankSize;
                     if (romIndex < 0 || romIndex >= m_emsCart->bankTwo().size()) {
                         qWarning() << "ROM Index is out of bound, aborting";
                         return;
                     }
-                    if (m_emsCart->bankTwo().at(romIndex)->romSize() > 0) {
-                        totalReadSize = m_emsCart->bankTwo().at(romIndex)->romSize();
-                    } else {
-                        totalReadSize = EmsConstants::BankSize;
-                    }
+                    totalReadSize = m_emsCart->bankTwo().at(romIndex)->romSize();
+                    baseAddress = EmsConstants::BankSize + m_emsCart->bankTwo().at(romIndex)->offset();
                     break;
                 default:
                     qWarning() << "Invalid bank in read, aborting";
