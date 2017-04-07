@@ -82,9 +82,8 @@ void CartController::setBusy(bool busy)
     emit busyChanged(isBusy());
 }
 
-void CartController::readCart(const QUrl &outFileUrl, CartMemory memory, int intBank, int romIndex)
+void CartController::readCart(const QUrl &outFileUrl, int memory, int bank, int romIndex)
 {
-    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
     setBusy(true);
     QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
     connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
@@ -96,9 +95,8 @@ void CartController::readCart(const QUrl &outFileUrl, CartMemory memory, int int
     watcher->setFuture(readFuture);
 }
 
-void CartController::writeCart(CartMemory memory, int intBank)
+void CartController::writeCart(int memory, int bank)
 {
-    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
     setBusy(true);
     QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
     connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
@@ -110,8 +108,10 @@ void CartController::writeCart(CartMemory memory, int intBank)
     watcher->setFuture(writeFuture);
 }
 
-void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, EmsCart::Bank bank, int romIndex)
+void CartController::readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank, int romIndex)
 {
+    EmsCart::Memory memory = static_cast<EmsCart::Memory>(intMemory);
+    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
     m_progress = 0;
     emit progressChanged(m_progress);
 
@@ -121,13 +121,11 @@ void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, Ems
         return;
     }
 
-    EmsCart::EmsMemory from;
     int totalReadSize;
     int baseAddress;
 
     switch (memory) {
-        case (ROM):
-            from = EmsCart::ROM;
+        case EmsCart::ROM:
             switch (bank) {
                 case EmsCart::BankOne:
                     if (romIndex < 0 || romIndex >= m_emsCart->bankOne().size()) {
@@ -151,8 +149,7 @@ void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, Ems
             }
             break;
 
-        case (SRAM):
-            from = EmsCart::SRAM;
+        case EmsCart::SRAM:
             totalReadSize = EmsConstants::SRAMSize;
             baseAddress = 0;
             break;
@@ -164,7 +161,7 @@ void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, Ems
 
     int offset = 0;
     while (offset < totalReadSize) {
-        QByteArray chunk = m_emsCart->read(from, baseAddress + offset, EmsConstants::ReadBlockSize);
+        QByteArray chunk = m_emsCart->read(memory, baseAddress + offset, EmsConstants::ReadBlockSize);
         if (chunk.isEmpty()) {
             emit error(QStringLiteral("Error reading cart at address %1, aborting").arg(baseAddress + offset));
             // Is the cart still connected?
@@ -189,8 +186,10 @@ void CartController::readCartImpl(const QUrl &outFileUrl, CartMemory memory, Ems
     emit transferCompleted();
 }
 
-void CartController::writeCartImpl(CartMemory memory, EmsCart::Bank bank)
+void CartController::writeCartImpl(int intMemory, int intBank)
 {
+    EmsCart::Memory memory = static_cast<EmsCart::Memory>(intMemory);
+    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
     m_progress = 0;
     emit progressChanged(m_progress);
 
@@ -205,13 +204,11 @@ void CartController::writeCartImpl(CartMemory memory, EmsCart::Bank bank)
         return;
     }
 
-    EmsCart::EmsMemory to;
     int totalWriteSize;
     int baseAddress;
 
     switch (memory) {
-        case (ROM):
-            to = EmsCart::ROM;
+        case EmsCart::ROM:
             totalWriteSize = qMin(EmsConstants::BankSize, (int) sourceFile.size());
             switch (bank) {
                 case EmsCart::BankOne:
@@ -226,8 +223,7 @@ void CartController::writeCartImpl(CartMemory memory, EmsCart::Bank bank)
             }
             break;
 
-        case (SRAM):
-            to = EmsCart::SRAM;
+        case EmsCart::SRAM:
             totalWriteSize = qMin(EmsConstants::SRAMSize, (int) sourceFile.size());
             baseAddress = 0;
             break;
@@ -245,7 +241,7 @@ void CartController::writeCartImpl(CartMemory memory, EmsCart::Bank bank)
             return;
         }
 
-        if (!m_emsCart->write(to, chunk, baseAddress + offset, EmsConstants::WriteBlockSize)) {
+        if (!m_emsCart->write(memory, chunk, baseAddress + offset, EmsConstants::WriteBlockSize)) {
             emit error(QStringLiteral("Error writing to cart at address %1, aborting").arg(baseAddress + offset));
             // Is the cart still connected?
             m_emsCart->findDevice();

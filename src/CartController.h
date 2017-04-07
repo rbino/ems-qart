@@ -15,14 +15,7 @@ class CartController : public QObject
     Q_PROPERTY(double progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QString localFilePath READ localFilePath NOTIFY localFilePathChanged)
 
-    Q_ENUMS(CartMemory)
-
     public:
-        enum CartMemory {
-            ROM,
-            SRAM
-        };
-
         CartController(QObject *parent = nullptr);
 
         virtual ~CartController();
@@ -30,8 +23,8 @@ class CartController : public QObject
         Q_INVOKABLE void refresh();
         Q_INVOKABLE void setLocalFilePath(QUrl fileUrl, QString extension);
         Q_INVOKABLE void clearLocalFilePath();
-        Q_INVOKABLE void readCart(const QUrl &outFileUrl, CartMemory memory, int intBank, int romIndex);
-        Q_INVOKABLE void writeCart(CartMemory memory, int intBank);
+        Q_INVOKABLE void readCart(const QUrl &outFileUrl, int memory, int bank, int romIndex);
+        Q_INVOKABLE void writeCart(int memory, int bank);
 
         Q_INVOKABLE static QString urlToLocalPath(const QUrl &fileUrl);
 
@@ -61,8 +54,8 @@ class CartController : public QObject
 
         EmsCart *m_emsCart;
 
-        void readCartImpl(const QUrl &outFileUrl, CartMemory memory, EmsCart::Bank bank, int romIndex);
-        void writeCartImpl(CartMemory memory, EmsCart::Bank bank);
+        void readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank, int romIndex);
+        void writeCartImpl(int intMemory, int intBank);
 
         void setBusy(bool busy);
 };
