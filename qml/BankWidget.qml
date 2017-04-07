@@ -12,6 +12,10 @@ Item {
 
     signal selected(int index);
 
+    function deselect() {
+        bankView.selection.clear();
+    }
+
     implicitHeight: bankLabel.height + bankView.height;
 
     Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
