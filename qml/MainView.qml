@@ -54,12 +54,20 @@ ApplicationWindow {
             title: "Status";
         }
         TabPage {
-            id: loadTab;
-            title: "Load";
+            id: readROMTab;
+            title: "Read ROM";
         }
         TabPage {
-            id: saveTab;
-            title: "Save";
+            id: writeROMTab;
+            title: "Write ROM(s)";
+        }
+        TabPage {
+            id: readSRAMTab;
+            title: "Read SRAM";
+        }
+        TabPage {
+            id: writeSRAMTab;
+            title: "Write SRAM";
         }
         TabPage {
             id: utilsTab;
