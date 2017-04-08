@@ -51,17 +51,21 @@ ApplicationWindow {
             id: statusTab;
             title: "Status";
         }
-        TabPage {
+        ReadTabPage {
             id: readROMTab;
             title: "Read ROM";
+
+            memory: EmsCart.ROM;
         }
         TabPage {
             id: writeROMTab;
             title: "Write ROM(s)";
         }
-        TabPage {
+        ReadTabPage {
             id: readSRAMTab;
             title: "Read SRAM";
+
+            memory: EmsCart.SRAM;
         }
         TabPage {
             id: writeSRAMTab;
