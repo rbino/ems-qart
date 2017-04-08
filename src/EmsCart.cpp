@@ -229,6 +229,7 @@ void EmsCart::setProgress(double progress)
 
 void EmsCart::readyUpdate(bool newReady)
 {
+    emit readyChanged(newReady);
     if (newReady) {
         updateInfo();
     } else {
@@ -239,7 +240,6 @@ void EmsCart::readyUpdate(bool newReady)
         m_bankTwo.clear();
         emit bankTwoChanged(m_bankTwo);
     }
-    emit readyChanged(newReady);
 }
 
 void EmsCart::updateInfo()
