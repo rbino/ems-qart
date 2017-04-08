@@ -7,19 +7,8 @@ import EmsQart 1.0
 Item {
     id: emsCartItem;
 
-    MessageDialog {
-        id: messageDialog;
-    }
-
     CartController {
         id: cartController;
-
-        onError: {
-            messageDialog.title = "Error";
-            messageDialog.text = message;
-            messageDialog.icon = StandardIcon.Critical;
-            messageDialog.open();
-        }
     }
 
     implicitWidth: emsCartIcon.width;
