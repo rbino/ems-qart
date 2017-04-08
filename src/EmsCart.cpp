@@ -250,6 +250,8 @@ void EmsCart::updateInfo()
 void EmsCart::updateInfoImpl()
 {
     setBusy(true);
+    setProgress(0);
+    double totalReadSize = EmsConstants::BankSize * 2;
     QByteArray header;
     int offset = 0;
     // Bank 1
@@ -260,6 +262,7 @@ void EmsCart::updateInfoImpl()
             rom->setOffset(offset);
             m_bankOne.append(rom);
         }
+        setProgress(offset / totalReadSize);
         offset += RomConstants::SmallestRomSize;
         QApplication::processEvents();
     }
@@ -274,6 +277,7 @@ void EmsCart::updateInfoImpl()
             rom->setOffset(offset);
             m_bankTwo.append(rom);
         }
+        setProgress((offset + EmsConstants::BankSize) / totalReadSize);
         offset += RomConstants::SmallestRomSize;
         QApplication::processEvents();
     }
