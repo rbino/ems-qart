@@ -6,10 +6,6 @@ import EmsQart 1.0
 Tab {
     id: statusTabPage;
 
-    CartController {
-        id: cartController;
-    }
-
     RowLayout {
         id: tabRowLayout;
 
@@ -72,5 +68,4 @@ Tab {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter;
         }
     }
-
 }
