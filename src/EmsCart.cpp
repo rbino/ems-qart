@@ -17,6 +17,7 @@ EmsCart::EmsCart(QObject *parent) :
     m_deviceHandle = nullptr;
     m_interfaceClaimed = false;
     m_busy = false;
+    m_progress = 0;
 
     int result = libusb_init(NULL);
     if (result < 0) {
