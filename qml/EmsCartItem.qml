@@ -122,4 +122,18 @@ Item {
             verticalAlignment: Text.AlignBottom;
         }
     }
+
+    ProgressBar {
+        id: progressBar;
+
+        visible: cartController.busy;
+        value: cartController.progress;
+
+        anchors {
+            top: emsCartIcon.bottom;
+            topMargin: 50;
+            left: emsCartIcon.left;
+            right: emsCartIcon.right;
+        }
+    }
 }
