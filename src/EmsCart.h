@@ -73,6 +73,7 @@ class EmsCart : public QObject
     private slots:
         void readyUpdate(bool newReady);
         void setBusy(bool busy);
+        void setProgress(double progress);
 
         void readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank = -1, int romIndex = -1);
         void writeCartImpl(const QUrl &inFileUrl, int intMemory, int intBank = -1, int offset = -1);

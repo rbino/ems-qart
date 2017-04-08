@@ -220,6 +220,12 @@ void EmsCart::setBusy(bool busy)
     emit busyChanged(this->busy());
 }
 
+void EmsCart::setProgress(double progress)
+{
+    m_progress = progress;
+    emit progressChanged(progress);
+}
+
 void EmsCart::readyUpdate(bool newReady)
 {
     if (newReady) {
@@ -332,8 +338,7 @@ void EmsCart::readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank, i
 {
     EmsCart::Memory memory = static_cast<EmsCart::Memory>(intMemory);
     EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
-    m_progress = 0;
-    emit progressChanged(m_progress);
+    setProgress(0);
 
     QFile outFile(outFileUrl.toLocalFile());
     if (!outFile.open(QIODevice::WriteOnly)) {
@@ -395,8 +400,7 @@ void EmsCart::readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank, i
             return;
         }
 
-        m_progress = (double) offset / totalReadSize;
-        emit progressChanged(m_progress);
+        setProgress((double) offset / totalReadSize);
 
         offset += EmsConstants::ReadBlockSize;
     }
@@ -410,8 +414,7 @@ void EmsCart::writeCartImpl(const QUrl &inFileUrl, int intMemory, int intBank, i
 {
     EmsCart::Memory memory = static_cast<EmsCart::Memory>(intMemory);
     EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
-    m_progress = 0;
-    emit progressChanged(m_progress);
+    setProgress(0);
 
     QFile sourceFile(inFileUrl.toLocalFile());
     if (!sourceFile.open(QIODevice::ReadOnly)) {
@@ -463,8 +466,7 @@ void EmsCart::writeCartImpl(const QUrl &inFileUrl, int intMemory, int intBank, i
             return;
         }
 
-        m_progress = (double) offset / totalWriteSize;
-        emit progressChanged(m_progress);
+        setProgress((double) offset / totalWriteSize);
 
         offset += EmsConstants::WriteBlockSize;
     }
