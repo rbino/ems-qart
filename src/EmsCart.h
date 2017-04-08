@@ -49,8 +49,12 @@ class EmsCart : public QObject
         bool write(Memory to, QByteArray data, uint32_t offset, uint32_t count);
         void updateInfo();
 
+        void readCart(const QUrl &outFileUrl, int memory, int bank = -1, int romIndex = -1);
+        void writeCart(const QUrl &inFileUrl, int memory, int bank = -1, int offset = -1);
+
         bool ready() const;
         bool busy() const;
+        double progress() const;
 
         QList<RomInfo *> bankOne() const;
         QList<RomInfo *> bankTwo() const;
@@ -58,6 +62,8 @@ class EmsCart : public QObject
     signals:
         void readyChanged(bool ready);
         void error(QString message);
+        void transferCompleted();
+        void progressChanged(double progress);
 
         void busyChanged(bool busy);
 
@@ -67,6 +73,9 @@ class EmsCart : public QObject
     private slots:
         void readyUpdate(bool newReady);
         void setBusy(bool busy);
+
+        void readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank = -1, int romIndex = -1);
+        void writeCartImpl(const QUrl &inFileUrl, int intMemory, int intBank = -1, int offset = -1);
 
         void updateInfoImpl();
 
@@ -78,6 +87,7 @@ class EmsCart : public QObject
         struct libusb_device_handle *m_deviceHandle;
         bool m_interfaceClaimed;
         bool m_busy;
+        double m_progress;
 
         QList<RomInfo *> m_bankOne;
         QList<RomInfo *> m_bankTwo;

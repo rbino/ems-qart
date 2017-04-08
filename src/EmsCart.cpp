@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QDataStream>
 #include <QTimer>
+#include <QtConcurrent>
 #include <QtEndian>
 
 EmsCart *EmsCart::s_instance;
@@ -198,6 +199,11 @@ bool EmsCart::busy() const
     return m_busy;
 }
 
+double EmsCart::progress() const
+{
+    return m_progress;
+}
+
 QList<RomInfo *> EmsCart::bankOne() const
 {
     return m_bankOne;
@@ -211,7 +217,7 @@ QList<RomInfo *> EmsCart::bankTwo() const
 void EmsCart::setBusy(bool busy)
 {
     m_busy = busy;
-    emit busyChanged(busy);
+    emit busyChanged(this->busy());
 }
 
 void EmsCart::readyUpdate(bool newReady)
@@ -294,4 +300,179 @@ bool EmsCart::isValidHeader(const QByteArray &header, int offset)
     }
 
     return true;
+}
+
+void EmsCart::readCart(const QUrl &outFileUrl, int memory, int bank, int romIndex)
+{
+    setBusy(true);
+    QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
+    connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
+        setBusy(false);
+        watcher->deleteLater();
+    });
+
+    QFuture<void> readFuture = QtConcurrent::run(this, &EmsCart::readCartImpl, outFileUrl, memory, bank, romIndex);
+    watcher->setFuture(readFuture);
+}
+
+void EmsCart::writeCart(const QUrl &inFileUrl, int memory, int bank, int offset)
+{
+    setBusy(true);
+    QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
+    connect(watcher, &QFutureWatcher<void>::finished, this, [this, watcher] {
+        setBusy(false);
+        watcher->deleteLater();
+    });
+
+    QFuture<void> writeFuture = QtConcurrent::run(this, &EmsCart::writeCartImpl, inFileUrl, memory, bank, offset);
+    watcher->setFuture(writeFuture);
+}
+
+void EmsCart::readCartImpl(const QUrl &outFileUrl, int intMemory, int intBank, int romIndex)
+{
+    EmsCart::Memory memory = static_cast<EmsCart::Memory>(intMemory);
+    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
+    m_progress = 0;
+    emit progressChanged(m_progress);
+
+    QFile outFile(outFileUrl.toLocalFile());
+    if (!outFile.open(QIODevice::WriteOnly)) {
+        emit error(QStringLiteral("Can't open file %1").arg(outFileUrl.toLocalFile()));
+        return;
+    }
+
+    int totalReadSize;
+    int baseAddress;
+
+    switch (memory) {
+        case EmsCart::ROM:
+            switch (bank) {
+                case EmsCart::BankOne:
+                    if (romIndex < 0 || romIndex >= bankOne().size()) {
+                        qWarning() << "ROM Index is out of bound, aborting";
+                        return;
+                    }
+                    totalReadSize = bankOne().at(romIndex)->romSize();
+                    baseAddress = bankOne().at(romIndex)->offset();
+                    break;
+                case EmsCart::BankTwo:
+                    if (romIndex < 0 || romIndex >= bankTwo().size()) {
+                        qWarning() << "ROM Index is out of bound, aborting";
+                        return;
+                    }
+                    totalReadSize = bankTwo().at(romIndex)->romSize();
+                    baseAddress = EmsConstants::BankSize + bankTwo().at(romIndex)->offset();
+                    break;
+                default:
+                    qWarning() << "Invalid bank in read, aborting";
+                    return;
+            }
+            break;
+
+        case EmsCart::SRAM:
+            totalReadSize = EmsConstants::SRAMSize;
+            baseAddress = 0;
+            break;
+
+        default:
+            qWarning() << "Invalid memory location in read, aborting";
+            return;
+    }
+
+    int offset = 0;
+    while (offset < totalReadSize) {
+        QByteArray chunk = read(memory, baseAddress + offset, EmsConstants::ReadBlockSize);
+        if (chunk.isEmpty()) {
+            emit error(QStringLiteral("Error reading cart at address %1, aborting").arg(baseAddress + offset));
+            // Is the cart still connected?
+            findDevice();
+            return;
+        }
+
+        int result = outFile.write(chunk);
+        if (result < 0) {
+            emit error(QStringLiteral("Error while writing in the file, aborting"));
+            return;
+        }
+
+        m_progress = (double) offset / totalReadSize;
+        emit progressChanged(m_progress);
+
+        offset += EmsConstants::ReadBlockSize;
+    }
+
+    outFile.close();
+
+    emit transferCompleted();
+}
+
+void EmsCart::writeCartImpl(const QUrl &inFileUrl, int intMemory, int intBank, int romOffset)
+{
+    EmsCart::Memory memory = static_cast<EmsCart::Memory>(intMemory);
+    EmsCart::Bank bank = static_cast<EmsCart::Bank>(intBank);
+    m_progress = 0;
+    emit progressChanged(m_progress);
+
+    QFile sourceFile(inFileUrl.toLocalFile());
+    if (!sourceFile.open(QIODevice::ReadOnly)) {
+        emit error(QStringLiteral("Can't open file %1").arg(inFileUrl.toLocalFile()));
+        return;
+    }
+
+    int totalWriteSize;
+    int baseAddress;
+
+    switch (memory) {
+        case EmsCart::ROM:
+            totalWriteSize = qMin(EmsConstants::BankSize, (int) sourceFile.size());
+            switch (bank) {
+                case EmsCart::BankOne:
+                    baseAddress = romOffset;
+                    break;
+                case EmsCart::BankTwo:
+                    baseAddress = EmsConstants::BankSize + romOffset;
+                    break;
+                default:
+                    qWarning() << "Invalid bank in write, aborting";
+                    return;
+            }
+            break;
+
+        case EmsCart::SRAM:
+            totalWriteSize = qMin(EmsConstants::SRAMSize, (int) sourceFile.size());
+            baseAddress = 0;
+            break;
+
+        default:
+            qWarning() << "Invalid memory location in write, aborting";
+            return;
+    }
+
+    int offset = 0;
+    while (offset < totalWriteSize && sourceFile.bytesAvailable()) {
+        QByteArray chunk = sourceFile.read(EmsConstants::WriteBlockSize);
+        if (chunk.isEmpty()) {
+            emit error(QStringLiteral("Error while reading the source file, aborting"));
+            return;
+        }
+
+        if (!write(memory, chunk, baseAddress + offset, EmsConstants::WriteBlockSize)) {
+            emit error(QStringLiteral("Error writing to cart at address %1, aborting").arg(baseAddress + offset));
+            // Is the cart still connected?
+            findDevice();
+            return;
+        }
+
+        m_progress = (double) offset / totalWriteSize;
+        emit progressChanged(m_progress);
+
+        offset += EmsConstants::WriteBlockSize;
+    }
+
+    sourceFile.close();
+
+    emit transferCompleted();
+
+    // Update cart informations
+    updateInfo();
 }
