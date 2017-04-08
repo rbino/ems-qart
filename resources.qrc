@@ -3,6 +3,7 @@
     <file>qml/MainView.qml</file>
     <file>qml/BankWidget.qml</file>
     <file>qml/EmsCartItem.qml</file>
+    <file>qml/ReadTabPage.qml</file>
     <file>qml/TabPage.qml</file>
     <file>qml/StatusTabPage.qml</file>
 
