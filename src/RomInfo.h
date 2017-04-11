@@ -34,6 +34,7 @@ class RomInfo : public QObject
         void setOffset(int offset);
         void setSourceFile(const QString &sourceFile);
 
+        bool isValid() const;
         QString title() const;
         QString sourceFile() const;
         int romSize() const;

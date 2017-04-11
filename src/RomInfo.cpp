@@ -30,6 +30,11 @@ RomInfo::~RomInfo()
 {
 }
 
+bool RomInfo::isValid() const
+{
+    return m_romSize > 0;
+}
+
 void RomInfo::updateInfo(const QByteArray &header)
 {
     // Title max length is 16
