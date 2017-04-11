@@ -31,13 +31,16 @@ class RomInfo : public QObject
         void updateInfo(const QByteArray &header);
         void resetInfo();
         void setOffset(int offset);
+        void setSourceFile(const QString &sourceFile);
 
         QString title() const;
+        QString sourceFile() const;
         int romSize() const;
         int offset() const;
 
     private:
         QString m_title;
+        QString m_sourceFile;
         int m_romSize;
         int m_offset;
 };

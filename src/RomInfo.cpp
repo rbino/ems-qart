@@ -65,9 +65,19 @@ void RomInfo::setOffset(int offset)
     m_offset = offset;
 }
 
+void RomInfo::setSourceFile(const QString &sourceFile)
+{
+    m_sourceFile = sourceFile;
+}
+
 QString RomInfo::title() const
 {
     return m_title;
+}
+
+QString RomInfo::sourceFile() const
+{
+    return m_sourceFile;
 }
 
 int RomInfo::romSize() const
