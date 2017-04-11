@@ -3,9 +3,9 @@
 
 #include "EmsCart.h"
 
-#include <QAbstractListModel>
+#include "RomListModel.h"
 
-class BankModel : public QAbstractListModel
+class BankModel : public RomListModel
 {
     Q_OBJECT
 
@@ -17,10 +17,6 @@ class BankModel : public QAbstractListModel
 
         EmsCart::Bank bank() const;
 
-        QHash<int, QByteArray> roleNames() const override;
-        int rowCount(const QModelIndex &parent) const override;
-        QVariant data(const QModelIndex &index, int role) const override;
-
         void setBank(EmsCart::Bank bank);
 
     private slots:
@@ -28,11 +24,6 @@ class BankModel : public QAbstractListModel
 
     private:
         EmsCart::Bank m_bank;
-        QHash<int, QByteArray> m_roleNames;
-
-        QList<QString> m_titles;
-        QList<int> m_sizes;
-        QList<int> m_offsets;
 };
 
 #endif
