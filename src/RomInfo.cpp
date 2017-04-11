@@ -1,5 +1,7 @@
 #include "RomInfo.h"
 
+#include <QFile>
+
 RomInfo::RomInfo(QObject *parent) :
     QObject(parent)
 {
@@ -11,6 +13,17 @@ RomInfo::RomInfo(const QByteArray &header, QObject *parent)
     : RomInfo(parent)
 {
     updateInfo(header);
+}
+
+RomInfo::RomInfo(const QString &filePath, QObject *parent)
+    : RomInfo(parent)
+{
+    QFile romFile(filePath);
+    if (romFile.open(QIODevice::ReadOnly)) {
+        QByteArray header = romFile.read(RomConstants::HeaderSize);
+        updateInfo(header);
+        setSourceFile(filePath);
+    }
 }
 
 RomInfo::~RomInfo()
