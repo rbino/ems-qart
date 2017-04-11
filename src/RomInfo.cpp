@@ -7,8 +7,8 @@ RomInfo::RomInfo(QObject *parent) :
     m_offset = -1;
 }
 
-RomInfo::RomInfo(const QByteArray &header, QObject *parent) :
-    QObject(parent)
+RomInfo::RomInfo(const QByteArray &header, QObject *parent)
+    : RomInfo(parent)
 {
     updateInfo(header);
 }
