@@ -3,12 +3,14 @@
 #include <QtQml>
 #include <QIcon>
 
+#include "AllocationController.h"
 #include "BankModel.h"
 #include "CartController.h"
 #include "EmsCart.h"
 
 int main(int argc, char *argv[])
 {
+    qmlRegisterType<AllocationController>("EmsQart", 1, 0, "AllocationController");
     qmlRegisterType<BankModel>("EmsQart", 1, 0, "BankModel");
     qmlRegisterType<CartController>("EmsQart", 1, 0, "CartController");
 
