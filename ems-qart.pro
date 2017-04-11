@@ -9,9 +9,10 @@ TARGET = ems-qart
 
 DEFINES += QT_NO_CAST_FROM_ASCII
 
-HEADERS = src/Allocator.h src/BankModel.h src/CartController.h src/EmsCart.h src/RomInfo.h
-SOURCES = src/main.cpp src/Allocator.cpp src/BankModel.cpp src/CartController.cpp \
-          src/EmsCart.cpp src/RomInfo.cpp
+HEADERS = src/Allocator.h src/BankModel.h src/CartController.h \
+          src/EmsCart.h src/RomInfo.h src/RomListModel.h
+SOURCES = src/main.cpp src/Allocator.cpp src/BankModel.cpp \
+          src/CartController.cpp src/EmsCart.cpp src/RomInfo.cpp src/RomListModel.cpp
 RESOURCES = resources.qrc
 
 RC_ICONS = images/ems-qart.ico
