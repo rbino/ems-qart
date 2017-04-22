@@ -43,6 +43,7 @@ void BankModel::setBank(EmsCart::Bank bank)
 
 void BankModel::refreshData()
 {
+    removeAll();
 
     QList<RomInfo *> roms;
     switch (m_bank) {
