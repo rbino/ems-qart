@@ -41,7 +41,7 @@ QVariant RomListModel::data(const QModelIndex &index, int role) const
             return QVariant(m_sizes.value(row));
 
         case Qt::UserRole + 2:
-            return QVariant(m_offsets.value(row));
+            return QVariant(QStringLiteral("0x%1").arg(QString::number(m_offsets.value(row), 16)));
 
         case Qt::UserRole + 3:
             return QVariant(m_sourceFiles.value(row));
