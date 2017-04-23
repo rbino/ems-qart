@@ -24,6 +24,8 @@ class AllocationController : public QObject
 
         void setBank(EmsCart::Bank bank);
 
+        bool allocate(RomInfo *rom);
+
     signals:
         void romsModelChanged();
         void bankChanged(EmsCart::Bank bank);

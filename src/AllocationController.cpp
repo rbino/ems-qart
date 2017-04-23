@@ -32,4 +32,14 @@ void AllocationController::setBank(EmsCart::Bank bank)
         m_bank = bank;
         emit bankChanged(bank);
     }
+
+bool AllocationController::allocate(RomInfo *rom)
+{
+    if (m_allocator->allocate(rom)) {
+        m_romsModel->addRom(rom);
+        m_allocatedRoms.append(rom);
+        return true;
+    }
+
+    return false;
 }
