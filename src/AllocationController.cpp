@@ -1,5 +1,6 @@
 #include "AllocationController.h"
 
+#include "Allocator.h"
 #include "EmsCart.h"
 #include "RomInfo.h"
 #include "RomListModel.h"
@@ -7,6 +8,7 @@
 AllocationController::AllocationController(QObject *parent)
     : QObject(parent)
     , m_romsModel(new RomListModel())
+    , m_allocator(new Allocator())
 {
 }
 

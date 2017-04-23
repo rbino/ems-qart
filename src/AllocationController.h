@@ -5,6 +5,7 @@
 
 #include <QObject>
 
+class Allocator;
 class RomListModel;
 
 class AllocationController : public QObject
@@ -29,6 +30,7 @@ class AllocationController : public QObject
 
     private:
         RomListModel *m_romsModel;
+        Allocator *m_allocator;
 
         EmsCart::Bank m_bank;
 };
