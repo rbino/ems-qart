@@ -26,6 +26,8 @@ class AllocationController : public QObject
 
         bool allocate(RomInfo *rom);
 
+        void remove(int romIndex);
+
         void reallocateAll();
 
     signals:

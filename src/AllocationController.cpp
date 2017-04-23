@@ -80,3 +80,15 @@ bool AllocationController::allocate(RomInfo *rom)
 
     return false;
 }
+
+void AllocationController::remove(int romIndex)
+{
+    if (romIndex < 0 || romIndex > m_allocatedRoms.count()) {
+        return;
+    }
+
+    m_romsModel->removeRom(romIndex);
+    delete m_allocatedRoms.takeAt(romIndex);
+
+    reallocateAll();
+}
