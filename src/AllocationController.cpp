@@ -31,7 +31,44 @@ void AllocationController::setBank(EmsCart::Bank bank)
     if (m_bank != bank) {
         m_bank = bank;
         emit bankChanged(bank);
+
+        reallocateAll();
     }
+}
+
+void AllocationController::reallocateAll()
+{
+    if (m_allocator) {
+        delete m_allocator;
+    }
+
+    switch (m_bank) {
+        case EmsCart::BankOne:
+            m_allocator = new Allocator(EmsCart::instance()->bankOne());
+            break;
+
+        case EmsCart::BankTwo:
+            m_allocator = new Allocator(EmsCart::instance()->bankTwo());
+            break;
+
+        default:
+            m_allocator = new Allocator();
+            // We return, but we keep allocated ROMs so we can retry
+            return;
+    }
+
+    QList<RomInfo*> roms = m_allocatedRoms;
+    m_allocatedRoms.clear();
+    m_romsModel->removeAll();
+
+    for (RomInfo *rom : roms) {
+        // Try to reallocate all roms
+        if (!allocate(rom)) {
+            // Free the ones we couldn't allocate
+            delete rom;
+        }
+    }
+}
 
 bool AllocationController::allocate(RomInfo *rom)
 {
