@@ -31,6 +31,7 @@ class AllocationController : public QObject
     private:
         RomListModel *m_romsModel;
         Allocator *m_allocator;
+        QList<RomInfo*> m_allocatedRoms;
 
         EmsCart::Bank m_bank;
 };
