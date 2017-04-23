@@ -5,6 +5,8 @@
 #include "RomInfo.h"
 #include "RomListModel.h"
 
+#include <QUrl>
+
 AllocationController::AllocationController(QObject *parent)
     : QObject(parent)
     , m_romsModel(new RomListModel())
@@ -68,6 +70,18 @@ void AllocationController::reallocateAll()
             delete rom;
         }
     }
+}
+
+bool AllocationController::allocate(const QUrl &romUrl)
+{
+    RomInfo *rom = new RomInfo(romUrl.toLocalFile());
+    if (rom->isValid() && allocate(rom)) {
+        return true;
+    }
+
+    // If we didn't allocate it, free the RomInfo
+    delete rom;
+    return false;
 }
 
 bool AllocationController::allocate(RomInfo *rom)

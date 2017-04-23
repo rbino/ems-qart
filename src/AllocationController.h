@@ -24,6 +24,7 @@ class AllocationController : public QObject
 
         void setBank(EmsCart::Bank bank);
 
+        Q_INVOKABLE bool allocate(const QUrl &romUrl);
         bool allocate(RomInfo *rom);
 
         void remove(int romIndex);
