@@ -6,7 +6,7 @@
 
 AllocationController::AllocationController(QObject *parent)
     : QObject(parent)
-    , m_romsModel(new RomListModel)
+    , m_romsModel(new RomListModel())
 {
 }
 
