@@ -18,3 +18,16 @@ QObject *AllocationController::romsModel() const
 {
     return m_romsModel;
 }
+
+EmsCart::Bank AllocationController::bank() const
+{
+    return m_bank;
+}
+
+void AllocationController::setBank(EmsCart::Bank bank)
+{
+    if (m_bank != bank) {
+        m_bank = bank;
+        emit bankChanged(bank);
+    }
+}
