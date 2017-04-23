@@ -8,6 +8,14 @@
 
 #define MAX_ORDER 7
 
+Allocator::Allocator()
+{
+    // Invalid allocator
+    for (int order = 0; order <= MAX_ORDER; order++) {
+        m_orderToFreeAddresses.insert(order, QList<int>());
+    }
+}
+
 Allocator::Allocator(const QList<RomInfo*> &initialRoms)
 {
     // First, we add all the possible smallest blocks (the smallest possible ROM)

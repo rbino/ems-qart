@@ -9,6 +9,7 @@ class RomInfo;
 class Allocator
 {
     public:
+        Allocator();
         Allocator(const QList<RomInfo*> &initialRoms);
         ~Allocator();
 
