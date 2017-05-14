@@ -15,6 +15,8 @@ class Allocator
 
         bool allocate(RomInfo *rom);
 
+        int freeSpace() const;
+
     private:
         void mergeBuddies();
 

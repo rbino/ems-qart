@@ -45,6 +45,18 @@ Allocator::~Allocator()
 {
 }
 
+int Allocator::freeSpace() const
+{
+    int freeSpace = 0;
+    QHash<int, QList<int>>::const_iterator it;
+    for (it = m_orderToFreeAddresses.constBegin(); it != m_orderToFreeAddresses.constEnd(); ++it) {
+        int orderBlockSize = RomConstants::SmallestRomSize << it.key();
+        freeSpace += orderBlockSize * it.value().count();
+    }
+
+    return freeSpace;
+}
+
 bool Allocator::allocate(RomInfo *rom)
 {
     // Try to allocate the ROM. If succesful, write its offset and return true.
