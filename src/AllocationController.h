@@ -14,6 +14,7 @@ class AllocationController : public QObject
 
     Q_PROPERTY(EmsCart::Bank bank READ bank WRITE setBank)
     Q_PROPERTY(QObject * romsModel READ romsModel NOTIFY romsModelChanged)
+    Q_PROPERTY(int freeSpace READ freeSpace NOTIFY freeSpaceChanged)
 
     public:
         AllocationController(QObject *parent = nullptr);
@@ -21,6 +22,7 @@ class AllocationController : public QObject
 
         QObject *romsModel() const;
         EmsCart::Bank bank() const;
+        int freeSpace() const;
 
         void setBank(EmsCart::Bank bank);
 
@@ -34,6 +36,7 @@ class AllocationController : public QObject
     signals:
         void romsModelChanged();
         void bankChanged(EmsCart::Bank bank);
+        void freeSpaceChanged();
 
     private:
         RomListModel *m_romsModel;

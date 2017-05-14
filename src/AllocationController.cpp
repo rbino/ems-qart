@@ -5,6 +5,7 @@
 #include "RomInfo.h"
 #include "RomListModel.h"
 
+#include <QDebug>
 #include <QUrl>
 
 AllocationController::AllocationController(QObject *parent)
@@ -38,6 +39,11 @@ void AllocationController::setBank(EmsCart::Bank bank)
     }
 }
 
+int AllocationController::freeSpace() const
+{
+    return m_allocator->freeSpace();
+}
+
 void AllocationController::reallocateAll()
 {
     if (m_allocator) {
@@ -56,6 +62,7 @@ void AllocationController::reallocateAll()
         default:
             m_allocator = new Allocator();
             // We return, but we keep allocated ROMs so we can retry
+            emit freeSpaceChanged();
             return;
     }
 
@@ -70,6 +77,7 @@ void AllocationController::reallocateAll()
             delete rom;
         }
     }
+    emit freeSpaceChanged();
 }
 
 bool AllocationController::allocate(const QUrl &romUrl)
@@ -89,6 +97,7 @@ bool AllocationController::allocate(RomInfo *rom)
     if (m_allocator->allocate(rom)) {
         m_romsModel->addRom(rom);
         m_allocatedRoms.append(rom);
+        emit freeSpaceChanged();
         return true;
     }
 
