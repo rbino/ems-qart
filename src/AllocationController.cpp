@@ -13,6 +13,8 @@ AllocationController::AllocationController(QObject *parent)
     , m_romsModel(new RomListModel())
     , m_allocator(new Allocator())
 {
+    connect(EmsCart::instance(), &EmsCart::bankOneChanged, this, &AllocationController::reallocateAll);
+    connect(EmsCart::instance(), &EmsCart::bankTwoChanged, this, &AllocationController::reallocateAll);
 }
 
 AllocationController::~AllocationController()
