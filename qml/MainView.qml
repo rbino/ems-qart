@@ -57,7 +57,7 @@ ApplicationWindow {
 
             memory: EmsCart.ROM;
         }
-        TabPage {
+        WriteROMTabPage {
             id: writeROMTab;
             title: "Write ROM(s)";
         }
