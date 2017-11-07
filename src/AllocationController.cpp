@@ -31,6 +31,11 @@ EmsCart::Bank AllocationController::bank() const
     return m_bank;
 }
 
+QVariant AllocationController::allocatedRomsList() const
+{
+    return QVariant::fromValue(m_allocatedRoms);
+}
+
 void AllocationController::setBank(EmsCart::Bank bank)
 {
     if (m_bank != bank) {
@@ -80,12 +85,14 @@ void AllocationController::reallocateAll()
         }
     }
     emit freeSpaceChanged();
+    emit allocatedRomsListChanged();
 }
 
 bool AllocationController::allocate(const QUrl &romUrl)
 {
     RomInfo *rom = new RomInfo(romUrl.toLocalFile());
     if (rom->isValid() && allocate(rom)) {
+        emit allocatedRomsListChanged();
         return true;
     }
 
