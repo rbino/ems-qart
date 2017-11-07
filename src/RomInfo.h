@@ -47,4 +47,6 @@ class RomInfo : public QObject
         int m_offset;
 };
 
+Q_DECLARE_METATYPE(QList<RomInfo*>)
+
 #endif
