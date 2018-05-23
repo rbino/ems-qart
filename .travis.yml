@@ -28,7 +28,8 @@ install:
   - '[[ "$TRAVIS_OS_NAME" != linux || "$BUILD_PLATFORM" != native ]] || sudo apt-get -qy install
     build-essential pkg-config devscripts dh-make qt5-qmake qt5-default qtbase5-dev qtdeclarative5-dev
     libqt5svg5-dev libusb-1.0-0-dev'
-  - '[ "$TRAVIS_OS_NAME" != osx ] || brew install qt55 libusb'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || brew upgrade libusb'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || brew install qt55'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew link --force qt55'
 
 before_script:
