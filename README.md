@@ -36,11 +36,6 @@ Go to the [latest release](https://github.com/rbino/ems-qart/releases/latest) an
 
 The first time you open the app, right-click on it and select `Open` from the menu. An alert will appear, then click `Open`.
 
-### Alternate: homebrew cask
-If you have [homebrew](https://brew.sh) and [caskroom](https://caskroom.github.io/) installed, simply run:
-
-`brew cask install ems-qart`
-
 ## Building on Linux
 Install the dependencies
 
